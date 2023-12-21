@@ -39,8 +39,7 @@ def main():
     }
     Config = CegisConfig(**opts)
     cegis = Cegis(Config)
-    cegis.solve()
-    end = timeit.default_timer()
+    end = cegis.solve()
     print('Elapsed Time: {}'.format(end - start))
 
 
