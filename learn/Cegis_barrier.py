@@ -1,7 +1,7 @@
 import timeit
 
 import torch
-
+import numpy as np
 from utils.Config import CegisConfig
 from learn.generate_data import Data
 from learn.Learner import Learner
@@ -79,7 +79,7 @@ class Cegis:
         for x, y in zip(data, add_res):
             if len(y) > 0:
                 ans = ans + len(y)
-                y = torch.Tensor(y)
+                y = torch.Tensor(np.array(y))
                 res.append(torch.cat([x, y], dim=0).detach())
             else:
                 res.append(x)
