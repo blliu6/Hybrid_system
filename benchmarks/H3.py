@@ -25,16 +25,18 @@ def main():
         'b2_hidden': b2_hidden_neurons,
         "example": example,
         'bm1_hidden': [10],
-        'bm2_hidden': [],
-        'bm1_act': ['SQUARE'],
-        'bm2_act': [],
+        'bm2_hidden': [10],
+        'bm1_act': ['SKIP'],
+        'bm2_act': ['SKIP'],
+        'rm1_hidden': [],
+        'rm2_hidden': [],
         'rm1_act': [],
         'rm2_act': [],
-        "batch_size": 500,
+        "batch_size": 1000,
         'lr': 0.1,
         'loss_weight': (1, 1, 1, 1, 1, 1, 1, 1),
         'R_b': 0.5,
-        'margin': 2,
+        'margin': 1,
         "DEG": [2, 0, 2, 2, 2, 2, 2, 2],  # Respectively represent the times of init, unsafe, diffB,
         # and unconstrained multipliers when verifying sos.
         "learning_loops": 100,
@@ -42,8 +44,7 @@ def main():
     }
     Config = CegisConfig(**opts)
     cegis = Cegis(Config)
-    cegis.solve()
-    end = timeit.default_timer()
+    end = cegis.solve()
     print('Elapsed Time: {}'.format(end - start))
 
 

@@ -13,7 +13,7 @@ from plot.plot import Draw
 class Cegis:
     def __init__(self, config: CegisConfig):
         self.config = config
-        self.max_cegis_iter = 100
+        self.max_cegis_iter = config.max_iter
 
     def solve(self):
         import mosek
@@ -68,10 +68,12 @@ class Cegis:
         print('Total learning time:{}'.format(t_learn))
         print('Total counter-examples generating time:{}'.format(t_cex))
         print('Total sos verifying time:{}'.format(t_sos))
+        end = timeit.default_timer()
         if vis_sos and self.config.example.n == 2:
             draw = Draw(self.config.example, barrier[0], barrier[1])
             # draw.draw()
             draw.draw_3d()
+        return end
 
     def merge_data(self, data, add_res):
         res = []

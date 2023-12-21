@@ -76,7 +76,10 @@ class Net(nn.Module):
         #############################################################
         # bm1_乘子网络
         if len(config.bm1_hidden) == 0:
-            bm1 = nn.Parameter(torch.randn(1))
+            if config.bm1 is not None:
+                bm1 = nn.Parameter(torch.Tensor([config.bm1]), requires_grad=False)
+            else:
+                bm1 = nn.Parameter(torch.randn(1))
             self.register_parameter('bm1', bm1)
             self.bm1_lay1.append(bm1)
         else:
@@ -110,7 +113,10 @@ class Net(nn.Module):
         #############################################################
         # bm2_乘子网络
         if len(config.bm2_hidden) == 0:
-            bm2 = nn.Parameter(torch.randn(1))
+            if config.bm2 is not None:
+                bm2 = nn.Parameter(torch.Tensor([config.bm2]), requires_grad=False)
+            else:
+                bm2 = nn.Parameter(torch.randn(1))
             self.register_parameter('bm2', bm2)
             self.bm2_lay1.append(bm2)
         else:
@@ -181,7 +187,10 @@ class Net(nn.Module):
         #############################################################
         # rm2_乘子网络
         if len(config.rm2_hidden) == 0:
-            rm2 = nn.Parameter(torch.randn(1))
+            if config.rm2 is not None:
+                rm2 = nn.Parameter(torch.Tensor([config.rm2]), requires_grad=False)
+            else:
+                rm2 = nn.Parameter(torch.randn(1))
             self.register_parameter('rm2', rm2)
             self.rm2_lay1.append(rm2)
         else:

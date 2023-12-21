@@ -50,8 +50,8 @@ examples = {
     ),
     1: Example(
         n=2,
-        local_1=Zone(shape='box', low=[-10, -10], up=[0, 10], verify_zone=[lambda x: -x[0]]),
-        local_2=Zone(shape='box', low=[0, -10], up=[10, 10], verify_zone=[lambda x: x[0]]),
+        local_1=Zone(shape='box', low=[-5, -5], up=[0, 5], verify_zone=[lambda x: -x[0]]),
+        local_2=Zone(shape='box', low=[0, -5], up=[5, 5], verify_zone=[lambda x: x[0]]),
         init=Zone(shape='ball', center=[-2, 2], r=0.5 ** 2),
         unsafe=Zone(shape='ball', center=[2, 2], r=0.5 ** 2),
         guard_1=Zone(shape='ball', center=[0, 0], r=0.75 ** 2),
