@@ -24,6 +24,7 @@ class CegisConfig:
     learning_loops = 100
     OPT = torch.optim.AdamW
     max_iter = 100
+    rm1 = None
 
     def __init__(self, **kwargs):
         for key, value in kwargs.items():

@@ -144,7 +144,10 @@ class Net(nn.Module):
         #############################################################
         # rm1_乘子网络
         if len(config.rm1_hidden) == 0:
-            rm1 = nn.Parameter(torch.randn(1))
+            if config.rm1 is not None:
+                rm1 = nn.Parameter(torch.Tensor([config.rm1]), requires_grad=False)
+            else:
+                rm1 = nn.Parameter(torch.randn(1))
             self.register_parameter('rm1', rm1)
             self.rm1_lay1.append(rm1)
         else:
@@ -342,7 +345,7 @@ class Net(nn.Module):
         if len(self.config.rm2_hidden) == 0:
             expr_6 = self.rm2_lay1[0].detach().numpy()[0]
         else:
-            expr_6 = self.net_out(x, self.config.rm2_act, self.rm2_lay1, self.rm2_lay2)
+            expr_6 = self.sp_net(x, self.config.rm2_act, self.rm2_lay1, self.rm2_lay2)
         expr.append(expr_6)
 
         return expr
