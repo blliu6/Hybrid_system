@@ -40,7 +40,8 @@ def main():
         "DEG": [2, 0, 2, 2, 2, 2, 2, 2],  # Respectively represent the times of init, unsafe, diffB,
         # and unconstrained multipliers when verifying sos.
         "learning_loops": 100,
-        'max_iter': 10
+        'max_iter': 10,
+        'counterexample_nums': 10
     }
     Config = CegisConfig(**opts)
     cegis = Cegis(Config)

@@ -9,7 +9,6 @@ class Learner:
         self.config = config
 
     def learn(self, data):
-        print('训练开始!')
         learn_loops = self.config.learning_loops
         margin = self.config.margin
         slope = 1e-3
@@ -87,7 +86,7 @@ class Learner:
                 result = result and (e == 100)
 
             if epoch % (learn_loops // 10) == 0 or result:
-                print(f'第{epoch + 1}轮', end=': ')
+                print(f'{epoch}->', end=' ')
                 for i in range(len(accuracy)):
                     print(f'accuracy{i + 1}:{accuracy[i]}', end=', ')
                 print(f'loss:{loss}')
@@ -95,5 +94,4 @@ class Learner:
             loss.backward()
             optimizer.step()
             if result:
-                print('训练结束')
                 break

@@ -11,6 +11,7 @@ class CounterExampleFinder:
         self.config = config
         self.ex = self.config.example
         self.n = self.ex.n
+        self.nums = config.counterexample_nums
 
     def find_counterexample(self, state, poly_list):
         expr = self.get_expr(poly_list)
@@ -77,7 +78,7 @@ class CounterExampleFinder:
         return res
 
     def enhance(self, x):
-        nums = 10
+        nums = self.nums
         eps = 0.05
         result = [x]
         for i in range(nums - 1):
@@ -123,7 +124,7 @@ class CounterExampleFinder:
             bound = tuple(zip(zone.low, zone.up))
             res = minimize(lambda x: opt(*x), np.zeros(self.ex.n), bounds=bound)
             if res.fun < 0 and res.success:
-                print(f'找到反例:{res.x}')
+                print(f'Counterexample found:{res.x}')
                 result = res.x
         elif zone.shape == 'ball':
             poly = zone.r
@@ -133,7 +134,7 @@ class CounterExampleFinder:
             con = {'type': 'ineq', 'fun': lambda x: poly_fun(*x)}
             res = minimize(lambda x: opt(*x), np.zeros(self.ex.n), constraints=con)
             if res.fun < 0 and res.success:
-                print(f'找到反例:{res.x}')
+                print(f'Counterexample found:{res.x}')
                 result = res.x
         if result is None:
             return False, []
@@ -162,7 +163,7 @@ class CounterExampleFinder:
         prob.solve(solver=cp.GUROBI)
         if prob.value < 0 and prob.status == 'optimal':
             ans = [e.value for e in x]
-            print(f'找到反例:{ans}')
+            print(f'Counterexample found:{ans}')
             return True, np.array(ans)
         else:
             return False, []

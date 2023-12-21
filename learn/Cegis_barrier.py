@@ -33,7 +33,7 @@ class Cegis:
         t_sos = 0
         vis_sos = False
         for i in range(self.max_cegis_iter):
-            print(f'第{i + 1}回合:')
+            print(f'iter:{i + 1}')
             t1 = timeit.default_timer()
             learner.learn(data)
             t2 = timeit.default_timer()
@@ -48,8 +48,10 @@ class Cegis:
             vis, state = sos.verify_all()
 
             if vis:
-                print('SOS verification passed!')
-                print(f'Number of iterations:{i + 1}')
+                print('All SOS verification passed!')
+                print(f'B1 = {barrier[0]}')
+                print(f'B2 = {barrier[1]}')
+                print(f'Total number of iterations:{i + 1}')
                 vis_sos = True
                 t4 = timeit.default_timer()
                 t_sos += t4 - t3
@@ -85,5 +87,5 @@ class Cegis:
                 res.append(torch.cat([x, y], dim=0).detach())
             else:
                 res.append(x)
-        print(f'加入{ans}个反例!')
+        print(f'Add {ans} counterexamples!')
         return tuple(res)

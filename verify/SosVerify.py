@@ -38,22 +38,22 @@ class SOS:
         ################################
         # 第一个
         state[0] = self.verify_positive(b1, self.get_con(self.ex.I), deg=deg[0])
-        if state[0]:
-            print('第一个条件通过!')
+        if not state[0]:
+            print('The condition 1 is not satisfied.')
         ################################
         # 第二个
         expr = sum([sp.diff(b1, x[i]) * self.ex.f1[i](x) for i in range(self.n)])
         expr = expr - bm1 * b1
         state[1] = self.verify_positive(expr, self.get_con(self.ex.l1), deg=deg[1])
-        if state[1]:
-            print('第二个条件通过!')
+        if not state[1]:
+            print('The condition 2 is not satisfied.')
         ################################
         # 第三个
         expr = sum([sp.diff(b2, x[i]) * self.ex.f2[i](x) for i in range(self.n)])
         expr = expr - bm2 * b2
         state[2] = self.verify_positive(expr, self.get_con(self.ex.l2), deg=deg[2])
-        if state[2]:
-            print('第三个条件通过!')
+        if not state[2]:
+            print('The condition 3 is not satisfied.')
         ################################
         # 第四个
         b2_fun = sp.lambdify(x, b2)
@@ -61,8 +61,8 @@ class SOS:
         bl2 = b2_fun(*x_)
         expr = bl2 - rm1 * b1
         state[3] = self.verify_positive(expr, self.get_con(self.ex.g1), deg=deg[3])
-        if state[3]:
-            print('第四个条件通过!')
+        if not state[3]:
+            print('The condition 4 is not satisfied.')
         ################################
         # 第五个
         b1_fun = sp.lambdify(x, b1)
@@ -70,23 +70,23 @@ class SOS:
         bl1 = b1_fun(*x_)
         expr = bl1 - rm2 * b2
         state[4] = self.verify_positive(expr, self.get_con(self.ex.g2), deg=deg[4])
-        if state[4]:
-            print('第五个条件通过!')
+        if not state[4]:
+            print('The condition 5 is not satisfied.')
         ################################
         # 第六个
         state[5] = self.verify_positive(rm1, self.get_con(self.ex.g1), deg=deg[5])
-        if state[5]:
-            print('第六个条件通过!')
+        if not state[5]:
+            print('The condition 6 is not satisfied.')
         ################################
         # 第七个
         state[6] = self.verify_positive(rm2, self.get_con(self.ex.g2), deg=deg[6])
-        if state[6]:
-            print('第七个条件通过!')
+        if not state[6]:
+            print('The condition 7 is not satisfied.')
         ################################
         # 第八个
         state[7] = self.verify_positive(-b2, self.get_con(self.ex.U), deg=deg[7])
-        if state[7]:
-            print('第八个条件通过!')
+        if not state[7]:
+            print('The condition 8 is not satisfied.')
 
         result = True
         for e in state:

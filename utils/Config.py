@@ -28,6 +28,7 @@ class CegisConfig:
     bm2 = None
     rm1 = None
     rm2 = None
+    counterexample_nums = 100
 
     def __init__(self, **kwargs):
         for key, value in kwargs.items():
