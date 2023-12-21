@@ -23,6 +23,7 @@ class CegisConfig:
     DEG = [2] * 8
     learning_loops = 100
     OPT = torch.optim.AdamW
+    max_iter = 100
 
     def __init__(self, **kwargs):
         for key, value in kwargs.items():

@@ -95,6 +95,8 @@ class SOS:
 
     def get_con(self, zone: Zone):
         x = self.x
+        if zone.verify_zone is not None:
+            return [e(x) for e in zone.verify_zone]
         if zone.shape == 'ball':
             poly = zone.r
             for i in range(self.n):
