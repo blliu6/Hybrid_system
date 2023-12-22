@@ -37,8 +37,7 @@ def main():
         'loss_weight': (1, 1, 1, 1, 1, 1, 1, 1),
         'R_b': 0.5,
         'margin': 1,
-        "DEG": [2, 0, 2, 2, 2, 2, 2, 2],  # Respectively represent the times of init, unsafe, diffB,
-        # and unconstrained multipliers when verifying sos.
+        "DEG": [2, 0, 2, 2, 2, 2, 2, 2],
         "learning_loops": 100,
         'max_iter': 10,
         'counterexample_nums': 10
