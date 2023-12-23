@@ -95,8 +95,8 @@ examples = {
     ),
     4: Example(
         n=2,
-        local_1=Zone(shape='box', low=[-5, -5], up=[0, 5], verify_zone=[lambda x: -x[0]]),
-        local_2=Zone(shape='box', low=[0, -5], up=[5, 5], verify_zone=[lambda x: x[0]]),
+        local_1=Zone(shape='box', low=[-10, -10], up=[0, 10]),
+        local_2=Zone(shape='box', low=[0, -10], up=[10, 10]),
         init=Zone(shape='box', low=[-2, -2], up=[-1, -1]),
         unsafe=Zone(shape='box', low=[0, -2], up=[1, -1]),
         guard_1=Zone(shape='ball', center=[-0.5, -0.5], r=0.5 ** 2),
@@ -126,7 +126,40 @@ examples = {
         name='H4_easy'
         # Darboux-type_barrier_certificates_for_safety_verification_of_nonlinear_hybrid_systems->EXAMPLE2
     ),
-
+    6: Example(
+        n=2,
+        local_1=Zone(shape='box', low=[0, 0], up=[40, 60], verify_zone=[lambda x: (x[0] - 5) * (35 - x[0])]),
+        local_2=Zone(shape='box', low=[0, 0], up=[40, 60], verify_zone=[lambda x: (x[0] - 5) * (35 - x[0])]),
+        init=Zone(shape='ball', center=[9, 20], r=2 ** 2),
+        unsafe=Zone(shape='box', low=[0, 48], up=[40, 60], verify_zone=[lambda x: (x[1] - 48) * (60 - x[1])]),
+        guard_1=Zone(shape='box', low=[34.9, 0], up=[35.1, 60]),
+        guard_2=Zone(shape='box', low=[4.9, 0], up=[5.1, 60]),
+        reset_1=[lambda x: x[0], lambda x: x[1]],
+        reset_2=[lambda x: x[0], lambda x: x[1]],
+        f_1=[lambda x: x[1] ** 2 - 10 * x[1] + 25,
+             lambda x: 2 * x[0] * x[1] + 10 * x[0] - 40 * x[1] - 200],
+        f_2=[lambda x: -x[1] ** 2 - 10 * x[1] - 25,
+             lambda x: 8 * x[0] * x[1] + 40 * x[0] - 160 * x[1] - 800],
+        name='H1'
+        # Safety Verification of Nonlinear Hybrid Systems Based on Invariant Clusters
+    ),
+    7: Example(
+        n=2,
+        local_1=Zone(shape='box', low=[0, 0], up=[40, 60]),
+        local_2=Zone(shape='box', low=[0, 0], up=[40, 60]),
+        init=Zone(shape='ball', center=[9, 20], r=2 ** 2),
+        unsafe=Zone(shape='box', low=[0, 48], up=[40, 60], verify_zone=[lambda x: (x[1] - 48) * (60 - x[1])]),
+        guard_1=Zone(shape='box', low=[34.9, 0], up=[35.1, 48]),
+        guard_2=Zone(shape='box', low=[4.9, 0], up=[5.1, 48]),
+        reset_1=[lambda x: x[0], lambda x: x[1]],
+        reset_2=[lambda x: x[0], lambda x: x[1]],
+        f_1=[lambda x: x[1] ** 2 - 10 * x[1] + 25,
+             lambda x: 2 * x[0] * x[1] + 10 * x[0] - 40 * x[1] - 200],
+        f_2=[lambda x: -x[1] ** 2 - 10 * x[1] - 25,
+             lambda x: 8 * x[0] * x[1] + 40 * x[0] - 160 * x[1] - 800],
+        name='H1_easy'
+        # Safety Verification of Nonlinear Hybrid Systems Based on Invariant Clusters
+    ),
 }
 
 

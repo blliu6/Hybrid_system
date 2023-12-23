@@ -40,8 +40,8 @@ class Cegis:
             t_learn += t2 - t1
 
             barrier = learner.net.get_barriers()
-            # for poly in barrier:
-            #     print(poly)
+            for poly in barrier:
+                print(poly)
 
             t3 = timeit.default_timer()
             sos = SOS(self.config, barrier)
@@ -67,14 +67,17 @@ class Cegis:
 
             data = self.merge_data(data, res)
 
-        print('Total learning time:{}'.format(t_learn))
-        print('Total counter-examples generating time:{}'.format(t_cex))
-        print('Total sos verifying time:{}'.format(t_sos))
         end = timeit.default_timer()
-        if vis_sos and self.config.example.n == 2:
-            draw = Draw(self.config.example, barrier[0], barrier[1])
-            # draw.draw()
-            draw.draw_3d()
+        if vis_sos:
+            print('Total learning time:{}'.format(t_learn))
+            print('Total counter-examples generating time:{}'.format(t_cex))
+            print('Total sos verifying time:{}'.format(t_sos))
+            if self.config.example.n == 2:
+                draw = Draw(self.config.example, barrier[0], barrier[1])
+                draw.draw()
+                draw.draw_3d()
+        else:
+            print('Failed')
         return end
 
     def merge_data(self, data, add_res):
