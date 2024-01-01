@@ -30,6 +30,25 @@ class SOS:
         except:
             return False
 
+    def verify_positive_multiplier(self, A, B, con, deg=2, R_deg=0):
+        x = self.x
+        prob = SOSProblem()
+        expr = A
+        for c in con:
+            P, par, terms = self.polynomial(deg)
+            prob.add_sos_constraint(P, x)
+            expr = expr - c * P
+
+        R, par, terms = self.polynomial(R_deg)
+        expr = expr - R * B
+        expr = sp.expand(expr)
+        prob.add_sos_constraint(expr, x)
+        try:
+            prob.solve(solver='mosek')
+            return True
+        except:
+            return False
+
     def verify_all(self):
         b1, b2, bm1, bm2, rm1, rm2 = self.poly_list
         deg = self.config.DEG
@@ -43,15 +62,17 @@ class SOS:
         ################################
         # 第二个
         expr = sum([sp.diff(b1, x[i]) * self.ex.f1[i](x) for i in range(self.n)])
-        expr = expr - bm1 * b1
-        state[1] = self.verify_positive(expr, self.get_con(self.ex.l1), deg=deg[1])
+        state[1] = self.verify_positive_multiplier(expr, b1, self.get_con(self.ex.l1), deg=deg[1])
+        # expr = expr - bm1 * b1
+        # state[1] = self.verify_positive(expr, self.get_con(self.ex.l1), deg=deg[1])
         if not state[1]:
             print('The condition 2 is not satisfied.')
         ################################
         # 第三个
         expr = sum([sp.diff(b2, x[i]) * self.ex.f2[i](x) for i in range(self.n)])
-        expr = expr - bm2 * b2
-        state[2] = self.verify_positive(expr, self.get_con(self.ex.l2), deg=deg[2])
+        state[1] = self.verify_positive_multiplier(expr, b2, self.get_con(self.ex.l2), deg=deg[2])
+        # expr = expr - bm2 * b2
+        # state[2] = self.verify_positive(expr, self.get_con(self.ex.l2), deg=deg[2])
         if not state[2]:
             print('The condition 3 is not satisfied.')
         ################################
@@ -59,8 +80,9 @@ class SOS:
         b2_fun = sp.lambdify(x, b2)
         x_ = [self.ex.r1[i](x) for i in range(self.n)]
         bl2 = b2_fun(*x_)
-        expr = bl2 - rm1 * b1
-        state[3] = self.verify_positive(expr, self.get_con(self.ex.g1), deg=deg[3])
+        state[3] = self.verify_positive_multiplier(bl2, b1, self.get_con(self.ex.g1), deg=deg[3])
+        # expr = bl2 - rm1 * b1
+        # state[3] = self.verify_positive(expr, self.get_con(self.ex.g1), deg=deg[3])
         if not state[3]:
             print('The condition 4 is not satisfied.')
         ################################
@@ -68,8 +90,9 @@ class SOS:
         b1_fun = sp.lambdify(x, b1)
         x_ = [self.ex.r2[i](x) for i in range(self.n)]
         bl1 = b1_fun(*x_)
-        expr = bl1 - rm2 * b2
-        state[4] = self.verify_positive(expr, self.get_con(self.ex.g2), deg=deg[4])
+        state[4] = self.verify_positive_multiplier(bl1, b2, self.get_con(self.ex.g2), deg=deg[4])
+        # expr = bl1 - rm2 * b2
+        # state[4] = self.verify_positive(expr, self.get_con(self.ex.g2), deg=deg[4])
         if not state[4]:
             print('The condition 5 is not satisfied.')
         ################################
@@ -87,6 +110,35 @@ class SOS:
         state[7] = self.verify_positive(-b2, self.get_con(self.ex.U), deg=deg[7])
         if not state[7]:
             print('The condition 8 is not satisfied.')
+
+        result = True
+        for e in state:
+            result = result and e
+        return result, state
+
+    def verify_continuous(self):
+        b1, bm1 = self.poly_list
+        deg = self.config.DEG_continuous
+        x = self.x
+        state = [True] * 3
+        ################################
+        # init
+        state[0] = self.verify_positive(b1, self.get_con(self.ex.I), deg=deg[0])
+        if not state[0]:
+            print('The init condition is not satisfied.')
+        ################################
+        # 第二个
+        expr = sum([sp.diff(b1, x[i]) * self.ex.f1[i](x) for i in range(self.n)])
+        # expr = expr - bm1 * b1
+        # state[1] = self.verify_positive(expr, self.get_con(self.ex.l1), deg=deg[1])
+        state[1] = self.verify_positive_multiplier(expr, b1, self.get_con(self.ex.l1), deg=deg[1], R_deg=deg[2])
+        if not state[1]:
+            print('The lie condition is not satisfied.')
+        ################################
+        # unsafe
+        state[2] = self.verify_positive(-b1, self.get_con(self.ex.U), deg=deg[3])
+        if not state[2]:
+            print('The unsafe condition is not satisfied.')
 
         result = True
         for e in state:

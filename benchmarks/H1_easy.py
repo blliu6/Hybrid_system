@@ -9,13 +9,13 @@ from learn.Cegis_barrier import Cegis
 
 def main():
     start = timeit.default_timer()
-    b1_activations = ['SKIP']  # Only "SQUARE","SKIP","MUL" are optional.
-    b1_hidden_neurons = [10] * len(b1_activations)
+    b1_activations = ['SKIP', 'SKIP']  # Only "SQUARE","SKIP","MUL" are optional.
+    b1_hidden_neurons = [30] * len(b1_activations)
 
     b2_activations = ['SKIP']  # Only "SQUARE","SKIP","MUL" are optional.
     b2_hidden_neurons = [10] * len(b1_activations)
 
-    example = get_example_by_name('H4')
+    example = get_example_by_name('H1_easy')
 
     start = timeit.default_timer()
     opts = {
@@ -25,21 +25,22 @@ def main():
         'b2_hidden': b2_hidden_neurons,
         "example": example,
         'bm1_hidden': [10],
-        'bm2_hidden': [10],
+        'bm2_hidden': [],
         'bm1_act': ['SKIP'],
-        'bm2_act': ['SKIP'],
+        'bm2_act': [],
         'rm1_hidden': [],
         'rm2_hidden': [],
         'rm1_act': [],
         'rm2_act': [],
         "batch_size": 500,
-        'lr': 0.4,
-        'loss_weight': (1, 1, 1, 1, 1, 1, 1, 1),
-        'R_b': 0.3,
-        'margin': 1,
-        "DEG": [2, 2, 2, 2, 2, 2, 2, 2],
+        'lr': 0.01,
+        'loss_weight': (10, 1, 1, 1, 1, 1, 1, 1),
+        'R_b': 0.5,
+        'margin': 0.5,
+        "DEG": [2, 4, 2, 2, 2, 2, 2, 2],  # Respectively represent the times of init, unsafe, diffB,
+        # and unconstrained multipliers when verifying sos.
         "learning_loops": 100,
-        'max_iter': 10
+        'max_iter': 10,
     }
     Config = CegisConfig(**opts)
     cegis = Cegis(Config)

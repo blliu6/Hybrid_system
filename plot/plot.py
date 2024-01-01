@@ -9,7 +9,7 @@ import mpl_toolkits.mplot3d.art3d as art3d
 
 
 class Draw:
-    def __init__(self, example: Example, b1, b2):
+    def __init__(self, example: Example, b1, b2=None):
         self.ex = example
         self.b1 = b1
         self.b2 = b2
@@ -39,11 +39,45 @@ class Draw:
         plt.legend()
         plt.show()
 
+    def draw_continuous(self):
+        fig = plt.figure()
+        ax = plt.gca()
+
+        ax.add_patch(self.draw_zone(self.ex.l1, 'b', 'local_1'))
+        ax.add_patch(self.draw_zone(self.ex.I, 'g', 'init'))
+        ax.add_patch(self.draw_zone(self.ex.U, 'r', 'unsafe'))
+
+        l1 = self.ex.l1
+
+        self.plot_vector_field(l1, self.ex.f1)
+
+        self.plot_barrier(l1, self.b1, 'lime')
+
+        plt.xlim(l1.low[0] - 1, l1.up[0] + 3)
+        plt.ylim(l1.low[1] - 1, l1.up[1] + 3)
+        ax.set_aspect(1)
+        plt.legend()
+        plt.show()
+
     def draw_3d(self):
         fig = plt.figure()
         ax = fig.add_subplot(projection='3d')
         self.plot_barrier_3d(ax, self.ex.l1, self.b1, 'gold')
         self.plot_barrier_3d(ax, self.ex.l2, self.b2, 'plum')
+
+        init = self.draw_zone(self.ex.I, color='g', label='init')
+        ax.add_patch(init)
+        art3d.pathpatch_2d_to_3d(init, z=0, zdir="z")
+
+        unsafe = self.draw_zone(self.ex.U, color='r', label='unsafe')
+        ax.add_patch(unsafe)
+        art3d.pathpatch_2d_to_3d(unsafe, z=0, zdir="z")
+        plt.show()
+
+    def draw_3d_continuous(self):
+        fig = plt.figure()
+        ax = fig.add_subplot(projection='3d')
+        self.plot_barrier_3d(ax, self.ex.l1, self.b1, 'gold')
 
         init = self.draw_zone(self.ex.I, color='g', label='init')
         ax.add_patch(init)

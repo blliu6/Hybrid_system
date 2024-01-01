@@ -18,9 +18,12 @@ class CegisConfig:
     batch_size = 500
     lr = 0.1
     loss_weight = (1, 1, 1, 1, 1, 1, 1, 1)
+    loss_weight_continuous = (1, 1, 1)
     R_b = 0.5
     margin = 0.5
     DEG = [2] * 8
+    DEG_continuous = [2] * 4
+    split = False
     learning_loops = 100
     OPT = torch.optim.AdamW
     max_iter = 100

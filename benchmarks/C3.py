@@ -12,32 +12,20 @@ def main():
     b1_activations = ['SKIP']  # Only "SQUARE","SKIP","MUL" are optional.
     b1_hidden_neurons = [10] * len(b1_activations)
 
-    b2_activations = ['SKIP']  # Only "SQUARE","SKIP","MUL" are optional.
-    b2_hidden_neurons = [10] * len(b1_activations)
-
-    example = get_example_by_name('H4')
+    example = get_example_by_name('C3')
 
     start = timeit.default_timer()
     opts = {
         'b1_act': b1_activations,
         'b1_hidden': b1_hidden_neurons,
-        'b2_act': b2_activations,
-        'b2_hidden': b2_hidden_neurons,
         "example": example,
-        'bm1_hidden': [10],
-        'bm2_hidden': [10],
-        'bm1_act': ['SKIP'],
-        'bm2_act': ['SKIP'],
-        'rm1_hidden': [],
-        'rm2_hidden': [],
-        'rm1_act': [],
-        'rm2_act': [],
+        'bm1_act': [],
         "batch_size": 500,
-        'lr': 0.4,
-        'loss_weight': (1, 1, 1, 1, 1, 1, 1, 1),
+        'lr': 0.001,
+        'loss_weight_continuous': (1, 1, 1),
         'R_b': 0.3,
         'margin': 1,
-        "DEG": [2, 2, 2, 2, 2, 2, 2, 2],
+        "DEG_continuous": [2, 2, 2, 2],
         "learning_loops": 100,
         'max_iter': 10
     }

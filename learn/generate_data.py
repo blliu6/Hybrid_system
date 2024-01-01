@@ -49,3 +49,13 @@ class Data:
         l1_dot = self.x2dotx(l1, self.ex.f1)
         l2_dot = self.x2dotx(l2, self.ex.f2)
         return l1, l2, I, U, g1, g2, l1_dot, l2_dot
+
+    def generate_data_for_continuous(self):
+        batch_size = self.config.batch_size
+        l1 = self.get_data(self.ex.l1, batch_size)
+        I = self.get_data(self.ex.I, batch_size)
+        U = self.get_data(self.ex.U, batch_size)
+
+        l1_dot = self.x2dotx(l1, self.ex.f1)
+
+        return l1, I, U, l1_dot

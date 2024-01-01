@@ -6,6 +6,39 @@ from benchmarks.Examplers import Zone, Example
 from scipy.optimize import minimize, NonlinearConstraint
 
 
+def split_bounds(bounds, n):
+    """
+    Divide an n-dimensional cuboid into 2^n small cuboids, and output the upper and lower bounds of each small cuboid.
+
+    parameter: bounds: An array of shape (n, 2), representing the upper and lower bounds of each dimension of an
+    n-dimensional cuboid.
+
+    return:
+        An array with a shape of (2^n, n, 2), representing the upper and lower bounds of the divided 2^n small cuboids.
+    """
+
+    if n == bounds.shape[0]:
+        return bounds.reshape((-1, *bounds.shape))
+    else:
+        # Take the middle position of the upper and lower bounds of the current dimension as the split point,
+        # and divide the cuboid into two small cuboids on the left and right.
+        if n > 5 and np.random.random() > 0.5:
+            subbounds = split_bounds(bounds, n + 1)
+        else:
+            mid = (bounds[n, 0] + bounds[n, 1]) / 2
+            left_bounds = bounds.copy()
+            left_bounds[n, 1] = mid
+            right_bounds = bounds.copy()
+            right_bounds[n, 0] = mid
+            # Recursively divide the left and right small cuboids.
+            left_subbounds = split_bounds(left_bounds, n + 1)
+            right_subbounds = split_bounds(right_bounds, n + 1)
+            # Merge the upper and lower bounds of the left and right small cuboids into an array.
+            subbounds = np.concatenate([left_subbounds, right_subbounds])
+
+        return subbounds
+
+
 class CounterExampleFinder:
     def __init__(self, config: CegisConfig):
         self.config = config
@@ -65,6 +98,47 @@ class CounterExampleFinder:
         res = (l1, l2, I, U, g1, g2, l1_dot, l2_dot)
         return res
 
+    def find_counterexample_for_continuous(self, state, poly_list):
+        expr = self.get_expr_for_continuous(poly_list)
+
+        l1, I, U, l1_dot = [], [], [], []
+
+        if not state[0]:
+            vis, x = self.get_extremum_scipy(self.ex.I, expr[0])
+            if vis:
+                x = self.enhance(x)
+                x = self.filter(x, expr[0])
+                I.extend(x)
+
+        if not state[2]:
+            vis, x = self.get_extremum_scipy(self.ex.U, -expr[0])
+            if vis:
+                x = self.enhance(x)
+                x = self.filter(x, -expr[0])
+                U.extend(x)
+
+        if not state[1]:
+            if self.config.split:
+                bounds = self.split_zone(self.ex.l1)
+            else:
+                bounds = [self.ex.l1]
+            for e in bounds:
+                vis, x = self.get_extremum_scipy(e, expr[1])
+                if vis:
+                    x = self.enhance(x)
+                    x = self.filter(x, expr[1])
+                    l1.extend(x)
+                    l1_dot.extend(self.x2dotx(x, self.ex.f1))
+
+        res = (l1, I, U, l1_dot)
+        return res
+
+    def split_zone(self, zone: Zone):
+        bound = list(zip(zone.low, zone.up))
+        bounds = split_bounds(np.array(bound), 0)
+        ans = [Zone(shape='box', low=e.T[0], up=e.T[1]) for e in bounds]
+        return ans
+
     def x2dotx(self, X, f):
         f_x = []
         for x in X:
@@ -114,6 +188,16 @@ class CounterExampleFinder:
         ans.append(rm1)
         ans.append(rm2)
         ans.append(-b2)
+        return ans
+
+    def get_expr_for_continuous(self, poly_list):
+        b1, bm1 = poly_list
+        ans = [b1]
+        x = sp.symbols([f'x{i + 1}' for i in range(self.n)])
+        expr = sum([sp.diff(b1, x[i]) * self.ex.f1[i](x) for i in range(self.n)])
+        expr = expr - bm1 * b1
+        ans.append(expr)
+
         return ans
 
     def get_extremum_scipy(self, zone: Zone, expr):

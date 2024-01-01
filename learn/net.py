@@ -284,6 +284,8 @@ class Net(nn.Module):
                 z1 = layer1(y)
                 z2 = layer2(y)
                 y = z1 * z2
+            elif act[idx] == 'LINEAR':
+                y = layer1(y)
         y = lay1[-1](y)
         return y
 
@@ -312,6 +314,10 @@ class Net(nn.Module):
                 grad = torch.matmul(torch.diag_embed(z1), layer2.weight) + torch.matmul(torch.diag_embed(z2),
                                                                                         layer1.weight)
                 jacobian = torch.matmul(grad, jacobian)
+            elif act[idx] == 'LINEAR':
+                z = layer1(y)
+                y = z
+                jacobian = torch.matmul(layer1.weight, jacobian)
 
         jacobian = torch.matmul(lay1[-1].weight, jacobian)
         grad_y = torch.sum(torch.mul(jacobian[:, 0, :], xdot), dim=1)
@@ -386,6 +392,10 @@ class Net(nn.Module):
                 z2 = np.dot(y, w2.T) + b2
 
                 y = np.multiply(z1, z2)
+            elif act[idx] == 'LINEAR':
+                w1 = layer1.weight.detach().numpy()
+                b1 = layer1.bias.detach().numpy()
+                y = np.dot(y, w1.T) + b1
 
         if lay1[-1].__getattr__('bias') is None:
             w1 = lay1[-1].weight.detach().numpy()
