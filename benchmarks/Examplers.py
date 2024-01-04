@@ -245,6 +245,18 @@ examples = {
         name='F3',
         continuous=True
     ),
+    17: Example(
+        n=2,
+        local_1=Zone(shape='box', low=[-1] * 2, up=[1] * 2),
+        init=Zone(shape='box', low=[-0.1] * 2, up=[0.1] * 2),
+        unsafe=Zone(shape='box', low=[0.5]*2 , up=[1] * 2),
+        f_1=[
+            lambda x: -2 * x[0] + x[0] * x[0] + x[1],
+            lambda x: x[0] - 2 * x[1] + x[1] * x[1]
+           ],
+        name='C5',
+        continuous=True
+    ),
 }
 
 
