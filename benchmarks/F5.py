@@ -10,7 +10,7 @@ from learn.Cegis_barrier import Cegis
 def main():
     start = timeit.default_timer()
     b1_activations = ['SKIP']  # Only "SQUARE","SKIP","MUL" are optional.
-    b1_hidden_neurons = [5] * len(b1_activations)
+    b1_hidden_neurons = [10] * len(b1_activations)
 
     example = get_example_by_name('F5')
 
@@ -19,12 +19,12 @@ def main():
         'b1_act': b1_activations,
         'b1_hidden': b1_hidden_neurons,
         "example": example,
-        "batch_size": 2000,
-        'lr': 0.88,
-        'loss_weight_continuous': (2, 2, 2),
-        'R_b': 0.7,
+        "batch_size": 1000,
+        'lr': 0.7,
+        'loss_weight_continuous': (1, 1, 1),
+        'R_b': 0.3,
         'margin': 2,
-        "DEG_continuous": [2, 2, 0, 2],
+        "DEG_continuous": [2, 2, 2, 2],
         "learning_loops": 100,
         'max_iter': 10
     }

@@ -19,12 +19,12 @@ def main():
         'b1_act': b1_activations,
         'b1_hidden': b1_hidden_neurons,
         "example": example,
-        "batch_size": 2000,
-        'lr': 0.5,
+        "batch_size": 1000,
+        'lr': 0.1,
         'loss_weight_continuous': (1, 1, 1),
-        'R_b': 0.9,
+        'R_b': 0,
         'margin': 2,
-        "DEG_continuous": [2, 2, 1, 2],
+        "DEG_continuous": [2, 2, 2, 2],
         "learning_loops": 100,
         'max_iter': 10
     }
