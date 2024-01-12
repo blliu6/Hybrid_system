@@ -106,6 +106,7 @@ class CounterExampleFinder:
         if not state[0]:
             vis, x = self.get_extremum_scipy(self.ex.I, expr[0])
             if vis:
+                print(f'Counterexample found:{x}')
                 x = self.enhance(x)
                 x = self.filter(x, expr[0])
                 I.extend(x)
@@ -113,6 +114,7 @@ class CounterExampleFinder:
         if not state[2]:
             vis, x = self.get_extremum_scipy(self.ex.U, -expr[0])
             if vis:
+                print(f'Counterexample found:{x}')
                 x = self.enhance(x)
                 x = self.filter(x, -expr[0])
                 U.extend(x)
@@ -122,16 +124,52 @@ class CounterExampleFinder:
                 bounds = self.split_zone(self.ex.l1)
             else:
                 bounds = [self.ex.l1]
+            cnt = 0
             for e in bounds:
-                vis, x = self.get_extremum_scipy(e, expr[1])
+                if self.config.lie_counterexample == 1:
+                    vis, x = self.get_lie_examples(expr[0], e)
+                else:
+                    vis, x = self.get_extremum_scipy(e, expr[1])
                 if vis:
+                    cnt += 1
                     x = self.enhance(x)
                     x = self.filter(x, expr[1])
                     l1.extend(x)
                     l1_dot.extend(self.x2dotx(x, self.ex.f1))
+            if cnt > 0:
+                print(f'Counterexamples for Lie found')
 
         res = (l1, I, U, l1_dot)
         return res
+
+    def get_lie_examples(self, expr, zone: Zone):
+        x = sp.symbols([f'x{i + 1}' for i in range(self.n)])
+        db = sum([sp.diff(expr, x[i]) * self.config.example.f1[i](x) for i in range(self.n)])
+        opt_b = sp.lambdify(x, expr)
+        opt_db = sp.lambdify(x, db)
+        margin = 0.00
+        con = NonlinearConstraint(lambda x: opt_b(*x), -margin, margin)
+
+        result = None
+        if zone.shape == 'box':
+            bound = tuple(zip(zone.low, zone.up))
+            res = minimize(lambda x: opt_db(*x), np.zeros(self.ex.n), bounds=bound, constraints=con)
+            if res.fun < 0 and res.success:
+                result = res.x
+        elif zone.shape == 'ball':
+            poly = zone.r
+            for i in range(self.ex.n):
+                poly = poly - (x[i] - zone.center[i]) ** 2
+            poly_fun = sp.lambdify(x, poly)
+            con1 = {'type': 'ineq', 'fun': lambda x: poly_fun(*x)}
+            res = minimize(lambda x: opt_db(*x), np.zeros(self.ex.n), constraints=(con, con1))
+            if res.fun < 0 and res.success:
+                # print(f'Counterexample found:{res.x}')
+                result = res.x
+        if result is None:
+            return False, []
+        else:
+            return True, result
 
     def split_zone(self, zone: Zone):
         bound = list(zip(zone.low, zone.up))
@@ -208,7 +246,7 @@ class CounterExampleFinder:
             bound = tuple(zip(zone.low, zone.up))
             res = minimize(lambda x: opt(*x), np.zeros(self.ex.n), bounds=bound)
             if res.fun < 0 and res.success:
-                print(f'Counterexample found:{res.x}')
+                # print(f'Counterexample found:{res.x}')
                 result = res.x
         elif zone.shape == 'ball':
             poly = zone.r
@@ -218,7 +256,7 @@ class CounterExampleFinder:
             con = {'type': 'ineq', 'fun': lambda x: poly_fun(*x)}
             res = minimize(lambda x: opt(*x), np.zeros(self.ex.n), constraints=con)
             if res.fun < 0 and res.success:
-                print(f'Counterexample found:{res.x}')
+                # print(f'Counterexample found:{res.x}')
                 result = res.x
         if result is None:
             return False, []
