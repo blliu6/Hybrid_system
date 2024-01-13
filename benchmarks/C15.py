@@ -21,13 +21,13 @@ def main():
         "example": example,
         'bm1_act': [],
         "batch_size": 2000,
-        'lr': 0.3,
+        'lr': 0.01,
         'loss_weight_continuous': (1, 1, 1),
-        'R_b': 0.5,
-        'margin': 10,
+        'R_b': 0.4,
+        'margin': 6,
         "DEG_continuous": [2, 2, 2, 2],
         "learning_loops": 100,
-        'max_iter': 10,
+        'max_iter': 15,
         'split': True,
         'counterexample_nums': 1
     }

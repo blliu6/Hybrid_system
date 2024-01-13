@@ -1,5 +1,6 @@
 import timeit
 import torch
+import random
 import numpy as np
 from utils.Config import CegisConfig
 from Examplers import get_example_by_name, get_example_by_id
@@ -40,4 +41,5 @@ def main():
 if __name__ == '__main__':
     torch.manual_seed(2024)
     np.random.seed(2024)
+    random.seed(2024)
     main()
