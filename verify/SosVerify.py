@@ -30,7 +30,7 @@ class SOS:
         except:
             return False
 
-    def verify_positive_multiplier(self, A, B, con, deg=2, R_deg=0):
+    def verify_positive_multiplier(self, A, B, con, deg=2, R_deg=2):
         x = self.x
         prob = SOSProblem()
         expr = A

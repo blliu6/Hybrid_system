@@ -481,10 +481,10 @@ examples = {
     38: Example(
         n=4,
         local_1=Zone(shape='box', low=[-1.5] * 4, up=[1.5] * 4),
-        init=Zone(shape='box', low=[-(0.1 ** 0.5), -1 - (0.1 ** 0.5), -1.5, -1.5],
-                  up=[0.1 ** 0.5, -1 + (0.1 ** 0.5), 1.5, 1.5]),  # 有改动
-        unsafe=Zone(shape='box', low=[-1 - (0.1 ** 0.5), -(0.1 ** 0.5), -1.5, -1.5],
-                    up=[-1 + (0.1 ** 0.5), 0.1 ** 0.5, 1.5, 1.5]),
+        init=Zone(shape='box', low=[-0.2, -1.2, -1.5, -1.5],
+                  up=[0.2, -0.8, 1.5, 1.5]),  # 有改动
+        unsafe=Zone(shape='box', low=[-1.2, -0.2, -1.5, -1.5],
+                    up=[-0.8, 0.2, 1.5, 1.5]),
         f_1=[
             lambda x: -0.5 * x[0] ** 2 - 2 * (x[1] ** 2 + x[2] ** 2 - x[3] ** 2),
             lambda x: -x[0] * x[1] - 1,
@@ -526,7 +526,7 @@ examples = {
     41: Example(
         n=9,
         local_1=Zone(shape='box', low=[-2] * 9, up=[2] * 9),
-        init=Zone(shape='ball', center=[1, 1, 1, 1, 1, 1, 1, 1, 1], r=0.01 ** 2),
+        init=Zone(shape='ball', center=[1, 1, 1, 1, 1, 1, 1, 1, 1], r=0.1 ** 2),
         unsafe=Zone(shape='ball', center=[1.9, 1.9, 1.9, 1.9, 1.9, 1.9, 1.9, 1.9, 1.9], r=0.1 ** 2),
         f_1=[
             lambda x: 3 * x[2] - x[0] * x[5],
@@ -545,7 +545,7 @@ examples = {
     42: Example(
         n=12,
         local_1=Zone(shape='box', low=[-2] * 12, up=[2] * 12),
-        init=Zone(shape='ball', center=[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], r=0.01),
+        init=Zone(shape='ball', center=[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], r=0.1 ** 2),
         unsafe=Zone(shape='ball', center=[1.9, 1.9, 1.9, 1.9, 1.9, 1.9, 1.9, 1.9, 1.9], r=0.1 ** 2),  # 这个也要改
         f_1=[
             lambda x: x[3],
