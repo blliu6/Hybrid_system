@@ -25,7 +25,7 @@ def main():
         'loss_weight_continuous': (1, 1, 1),
         'R_b': 0.6,
         'margin': 1,
-        "DEG_continuous": [2,2,1, 2],
+        "DEG_continuous": [0, 2, 1, 0],
         "learning_loops": 100,
         'max_iter': 10
     }

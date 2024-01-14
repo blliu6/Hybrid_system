@@ -21,13 +21,13 @@ def main():
         "example": example,
         'bm1_act': [],
         "batch_size": 500,
-        'lr': 0.5,
+        'lr': 0.01,
         'loss_weight_continuous': (1, 1, 1),
-        'R_b': 0.8,
+        'R_b': 0.5,
         'margin': 2,
-        "DEG_continuous": [2, 4, 3, 2],
+        "DEG_continuous": [2, 2, 2, 2],
         "learning_loops": 100,
-        'max_iter': 20
+        'max_iter': 5
     }
     Config = CegisConfig(**opts)
     cegis = Cegis(Config)

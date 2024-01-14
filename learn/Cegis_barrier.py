@@ -1,5 +1,5 @@
 import timeit
-
+import os
 import torch
 import numpy as np
 from utils.Config import CegisConfig
@@ -92,6 +92,7 @@ class Cegis:
             print('Total learning time:{}'.format(t_learn))
             print('Total counter-examples generating time:{}'.format(t_cex))
             print('Total sos verifying time:{}'.format(t_sos))
+            self.save_model(learner.net)
             if self.config.example.n == 2:
                 if self.config.example.continuous:
                     draw = Draw(self.config.example, barrier[0])
@@ -117,3 +118,11 @@ class Cegis:
                 res.append(x)
         print(f'Add {ans} counterexamples!')
         return tuple(res)
+
+    def save_model(self, net):
+        if not os.path.exists('../model'):
+            os.mkdir('../model')
+        if self.config.example.continuous:
+            torch.save(net.state_dict(), f'../model/{self.config.example.name}.pt')
+        else:
+            pass
