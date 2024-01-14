@@ -546,7 +546,7 @@ examples = {
         n=12,
         local_1=Zone(shape='box', low=[-2] * 12, up=[2] * 12),
         init=Zone(shape='ball', center=[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], r=0.1 ** 2),
-        unsafe=Zone(shape='ball', center=[1.9, 1.9, 1.9, 1.9, 1.9, 1.9, 1.9, 1.9, 1.9], r=0.1 ** 2),  # 这个也要改
+        unsafe=Zone(shape='ball', center=[1, 1, 1, 1, 1, 1, 1, 1, 1], r=0.1 ** 2),  # 这个也要改
         f_1=[
             lambda x: x[3],
             lambda x: x[4],

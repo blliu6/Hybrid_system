@@ -122,7 +122,4 @@ class Cegis:
     def save_model(self, net):
         if not os.path.exists('../model'):
             os.mkdir('../model')
-        if self.config.example.continuous:
-            torch.save(net.state_dict(), f'../model/{self.config.example.name}.pt')
-        else:
-            pass
+        torch.save(net.state_dict(), f'../model/{self.config.example.name}.pt')
