@@ -39,14 +39,32 @@ DB_2 = jacobian(B_2, x1) * f_2(1) + jacobian(B_2, x2) * f_2(2) + jacobian(B_2, x
 [S5, s5, sv5] = polynomial([x1, x2, x3], 2);
 [S6, s6, sv6] = polynomial([x1, x2, x3], 2);
 
-[R1, r1, rv1] = polynomial([x1, x2, x3], 2);
-[R2, r2, rv2] = polynomial([x1, x2, x3], 2);
+% [R1, r1, rv1] = polynomial([x1, x2, x3], 2);
+% [R2, r2, rv2] = polynomial([x1, x2, x3], 2);
+r = monolist([x1, x2, x3], 2);
+R1 = 0;
+for i = 1:size(r)
+    R1 = R1 + randn(1) * r(i);
+end
+R2 = 0;
+for i = 1:size(r)
+    R2 = R2 + randn(1) * r(i);
+end
+R3 = 0;
+for i = 1:size(r)
+    R3 = R3 + randn(1) * r(i);
+end
+R4 = 0;
+for i = 1:size(r)
+    R4 = R4 + randn(1) * r(i);
+end
+
 
 DB_1 = DB_1 - R1 * B_1 - S1 * local_1(1) - S2 * local_1(2) - S3 * local_1(3);
 DB_2 = DB_2 - R2 * B_2 - S4 * local_2(1) - S5 * local_2(2) - S6 * local_2(3);
 
 con = [con, sos(DB_1), sos(DB_2), sos(S1), sos(S2), sos(S3), sos(S4), sos(S5), sos(S6)];
-par = [par; s1; s2; r1; r2; s3; s4; s5; s6];
+par = [par; s1; s2; s3; s4; s5; s6];
 
 [W1, w1, wv1] = polynomial([x1, x2, x3], 2);
 [W2, w2, wv2] = polynomial([x1, x2, x3], 2);
@@ -54,15 +72,15 @@ par = [par; s1; s2; r1; r2; s3; s4; s5; s6];
 [W4, w4, wv4] = polynomial([x1, x2, x3], 2);
 [W5, w5, wv5] = polynomial([x1, x2, x3], 2);
 [W6, w6, wv6] = polynomial([x1, x2, x3], 2);
-[R3, r3, rv3] = polynomial([x1, x2, x3], 2);
-[R4, r4, rv4] = polynomial([x1, x2, x3], 2);
+% [R3, r3, rv3] = polynomial([x1, x2, x3], 2);
+% [R4, r4, rv4] = polynomial([x1, x2, x3], 2);
 H_1 = b_2' * monolist([x1, x2, x3], 2) - R3 * B_1 - W1 * guard_1(1) - W2 * guard_1(2) - W3 * guard_1(3);
 H_2 = b_1' * monolist([x1, x2, x3], 2) - R4 * B_2 - W4 * guard_2(1) - W5 * guard_2(2) - W6 * guard_2(3);
 con = [con, sos(H_1), sos(H_2), sos(W1), sos(W2), sos(R3), sos(R4), sos(W3), sos(W4), sos(W5), sos(W6)];
-par = [par; w1; w2; r3; r4; w3; w4; w5; w6];
+par = [par; w1; w2; w3; w4; w5; w6];
 
 
-ops = sdpsettings('solver', 'penbmi');
+ops = sdpsettings('solver', 'sedumi');
 sol = solvesos(con,[],ops,par);
 
 if sol.problem == 0

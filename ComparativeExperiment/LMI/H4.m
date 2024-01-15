@@ -38,26 +38,43 @@ DB_2 = jacobian(B_2, x1) * f_2(1) + jacobian(B_2, x2) * f_2(2);
 [S2, s2, sv2] = polynomial([x1, x2], 2);
 [S3, s3, sv3] = polynomial([x1, x2], 2);
 [S4, s4, sv4] = polynomial([x1, x2], 2);
-[R1, r1, rv1] = polynomial([x1, x2], 2);
-[R2, r2, rv2] = polynomial([x1, x2], 2);
+% [R1, r1, rv1] = polynomial([x1, x2], 2);
+% [R2, r2, rv2] = polynomial([x1, x2], 2);
+r = monolist([x1, x2], 2);
+R1 = 0;
+for i = 1:size(r)
+    R1 = R1 + randn(1) * r(i);
+end
+R2 = 0;
+for i = 1:size(r)
+    R2 = R2 + randn(1) * r(i);
+end
+R3 = 0;
+for i = 1:size(r)
+    R3 = R3 + randn(1) * r(i);
+end
+R4 = 0;
+for i = 1:size(r)
+    R4 = R4 + randn(1) * r(i);
+end
 
 DB_1 = DB_1 - R1 * B_1 - S1 * local_1(1) - S2 * local_1(2);
 DB_2 = DB_2 - R2 * B_2 - S3 * local_2(1) - S4 * local_2(2);
 
 con = [con, sos(DB_1), sos(DB_2), sos(S1), sos(S2), sos(S3), sos(S4)];
-par = [par; s1; s2; r1; r2; s3; s4];
+par = [par; s1; s2; s3; s4];
 
 [S5, s5, sv5] = polynomial([x1, x2], 2);
 [S6, s6, sv6] = polynomial([x1, x2], 2);
-[R3, r3, rv3] = polynomial([x1, x2], 2);
-[R4, r4, rv4] = polynomial([x1, x2], 2);
+% [R3, r3, rv3] = polynomial([x1, x2], 2);
+% [R4, r4, rv4] = polynomial([x1, x2], 2);
 H_1 = b_2' * monolist([-x1 + 2, -x2 + 2], 2) - R3 * B_1 - S5 * guard_1(1);
 H_2 = b_1' * monolist([x1 - 2, x2 - 2], 2) - R4 * B_2 - S6 * guard_2(1);
 con = [con, sos(H_1), sos(H_2), sos(S5), sos(S6), sos(R3), sos(R4)];
-par = [par; s5; s6; r3; r4];
+par = [par; s5; s6];
 
 
-ops = sdpsettings('solver', 'penbmi');
+ops = sdpsettings('solver', 'sedumi');
 sol = solvesos(con,[],ops,par);
 
 if sol.problem == 0
