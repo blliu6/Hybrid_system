@@ -310,7 +310,7 @@ examples = {
         n=3,
         local_1=Zone(shape='box', low=[-2] * 3, up=[2] * 3),
         init=Zone(shape='ball', center=[1, 1, 0], r=0.8 ** 2),
-        unsafe=Zone(shape='box', low=[-0.5, -1.5, -2], up=[0.5, -0.5, 2]),  # 有改动，圆改成box
+        unsafe=Zone(shape='box', low=[-0.5, -1.5, -1], up=[0.5, -0.5, 1]),  # 有改动，圆改成box
         f_1=[
             lambda x: x[0] * (1 - x[2]),
             lambda x: x[1] * (1 - 2 * x[2]),
