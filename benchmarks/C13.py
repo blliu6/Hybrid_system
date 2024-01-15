@@ -1,6 +1,5 @@
 import timeit
 import torch
-import random
 import numpy as np
 from utils.Config import CegisConfig
 from Examplers import get_example_by_name, get_example_by_id
@@ -21,16 +20,15 @@ def main():
         'b1_hidden': b1_hidden_neurons,
         "example": example,
         'bm1_act': [],
-        "batch_size": 1500,
-        'lr': 0.09,
+        "batch_size": 1000,
+        'lr': 0.05,
         'loss_weight_continuous': (1, 1, 1),
-        'R_b': 0.6,
+        'R_b': 0.5,
         'margin': 2,
         "DEG_continuous": [2, 2, 2, 2],
         "learning_loops": 100,
         'max_iter': 10,
-        'split': True,
-        'counterexample_nums': 1
+        'split': True
     }
     Config = CegisConfig(**opts)
     cegis = Cegis(Config)
@@ -41,5 +39,4 @@ def main():
 if __name__ == '__main__':
     torch.manual_seed(2024)
     np.random.seed(2024)
-    random.seed(2024)
     main()

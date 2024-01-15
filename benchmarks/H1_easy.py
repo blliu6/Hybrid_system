@@ -9,7 +9,7 @@ from learn.Cegis_barrier import Cegis
 
 def main():
     start = timeit.default_timer()
-    b1_activations = ['SKIP', 'SKIP']  # Only "SQUARE","SKIP","MUL" are optional.
+    b1_activations = ['SKIP']  # Only "SQUARE","SKIP","MUL" are optional.
     b1_hidden_neurons = [30] * len(b1_activations)
 
     b2_activations = ['SKIP']  # Only "SQUARE","SKIP","MUL" are optional.
@@ -33,8 +33,8 @@ def main():
         'rm1_act': [],
         'rm2_act': [],
         "batch_size": 500,
-        'lr': 0.01,
-        'loss_weight': (10, 1, 1, 1, 1, 1, 1, 1),
+        'lr': 0.001,
+        'loss_weight': (1, 1, 1, 1, 1, 1, 1, 1),
         'R_b': 0.5,
         'margin': 0.5,
         "DEG": [2, 4, 2, 2, 2, 2, 2, 2],  # Respectively represent the times of init, unsafe, diffB,

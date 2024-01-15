@@ -19,16 +19,14 @@ def main():
         'b1_act': b1_activations,
         'b1_hidden': b1_hidden_neurons,
         "example": example,
-        'bm1_act': [],
         "batch_size": 1000,
-        'lr': 0.05,
+        'lr': 0.88,
         'loss_weight_continuous': (1, 1, 1),
         'R_b': 0.5,
-        'margin': 2,
-        "DEG_continuous": [2, 2, 2, 2],
+        'margin': 0.5,
+        "DEG_continuous": [0, 2, 1, 0],
         "learning_loops": 100,
-        'max_iter': 10,
-        'split': True
+        'max_iter': 10
     }
     Config = CegisConfig(**opts)
     cegis = Cegis(Config)

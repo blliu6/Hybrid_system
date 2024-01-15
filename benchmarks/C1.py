@@ -9,8 +9,8 @@ from learn.Cegis_barrier import Cegis
 
 def main():
     start = timeit.default_timer()
-    b1_activations = ['SKIP']
-    b1_hidden_neurons = [5] * len(b1_activations)
+    b1_activations = ['SKIP', 'SKIP']  # Only "SQUARE","SKIP","MUL" are optional.
+    b1_hidden_neurons = [10] * len(b1_activations)
 
     example = get_example_by_name('C1')
 
@@ -23,11 +23,11 @@ def main():
         "batch_size": 500,
         'lr': 0.1,
         'loss_weight_continuous': (1, 1, 1),
-        'R_b': 0.5,
+        'R_b': 0.8,
         'margin': 2,
-        "DEG_continuous": [2, 2, 2, 2],
+        "DEG_continuous": [2, 2, 1, 2],
         "learning_loops": 100,
-        'max_iter': 5
+        'max_iter': 10
     }
     Config = CegisConfig(**opts)
     cegis = Cegis(Config)

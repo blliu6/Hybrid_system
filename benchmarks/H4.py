@@ -24,22 +24,18 @@ def main():
         'b2_act': b2_activations,
         'b2_hidden': b2_hidden_neurons,
         "example": example,
-        'bm1_hidden': [10],
-        'bm2_hidden': [10],
-        'bm1_act': ['SKIP'],
-        'bm2_act': ['SKIP'],
-        'rm1_hidden': [],
-        'rm2_hidden': [],
+        'bm1_act': [],
+        'bm2_act': [],
         'rm1_act': [],
         'rm2_act': [],
-        "batch_size": 500,
-        'lr': 0.4,
+        "batch_size": 500,  # 100
+        'lr': 0.1,
         'loss_weight': (1, 1, 1, 1, 1, 1, 1, 1),
         'R_b': 0.3,
-        'margin': 1,
-        "DEG": [2, 2, 2, 2, 2, 2, 2, 2],
+        'margin': 0.5,
+        "DEG": [2] * 8,  # Respectively represent the times of init, unsafe, diffB,
+        # and unconstrained multipliers when verifying sos.
         "learning_loops": 100,
-        'max_iter': 10
     }
     Config = CegisConfig(**opts)
     cegis = Cegis(Config)
