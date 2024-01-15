@@ -1,7 +1,7 @@
 import sympy as sp
 from benchmarks.Examplers import get_example_by_name, Example, Zone
 
-name = 'Exp3'
+name = 'R6'
 ex = get_example_by_name(name)
 
 
@@ -38,7 +38,7 @@ with open(f'./{ex.name}.m', 'w') as f:
     f.write(f'inv = [{write_zone(ex.l1)}];\n\n')
 
     x_ = sp.symbols(x)
-    ff = '; '.join([str(e(x_)) for e in ex.f1])
+    ff = '; '.join([str(e(x_)).replace('**', '^') for e in ex.f1])
     f.write(f'f = [{ff}];\n\n')
 
     expr = ', '.join(x)
@@ -54,8 +54,8 @@ with open(f'./{ex.name}.m', 'w') as f:
     I = ', '.join(v)
     f.write(f'con = [sos(B_I), {I}];\n')
     v = [f'p{i + 1}' for i in range(get_number(ex.I))]
-    I = ', '.join(v)
-    f.write(f'par = [par, {I}];\n\n')
+    I = '; '.join(v)
+    f.write(f'par = [par; {I}];\n\n')
 
     for i in range(get_number(ex.U)):
         f.write(f'[Q{i + 1}, q{i + 1}, qv{i + 1}] = polynomial([{expr}], 2);\n')
@@ -66,8 +66,8 @@ with open(f'./{ex.name}.m', 'w') as f:
     I = ', '.join(v)
     f.write(f'con = [con, sos(B_U), {I}];\n')
     v = [f'q{i + 1}' for i in range(get_number(ex.U))]
-    I = ', '.join(v)
-    f.write(f'par = [par, {I}];\n\n')
+    I = '; '.join(v)
+    f.write(f'par = [par; {I}];\n\n')
 
     v = [f'jacobian(B, x{i + 1}) * f({i + 1})' for i in range(ex.n)]
     I = ' + '.join(v)
@@ -85,8 +85,8 @@ with open(f'./{ex.name}.m', 'w') as f:
     I = ', '.join(v)
     f.write(f'con = [con, sos(DB), {I}];\n')
     v = [f's{i + 1}' for i in range(get_number(ex.l1))]
-    I = ', '.join(v)
-    f.write(f'par = [par, {I}];\n\n')
+    I = '; '.join(v)
+    f.write(f'par = [par; r; {I}];\n\n')
 
     f.write('ops = sdpsettings(\'solver\', \'penbmi\');\n')
     f.write('sol = solvesos(con,[],ops,par);\n')
