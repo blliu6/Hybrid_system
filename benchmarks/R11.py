@@ -21,10 +21,10 @@ def main():
         "example": example,
         'bm1_act': [],
         "batch_size": 2000,
-        'lr': 0.05,
+        'lr': 0.01,
         'loss_weight_continuous': (1, 1, 1),
-        'R_b': 0.6,
-        'margin': 1,
+        'R_b': 0.2,
+        'margin': 2,
         "DEG_continuous": [0, 2, 1, 0],
         "learning_loops": 100,
         'max_iter': 20
