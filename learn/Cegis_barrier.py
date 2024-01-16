@@ -35,6 +35,7 @@ class Cegis:
         t_cex = 0
         t_sos = 0
         vis_sos = False
+        barrier = None
         for i in range(self.max_cegis_iter):
             print(f'iter:{i + 1}')
             t1 = timeit.default_timer()
@@ -92,7 +93,7 @@ class Cegis:
             print('Total learning time:{}'.format(t_learn))
             print('Total counter-examples generating time:{}'.format(t_cex))
             print('Total sos verifying time:{}'.format(t_sos))
-            self.save_model(learner.net)
+            self.save_model(learner.net, barrier)
             if self.config.example.n == 2:
                 if self.config.example.continuous:
                     draw = Draw(self.config.example, barrier[0])
@@ -119,7 +120,17 @@ class Cegis:
         print(f'Add {ans} counterexamples!')
         return tuple(res)
 
-    def save_model(self, net):
+    def save_model(self, net, barrier):
         if not os.path.exists('../model'):
             os.mkdir('../model')
         torch.save(net.state_dict(), f'../model/{self.config.example.name}.pt')
+
+        if not os.path.exists('../result'):
+            os.mkdir('../result')
+
+        with open(f'../result/{self.config.example.name}.txt', 'w') as f:
+            if self.config.example.continuous:
+                f.write(f'B={barrier[0]}')
+            else:
+                f.write(f'B1={barrier[0]}\n')
+                f.write(f'B2={barrier[1]}')

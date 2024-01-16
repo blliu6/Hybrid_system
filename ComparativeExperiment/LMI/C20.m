@@ -114,7 +114,7 @@ for i = 1:size(r)
 end
 DB = DB - R * B - inv(1) * S1 - inv(2) * S2 - inv(3) * S3 - inv(4) * S4 - inv(5) * S5 - inv(6) * S6 - inv(7) * S7 - inv(8) * S8 - inv(9) * S9 - inv(10) * S10 - inv(11) * S11 - inv(12) * S12 - inv(13) * S13 - inv(14) * S14 - inv(15) * S15;
 prog = sosineq(prog, DB);
-solver_opt.solver = 'mosek';
+solver_opt.solver = 'sedumi';
 prog = sossolve(prog, solver_opt);
 SOLB = sosgetsol(prog,B)
 toc;
