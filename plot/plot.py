@@ -1,5 +1,6 @@
 import numpy as np
 import sympy as sp
+import os
 from matplotlib import pyplot as plt
 from matplotlib import cm
 from matplotlib.patches import Circle, Rectangle
@@ -37,6 +38,7 @@ class Draw:
         plt.ylim(min(l1.low[1], l2.low[1]) - 1, max(l1.up[1], l2.up[1]) + 1)
         ax.set_aspect(1)
         plt.legend()
+        plt.savefig(f'picture/{self.ex.name}_2d.png', dpi=1000, bbox_inches='tight')
         plt.show()
 
     def draw_continuous(self):
@@ -57,6 +59,7 @@ class Draw:
         plt.ylim(l1.low[1] - 1, l1.up[1] + 1)
         ax.set_aspect(1)
         plt.legend()
+        plt.savefig(f'picture/{self.ex.name}_2d.png', dpi=1000, bbox_inches='tight')
         plt.show()
 
     def draw_3d(self):
@@ -72,6 +75,7 @@ class Draw:
         unsafe = self.draw_zone(self.ex.U, color='r', label='unsafe')
         ax.add_patch(unsafe)
         art3d.pathpatch_2d_to_3d(unsafe, z=0, zdir="z")
+        plt.savefig(f'picture/{self.ex.name}_3d.png', dpi=1000, bbox_inches='tight')
         plt.show()
 
     def draw_3d_continuous(self):
@@ -86,6 +90,7 @@ class Draw:
         unsafe = self.draw_zone(self.ex.U, color='r', label='unsafe')
         ax.add_patch(unsafe)
         art3d.pathpatch_2d_to_3d(unsafe, z=0, zdir="z")
+        plt.savefig(f'picture/{self.ex.name}_3d.png', dpi=1000, bbox_inches='tight')
         plt.show()
 
     def plot_barrier_3d(self, ax, zone, b, color):
