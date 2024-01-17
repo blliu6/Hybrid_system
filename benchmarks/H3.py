@@ -9,10 +9,10 @@ from learn.Cegis_barrier import Cegis
 
 def main():
     start = timeit.default_timer()
-    b1_activations = ['SKIP']  # Only "SQUARE","SKIP","MUL" are optional.
+    b1_activations = ['SKIP']
     b1_hidden_neurons = [10] * len(b1_activations)
 
-    b2_activations = ['SKIP']  # Only "SQUARE","SKIP","MUL" are optional.
+    b2_activations = ['SKIP']
     b2_hidden_neurons = [10] * len(b1_activations)
 
     example = get_example_by_name('H3')
@@ -33,8 +33,7 @@ def main():
         'loss_weight': (1, 1, 1, 1, 1, 1, 1, 1),
         'R_b': 0.3,
         'margin': 0.5,
-        "DEG": [2] * 8,  # Respectively represent the times of init, unsafe, diffB,
-        # and unconstrained multipliers when verifying sos.
+        "DEG": [2] * 8,
         "learning_loops": 100,
     }
     Config = CegisConfig(**opts)

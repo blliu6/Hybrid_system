@@ -9,10 +9,10 @@ from learn.Cegis_barrier import Cegis
 
 def main():
     start = timeit.default_timer()
-    b1_activations = ['SKIP']  # Only "SQUARE","SKIP","MUL" are optional.
+    b1_activations = ['SKIP']
     b1_hidden_neurons = [10] * len(b1_activations)
 
-    b2_activations = ['SKIP']  # Only "SQUARE","SKIP","MUL" are optional.
+    b2_activations = ['SKIP']
     b2_hidden_neurons = [10] * len(b1_activations)
 
     example = get_example_by_name('H1')

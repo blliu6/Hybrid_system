@@ -7,12 +7,12 @@ class Zone:
         self.verify_zone = verify_zone
         if shape == 'ball':
             self.center = np.array(center, dtype=np.float32)
-            self.r = r  # 半径的平方
+            self.r = r  # radius squared
         elif shape == 'box':
             self.low = np.array(low, dtype=np.float32)
             self.up = np.array(up, dtype=np.float32)
         else:
-            raise ValueError(f'没有形状为{shape}的区域!')
+            raise ValueError(f'There is no area of such shape!')
 
 
 class Example:
@@ -269,7 +269,7 @@ examples = {
         n=3,
         local_1=Zone(shape='box', low=[-2] * 3, up=[2] * 3),
         init=Zone(shape='ball', center=[0, 0, 0], r=1 ** 2),
-        unsafe=Zone(shape='ball', center=[1.5, 1.5, 1.5], r=1.5 ** 2),  # 在圆形区域外，还需要并的操作
+        unsafe=Zone(shape='ball', center=[1.5, 1.5, 1.5], r=1.5 ** 2),
         # 非安全区域改动
         f_1=[
             lambda x: -x[0] + x[1] - x[2],
@@ -310,7 +310,7 @@ examples = {
         n=4,
         local_1=Zone(shape='box', low=[-1.5] * 4, up=[1.5] * 4),
         init=Zone(shape='box', low=[-0.2, -1.2, -1.5, -1.5],
-                  up=[0.2, -0.8, 1.5, 1.5]),  # 有改动
+                  up=[0.2, -0.8, 1.5, 1.5]),
         unsafe=Zone(shape='box', low=[-1.2, -0.2, -1.5, -1.5],
                     up=[-0.8, 0.2, 1.5, 1.5]),
         f_1=[
@@ -429,7 +429,7 @@ examples = {
         n=12,
         local_1=Zone(shape='box', low=[-2] * 12, up=[2] * 12),
         init=Zone(shape='ball', center=[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], r=0.1 ** 2),
-        unsafe=Zone(shape='ball', center=[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], r=0.1 ** 2),  # 这个也要改
+        unsafe=Zone(shape='ball', center=[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], r=0.1 ** 2),
         f_1=[
             lambda x: x[3],
             lambda x: x[4],
@@ -744,7 +744,7 @@ examples = {
         n=3,
         local_1=Zone(shape='box', low=[-2] * 3, up=[2] * 3),
         init=Zone(shape='ball', center=[1, 1, 0], r=0.8 ** 2),
-        unsafe=Zone(shape='box', low=[-0.5, -1.5, -1], up=[0.5, -0.5, 1]),  # 有改动，圆改成box
+        unsafe=Zone(shape='box', low=[-0.5, -1.5, -1], up=[0.5, -0.5, 1]),
         f_1=[
             lambda x: x[0] * (1 - x[2]),
             lambda x: x[1] * (1 - 2 * x[2]),
@@ -756,7 +756,7 @@ examples = {
     25: Example(
         n=2,
         local_1=Zone(shape='box', low=[-1.5] * 2, up=[5.5] * 2),
-        init=Zone(shape='box', low=[4, -1], up=[4.25, 1]),  # 椭圆改圆，长轴做半径
+        init=Zone(shape='box', low=[4, -1], up=[4.25, 1]),
         unsafe=Zone(shape='ball', center=[1.5, 2.5], r=0.5 ** 2),
         f_1=[
             lambda x: -x[0] + 2 * x[1] * x[0] ** 2,
@@ -841,7 +841,7 @@ examples = {
     34: Example(
         n=2,
         local_1=Zone(shape='box', low=[-1] * 2, up=[3] * 2),
-        init=Zone(shape='ball', center=[0, 9 / 8], r=27 / 8),  # 椭圆改圆
+        init=Zone(shape='ball', center=[0, 9 / 8], r=27 / 8),
         unsafe=Zone(shape='ball', center=[2, 2], r=0.5 ** 2),
         f_1=[
             lambda x: -x[0] + 2 * (x[0] ** 2) * x[1],
@@ -866,7 +866,7 @@ examples = {
     39: Example(
         n=2,
         local_1=Zone(shape='box', low=[1.5] * 2, up=[3.5] * 2),
-        init=Zone(shape='ball', center=[2.75, 2], r=0.25 ** 2),  # 是个椭圆的原本，改成圆了，以长轴为半径
+        init=Zone(shape='ball', center=[2.75, 2], r=0.25 ** 2),
         unsafe=Zone(shape='box', low=[1.5, 1.5], up=[2, 3.5]),
         f_1=[
             lambda x: x[0] - x[1],
@@ -951,7 +951,7 @@ examples = {
         name='T14',
         continuous=True
     ),
-    52: Example(  # 这个还没写完 区间没改
+    52: Example(
         n=12,
         local_1=Zone(shape='box', low=[-2] * 12, up=[2] * 12),
         init=Zone(shape='box', low=[-0.1] * 12, up=[0.1] * 12),
