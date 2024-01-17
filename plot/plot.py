@@ -18,8 +18,8 @@ class Draw:
         fig = plt.figure()
         ax = plt.gca()
 
-        ax.add_patch(self.draw_zone(self.ex.l1, 'b', 'local_1'))
-        ax.add_patch(self.draw_zone(self.ex.l2, 'purple', 'local_2'))
+        ax.add_patch(self.draw_zone(self.ex.l1, 'black', 'local_1'))
+        ax.add_patch(self.draw_zone(self.ex.l2, 'black', 'local_2'))
         ax.add_patch(self.draw_zone(self.ex.I, 'g', 'init'))
         ax.add_patch(self.draw_zone(self.ex.U, 'r', 'unsafe'))
         ax.add_patch(self.draw_zone(self.ex.g1, 'bisque', 'guard_1'))
@@ -27,11 +27,11 @@ class Draw:
 
         l1, l2 = self.ex.l1, self.ex.l2
 
-        self.plot_vector_field(l1, self.ex.f1)
-        self.plot_vector_field(l2, self.ex.f2)
+        self.plot_vector_field(l1, self.ex.f1, 'slategrey')
+        self.plot_vector_field(l2, self.ex.f2, 'cornflowerblue')
 
-        self.plot_barrier(l1, self.b1, 'lime')
-        self.plot_barrier(l2, self.b2, 'aqua')
+        self.plot_barrier(l1, self.b1, 'blue')
+        self.plot_barrier(l2, self.b2, 'purple')
 
         plt.xlim(min(l1.low[0], l2.low[0]) - 1, max(l1.up[0], l2.up[0]) + 1)
         plt.ylim(min(l1.low[1], l2.low[1]) - 1, max(l1.up[1], l2.up[1]) + 1)
@@ -43,7 +43,7 @@ class Draw:
         fig = plt.figure()
         ax = plt.gca()
 
-        ax.add_patch(self.draw_zone(self.ex.l1, 'b', 'local_1'))
+        ax.add_patch(self.draw_zone(self.ex.l1, 'black', 'local_1'))
         ax.add_patch(self.draw_zone(self.ex.I, 'g', 'init'))
         ax.add_patch(self.draw_zone(self.ex.U, 'r', 'unsafe'))
 
@@ -51,7 +51,7 @@ class Draw:
 
         self.plot_vector_field(l1, self.ex.f1)
 
-        self.plot_barrier(l1, self.b1, 'lime')
+        self.plot_barrier(l1, self.b1, 'b')
 
         plt.xlim(l1.low[0] - 1, l1.up[0] + 1)
         plt.ylim(l1.low[1] - 1, l1.up[1] + 1)
@@ -96,8 +96,10 @@ class Draw:
         s_x = sp.symbols(['x1', 'x2'])
         lambda_b = sp.lambdify(s_x, b, 'numpy')
         plot_b = lambda_b(X, Y)
-        # ax.plot_surface(X, Y, plot_b, rstride=5, cstride=5, alpha=0.5, cmap=cm.jet)
-        ax.plot_surface(X, Y, plot_b, rstride=5, cstride=5, alpha=0.5, color=color)
+        if self.ex.continuous:
+            ax.plot_surface(X, Y, plot_b, rstride=5, cstride=5, alpha=0.5, cmap=cm.jet)
+        else:
+            ax.plot_surface(X, Y, plot_b, rstride=5, cstride=5, alpha=0.5, color=color)
 
     def plot_barrier(self, zone, hx, color):
         low, up = zone.low, zone.up
@@ -111,7 +113,7 @@ class Draw:
         value = fun_hx(X, Y)
         plt.contour(X, Y, value, 0, alpha=0.8, colors=color)
 
-    def plot_vector_field(self, zone: Zone, f):
+    def plot_vector_field(self, zone: Zone, f, color='grey'):
         low, up = zone.low, zone.up
         xv = np.linspace(low[0], up[0], 10)
         yv = np.linspace(low[1], up[1], 10)
@@ -122,7 +124,7 @@ class Draw:
         DY = DY / np.linalg.norm(DY, ord=2, axis=1, keepdims=True)
 
         plt.streamplot(Xd, Yd, DX, DY, linewidth=0.3,
-                       density=0.5, arrowstyle='-|>', arrowsize=1.5, color='grey')
+                       density=0.8, arrowstyle='-|>', arrowsize=1, color=color)
 
     def draw_zone(self, zone: Zone, color, label, fill=False):
         if zone.shape == 'ball':
