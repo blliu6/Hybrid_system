@@ -70,7 +70,7 @@ class SOS:
         ################################
         # 第三个
         expr = sum([sp.diff(b2, x[i]) * self.ex.f2[i](x) for i in range(self.n)])
-        state[1] = self.verify_positive_multiplier(expr, b2, self.get_con(self.ex.l2), deg=deg[2])
+        state[2] = self.verify_positive_multiplier(expr, b2, self.get_con(self.ex.l2), deg=deg[2])
         # expr = expr - bm2 * b2
         # state[2] = self.verify_positive(expr, self.get_con(self.ex.l2), deg=deg[2])
         if not state[2]:
@@ -114,6 +114,7 @@ class SOS:
         result = True
         for e in state:
             result = result and e
+        # print(result, state)
         return result, state
 
     def verify_continuous(self):

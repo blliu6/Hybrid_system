@@ -15,7 +15,7 @@ def main():
     b2_activations = ['SKIP']  # Only "SQUARE","SKIP","MUL" are optional.
     b2_hidden_neurons = [10] * len(b1_activations)
 
-    example = get_example_by_name('H1')
+    example = get_example_by_name('H5_easy')
 
     start = timeit.default_timer()
     opts = {
@@ -33,13 +33,14 @@ def main():
         'rm1_act': [],
         'rm2_act': [],
         "batch_size": 500,
-        'lr': 0.01,
+        'lr': 0.1,
         'loss_weight': (1, 1, 1, 1, 1, 1, 1, 1),
         'R_b': 0.5,
         'margin': 1,
-        "DEG": [2, 2, 2, 2, 2, 2, 2, 2],
+        "DEG": [2, 2, 2, 2, 2, 2, 2, 2],  # Respectively represent the times of init, unsafe, diffB,
+        # and unconstrained multipliers when verifying sos.
         "learning_loops": 100,
-        'max_iter': 10
+        'max_iter': 10,
     }
     Config = CegisConfig(**opts)
     cegis = Cegis(Config)

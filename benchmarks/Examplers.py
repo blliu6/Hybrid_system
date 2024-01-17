@@ -109,7 +109,8 @@ examples = {
              lambda x: -x[1] + x[0] * x[1]],
         f_2=[lambda x: x[0] + x[0] ** 2 * x[1],
              lambda x: x[1] + x[0] * x[1]],
-        name='H4_hard'  # Darboux-type_barrier_certificates_for_safety_verification_of_nonlinear_hybrid_systems->EXAMPLE2
+        name='H4_hard'
+        # Darboux-type_barrier_certificates_for_safety_verification_of_nonlinear_hybrid_systems->EXAMPLE2
     ),
     5: Example(
         n=2,
@@ -142,7 +143,7 @@ examples = {
              lambda x: 2 * x[0] * x[1] + 10 * x[0] - 40 * x[1] - 200],
         f_2=[lambda x: -x[1] ** 2 - 10 * x[1] - 25,
              lambda x: 8 * x[0] * x[1] + 40 * x[0] - 160 * x[1] - 800],
-        name='H1'
+        name='H5'
         # Safety Verification of Nonlinear Hybrid Systems Based on Invariant Clusters
     ),
     7: Example(
@@ -151,16 +152,33 @@ examples = {
         local_2=Zone(shape='box', low=[0, 0], up=[40, 60]),
         init=Zone(shape='ball', center=[9, 20], r=2 ** 2),
         unsafe=Zone(shape='box', low=[0, 48], up=[40, 60], verify_zone=[lambda x: (x[1] - 48) * (60 - x[1])]),
-        guard_1=Zone(shape='box', low=[34.9, 0], up=[35.1, 48]),
-        guard_2=Zone(shape='box', low=[4.9, 0], up=[5.1, 48]),
+        guard_1=Zone(shape='box', low=[35, 0], up=[40, 48]),
+        guard_2=Zone(shape='box', low=[0, 0], up=[5, 48]),
         reset_1=[lambda x: x[0], lambda x: x[1]],
         reset_2=[lambda x: x[0], lambda x: x[1]],
         f_1=[lambda x: x[1] ** 2 - 10 * x[1] + 25,
              lambda x: 2 * x[0] * x[1] + 10 * x[0] - 40 * x[1] - 200],
         f_2=[lambda x: -x[1] ** 2 - 10 * x[1] - 25,
              lambda x: 8 * x[0] * x[1] + 40 * x[0] - 160 * x[1] - 800],
-        name='H1_easy'
+        name='H5_easy'
         # Safety Verification of Nonlinear Hybrid Systems Based on Invariant Clusters
+    ),
+    8: Example(
+        n=2,
+        local_1=Zone(shape='box', low=[-2, -2], up=[0, 2]),
+        local_2=Zone(shape='box', low=[0, -2], up=[2, 2]),
+        init=Zone(shape='ball', center=[-1, -1], r=0.5 ** 2),
+        unsafe=Zone(shape='ball', center=[1, 1], r=0.5 ** 2),
+        guard_1=Zone(shape='box', low=[0, -2], up=[2, 2]),
+        guard_2=Zone(shape='box', low=[-2, -2], up=[0, 2]),
+        reset_1=[lambda x: x[0], lambda x: x[1]],
+        reset_2=[lambda x: x[0], lambda x: x[1]],
+        f_1=[lambda x: x[1],
+             lambda x: x[0] - 0.25 * x[0] ** 2],
+        f_2=[lambda x: x[1],
+             lambda x: -x[0] - 0.5 * x[0] ** 3],
+        name='H1'
+        # fossil
     ),
     37: Example(
         n=2,
@@ -572,7 +590,7 @@ examples = {
                         -0.25, -0.25, -0.25, -0.25, -0.25, -0.25, -0.25, -0.25]),
         f_1=[
             lambda x: (x[1] + x[2] + x[2] + x[3] + x[3] + x[4] + x[4] + x[5] + x[5] + x[6] + x[6] + x[7] + x[7] + x[8] +
-                       x[8] + x[9] + x[9] + x[10] + x[11]) / 100 + 1,
+                       x[8] + x[9] + x[9] + x[10] + x[10] + x[11]) / 100 + 1,
             lambda x: x[2],
             lambda x: -10 * (x[1] - x[1] ** 3 / 6) - x[1],
             lambda x: x[4],
@@ -612,7 +630,7 @@ examples = {
                         -0.25, -0.25, -0.25, -0.25, -0.25, -0.25, -0.25, -0.25, -0.25, -0.25]),
         f_1=[
             lambda x: (x[1] + x[2] + x[2] + x[3] + x[3] + x[4] + x[4] + x[5] + x[5] + x[6] + x[6] + x[7] + x[7] + x[8] +
-                       x[8] + x[9] + x[9] + x[10] + x[11] + x[12]) / 100 + 1,
+                       x[8] + x[9] + x[9] + x[10] + x[10] + x[11] + x[11] + x[12]) / 100 + 1,
             lambda x: x[2],
             lambda x: -10 * (x[1] - x[1] ** 3 / 6) - x[1],
             lambda x: x[4],
