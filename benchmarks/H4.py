@@ -28,10 +28,10 @@ def main():
         'bm2_act': [],
         'rm1_act': [],
         'rm2_act': [],
-        "batch_size": 500,  # 100
-        'lr': 0.1,
+        "batch_size": 1000,
+        'lr': 0.01,
         'loss_weight': (1, 1, 1, 1, 1, 1, 1, 1),
-        'R_b': 0.3,
+        'R_b': 0.5,
         'margin': 0.5,
         "DEG": [2] * 8,  # Respectively represent the times of init, unsafe, diffB,
         # and unconstrained multipliers when verifying sos.

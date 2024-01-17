@@ -15,7 +15,7 @@ def main():
     b2_activations = ['SKIP']  # Only "SQUARE","SKIP","MUL" are optional.
     b2_hidden_neurons = [10] * len(b1_activations)
 
-    example = get_example_by_name('H4_hard')
+    example = get_example_by_name('H3_hard')
 
     start = timeit.default_timer()
     opts = {

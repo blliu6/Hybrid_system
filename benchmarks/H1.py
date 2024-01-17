@@ -33,7 +33,7 @@ def main():
         'rm1_act': [],
         'rm2_act': [],
         "batch_size": 500,
-        'lr': 0.01,
+        'lr': 0.2,
         'loss_weight': (1, 1, 1, 1, 1, 1, 1, 1),
         'R_b': 0.5,
         'margin': 1,

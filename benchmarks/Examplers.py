@@ -48,7 +48,7 @@ examples = {
              lambda x: -x[1]],
         f_2=[lambda x: -x[0] + 2 * x[0] ** 2 * x[1],
              lambda x: -x[1]],
-        name='H3_easy'
+        name='H2_easy'
     ),
     1: Example(
         n=2,
@@ -64,7 +64,7 @@ examples = {
              lambda x: -x[1]],
         f_2=[lambda x: -x[0] + 2 * x[0] ** 2 * x[1],
              lambda x: -x[1]],
-        name='H3'  # Safety Verification of Nonlinear Hybrid Systems Based on Bilinear Programming->H3
+        name='H2'  # Safety Verification of Nonlinear Hybrid Systems Based on Bilinear Programming->H3
     ),
     2: Example(
         n=3,
@@ -79,7 +79,7 @@ examples = {
         reset_2=[lambda x: x[0], lambda x: x[1], lambda x: x[2]],
         f_1=[lambda x: -x[1], lambda x: -x[0] + x[2], lambda x: x[0] + (2 * x[1] + 3 * x[2]) * (1 + x[2] ** 2)],
         f_2=[lambda x: -x[1], lambda x: -x[0] + x[2], lambda x: -x[0] - 2 * x[1] - 3 * x[2]],
-        name='H2'  # Safety Verification of Nonlinear Hybrid Systems Based on Bilinear Programming->H2
+        name='H4'  # Safety Verification of Nonlinear Hybrid Systems Based on Bilinear Programming->H2
     ),
     3: Example(
         n=3,
@@ -93,7 +93,7 @@ examples = {
         reset_2=[lambda x: x[0], lambda x: x[1], lambda x: x[2]],
         f_1=[lambda x: -x[1], lambda x: -x[0] + x[2], lambda x: x[0] + (2 * x[1] + 3 * x[2]) * (1 + x[2] ** 2)],
         f_2=[lambda x: -x[1], lambda x: -x[0] + x[2], lambda x: -x[0] - 2 * x[1] - 3 * x[2]],
-        name='H2_easy'
+        name='H4_easy'
     ),
     4: Example(
         n=2,
@@ -109,7 +109,7 @@ examples = {
              lambda x: -x[1] + x[0] * x[1]],
         f_2=[lambda x: x[0] + x[0] ** 2 * x[1],
              lambda x: x[1] + x[0] * x[1]],
-        name='H4_hard'
+        name='H3_hard'
         # Darboux-type_barrier_certificates_for_safety_verification_of_nonlinear_hybrid_systems->EXAMPLE2
     ),
     5: Example(
@@ -126,7 +126,7 @@ examples = {
              lambda x: -x[1] + x[0] * x[1]],
         f_2=[lambda x: x[0] + x[0] ** 2 * x[1],
              lambda x: x[1] + x[0] * x[1]],
-        name='H4'
+        name='H3'
         # Darboux-type_barrier_certificates_for_safety_verification_of_nonlinear_hybrid_systems->EXAMPLE2
     ),
     6: Example(
