@@ -33,8 +33,8 @@ class Draw:
         self.plot_barrier(l1, self.b1, 'lime')
         self.plot_barrier(l2, self.b2, 'aqua')
 
-        plt.xlim(min(l1.low[0], l2.low[0]) - 1, max(l1.up[0], l2.up[0]) + 3)
-        plt.ylim(min(l1.low[1], l2.low[1]) - 1, max(l1.up[1], l2.up[1]) + 3)
+        plt.xlim(min(l1.low[0], l2.low[0]) - 1, max(l1.up[0], l2.up[0]) + 1)
+        plt.ylim(min(l1.low[1], l2.low[1]) - 1, max(l1.up[1], l2.up[1]) + 1)
         ax.set_aspect(1)
         plt.legend()
         plt.show()
@@ -53,8 +53,8 @@ class Draw:
 
         self.plot_barrier(l1, self.b1, 'lime')
 
-        plt.xlim(l1.low[0] - 1, l1.up[0] + 3)
-        plt.ylim(l1.low[1] - 1, l1.up[1] + 3)
+        plt.xlim(l1.low[0] - 1, l1.up[0] + 1)
+        plt.ylim(l1.low[1] - 1, l1.up[1] + 1)
         ax.set_aspect(1)
         plt.legend()
         plt.show()
