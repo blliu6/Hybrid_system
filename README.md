@@ -78,29 +78,17 @@ At first, we should confirm the dimension `n` and three basic domains: `local,in
 
 **Example 1** &emsp; Suppose we wish to input the following domains:
 
-**The local condition:**
-$$
-\Psi \left(\ell_1\right)=\left\{\bf{x} \in \Bbb{R}^{2} \mid -5 \leq x_{1}\leq 0,-5 \leq x_{2} \leq 5\right\}.\\
-\Psi \left(\ell_2\right)=\left\{\bf{x} \in \Bbb{R}^{2} \mid 0 \leq x_{1}\leq 5,-5 \leq x_{2} \leq 5\right\}.
-$$
-**The initial set:**
-$$
-\cal{X}_{0}=\left\{\bf{x} \in \Bbb{R}^{2} \mid (x_{1}+2)^2+(x_{2}-2)^2 \leq 0.25\right\}.
-$$
+**The local condition:** <br />
+![local](https://github.com/blliu6/Hybrid_system/blob/main/benchmarks/picture/local.png) <br />
+**The initial set:** <br />
+![initial](https://github.com/blliu6/Hybrid_system/blob/main/benchmarks/picture/initial.png) <br />
 
-**The unsafe set:** 
-$$
-\cal{X}_{u}=\left\{\bf{x} \in \Bbb{R}^{2} \mid (x_{1}-2)^2+(x_{2}-2)^2 \leq 0.25\right\}. 
-$$
-**The guard condition:** 
-$$
-G_{\ell_1,\ell_2}=\left\{\bf{x} \in \Bbb{R}^{2} \mid x_{1}^2+x_{2}^2 \leq 0.5625\right\}.\\G_{\ell_2,\ell_1}=\left\{\bf{x} \in \Bbb{R}^{2} \mid x_{1}^2+x_{2}^2 \leq 0.25\right\}.
-$$
-**The reset condition:** 
-$$
-R_{\ell_1,\ell_2}=\left\{x_{1}'=-x_{1},x_{2}'=x_{2}\right\}.\\
-R_{\ell_2,\ell_1}=\left\{x_{1}'=x_{1}-2,x_{2}'=x_{2}+1\right\}.
-$$
+**The unsafe set:**  <br />
+![unsafe](https://github.com/blliu6/Hybrid_system/blob/main/benchmarks/picture/unsafe.png) <br />
+**The guard condition:**  <br />
+![guard](https://github.com/blliu6/Hybrid_system/blob/main/benchmarks/picture/guard.png) <br />
+**The reset condition:**  <br />
+![reset](https://github.com/blliu6/Hybrid_system/blob/main/benchmarks/picture/reset.png) <br />
 
 This can be instantiated as follows:
 
@@ -118,17 +106,8 @@ This can be instantiated as follows:
 
 Then, the dynamical system should be confirmed in the Example function. The dynamical system is modelled as differential equations `f`. We define the differential equations through lambda expressions. The variables $x_1,x_2,x_3,\cdots,x_n$ should be typed as $x[0], x[1], x[2], \cdots, x[n-1]$ in code. All differential equations are input into the *f* list.
 
-For Example 1, we consider the following differential equations:
-$$
-\bf{f_{1}}=\left[\begin{array}{c}
--x_{1}+x_{1}x_{2}\\
--x_{2}\\
-\end{array}\right],
-\bf{f_{2}}=\left[\begin{array}{c}
--x_{1}+2x_{1}^2x_{2}\\
--x_{2}\\
-\end{array}\right].
-$$
+For Example 1, we consider the following differential equations: <br />
+![f](https://github.com/blliu6/Hybrid_system/blob/main/benchmarks/picture/f.png) <br />
 Construct the differential equations by setting
 
 ```python
