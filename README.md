@@ -31,7 +31,7 @@ To install and run SNBCHS, you need:
 You need install required software packages listed below and setting up a MOSEK license .
 
 1. Download SNBCHS.zip, and unpack it;
-2. Install the required software packages for using SynNBC:
+2. Install the required software packages for using SNBCHS:
 
     ```python
     pip install cvxopt==1.3.0
@@ -61,12 +61,12 @@ You need install required software packages listed below and setting up a MOSEK 
 Main steps to synthesize verified barrier certificates:
 
 1. Create a new example and confirm its number;
-2. Input dimension `n`, three domains: `local,init and unsafe` and differential equations `f`;
+2. Input dimension `n`, three basic domains: `local,init and unsafe` and differential equations `f`;
 3. Define the example’s name, call function `get_example_by_name`, input parameters of opts and get verified barrier functions.
 
 ## 3.1 New examples
 
-In SYNHBC, if we want to synthesize a barrier certificate, at first we need create a new example in the examples dictionary in `Exampler_A.py`. Then we should confirm its number. In an example, its number is the key and value is the new example constructed by Example function.
+In SYBCHS, if we want to synthesize a barrier certificate, at first we need create a new example in the examples dictionary in `Exampler_A.py`. Then we should confirm its number. In an example, its number is the key and value is the new example constructed by Example function.
 
 ```python
 >>  1 : Example ()
@@ -78,32 +78,28 @@ At first, we should confirm the dimension `n` and three basic domains: `local,in
 
 **Example 1** &emsp; Suppose we wish to input the following domains:
 
+**The local condition:**
 $$
-\begin{split}
-    The\  local\ condition:&
-\Psi \left(\ell_1\right)=\left\{\mathbf{x} \in \mathbb{R}^{2} \mid -5 \leq x_{1}\leq 0,-5 \leq x_{2} \leq 5\right\}.\\&
+\Psi \left(\ell_1\right)=\left\{\mathbf{x} \in \mathbb{R}^{2} \mid -5 \leq x_{1}\leq 0,-5 \leq x_{2} \leq 5\right\}.\\
 \Psi \left(\ell_2\right)=\left\{\mathbf{x} \in \mathbb{R}^{2} \mid 0 \leq x_{1}\leq 5,-5 \leq x_{2} \leq 5\right\}.
-\end{split}
-
+$$
+**The initial set:**
+$$
+\mathcal{X}_{0}=\left\{\mathbf{x} \in \mathbb{R}^{2} \mid (x_{1}+2)^2+(x_{2}-2)^2 \leq 0.25\right\}.
 $$
 
+**The unsafe set:** 
 $$
-The\ initial\ set: \mathcal{X}_{0}=\left\{\mathbf{x} \in \mathbb{R}^{2} \mid (x_{1}+2)^2+(x_{2}-2)^2 \leq 0.25\right\}.
+\mathcal{X}_{u}=\left\{\mathbf{x} \in \mathbb{R}^{2} \mid (x_{1}-2)^2+(x_{2}-2)^2 \leq 0.25\right\}. 
 $$
-
+**The guard condition:** 
 $$
-The\ unsafe\ set: \mathcal{X}_{u}=\left\{\mathbf{x} \in \mathbb{R}^{2} \mid (x_{1}-2)^2+(x_{2}-2)^2 \leq 0.25\right\}. 
+G_{\ell_1,\ell_2}=\left\{\mathbf{x} \in \mathbb{R}^{2} \mid x_{1}^2+x_{2}^2 \leq 0.5625\right\}.\\G_{\ell_2,\ell_1}=\left\{\mathbf{x} \in \mathbb{R}^{2} \mid x_{1}^2+x_{2}^2 \leq 0.25\right\}.
 $$
+**The reset condition:** 
 $$
-\begin{split}
-    The\ guard\ condition: &G_{\ell_1,\ell_2}=\left\{\mathbf{x} \in \mathbb{R}^{2} \mid x_{1}^2+x_{2}^2 \leq 0.5625\right\}.\\&G_{\ell_2,\ell_1}=\left\{\mathbf{x} \in \mathbb{R}^{2} \mid x_{1}^2+x_{2}^2 \leq 0.25\right\}.
-\end{split}
-$$
-$$
-\begin{split}
-    The reset condition: &R_{\ell_1,\ell_2}=\left\{x_{1}'=-x_{1},x_{2}'=x_{2}\right\}.\\&
-    R_{\ell_2,\ell_1}=\left\{x_{1}'=x_{1}-2,x_{2}'=x_{2}+1\right\}.
-\end{split}
+R_{\ell_1,\ell_2}=\left\{x_{1}'=-x_{1},x_{2}'=x_{2}\right\}.\\
+R_{\ell_2,\ell_1}=\left\{x_{1}'=x_{1}-2,x_{2}'=x_{2}+1\right\}.
 $$
 
 This can be instantiated as follows:
@@ -124,7 +120,6 @@ Then, the dynamical system should be confirmed in the Example function. The dyna
 
 For Example 1, we consider the following differential equations:
 $$
-\begin{equation*}
 \mathbf{f_{1}}=\left[\begin{array}{c}
 -x_{1}+x_{1}x_{2}\\
 -x_{2}\\
@@ -133,7 +128,6 @@ $$
 -x_{1}+2x_{1}^2x_{2}\\
 -x_{2}\\
 \end{array}\right].
-\end{equation*}
 $$
 Construct the differential equations by setting
 
