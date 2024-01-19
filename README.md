@@ -80,21 +80,21 @@ At first, we should confirm the dimension `n` and three basic domains: `local,in
 
 **The local condition:**
 $$
-\Psi \left(\ell_1\right)=\left\{\mathbf{x} \in \mathbb{R}^{2} \mid -5 \leq x_{1}\leq 0,-5 \leq x_{2} \leq 5\right\}.\\
-\Psi \left(\ell_2\right)=\left\{\mathbf{x} \in \mathbb{R}^{2} \mid 0 \leq x_{1}\leq 5,-5 \leq x_{2} \leq 5\right\}.
+\Psi \left(\ell_1\right)=\left\{\bf{x} \in \Bbb{R}^{2} \mid -5 \leq x_{1}\leq 0,-5 \leq x_{2} \leq 5\right\}.\\
+\Psi \left(\ell_2\right)=\left\{\bf{x} \in \Bbb{R}^{2} \mid 0 \leq x_{1}\leq 5,-5 \leq x_{2} \leq 5\right\}.
 $$
 **The initial set:**
 $$
-\mathcal{X}_{0}=\left\{\mathbf{x} \in \mathbb{R}^{2} \mid (x_{1}+2)^2+(x_{2}-2)^2 \leq 0.25\right\}.
+\cal{X}_{0}=\left\{\bf{x} \in \Bbb{R}^{2} \mid (x_{1}+2)^2+(x_{2}-2)^2 \leq 0.25\right\}.
 $$
 
 **The unsafe set:** 
 $$
-\mathcal{X}_{u}=\left\{\mathbf{x} \in \mathbb{R}^{2} \mid (x_{1}-2)^2+(x_{2}-2)^2 \leq 0.25\right\}. 
+\cal{X}_{u}=\left\{\bf{x} \in \Bbb{R}^{2} \mid (x_{1}-2)^2+(x_{2}-2)^2 \leq 0.25\right\}. 
 $$
 **The guard condition:** 
 $$
-G_{\ell_1,\ell_2}=\left\{\mathbf{x} \in \mathbb{R}^{2} \mid x_{1}^2+x_{2}^2 \leq 0.5625\right\}.\\G_{\ell_2,\ell_1}=\left\{\mathbf{x} \in \mathbb{R}^{2} \mid x_{1}^2+x_{2}^2 \leq 0.25\right\}.
+G_{\ell_1,\ell_2}=\left\{\bf{x} \in \Bbb{R}^{2} \mid x_{1}^2+x_{2}^2 \leq 0.5625\right\}.\\G_{\ell_2,\ell_1}=\left\{\bf{x} \in \Bbb{R}^{2} \mid x_{1}^2+x_{2}^2 \leq 0.25\right\}.
 $$
 **The reset condition:** 
 $$
@@ -120,11 +120,11 @@ Then, the dynamical system should be confirmed in the Example function. The dyna
 
 For Example 1, we consider the following differential equations:
 $$
-\mathbf{f_{1}}=\left[\begin{array}{c}
+\bf{f_{1}}=\left[\begin{array}{c}
 -x_{1}+x_{1}x_{2}\\
 -x_{2}\\
 \end{array}\right],
-\mathbf{f_{2}}=\left[\begin{array}{c}
+\bf{f_{2}}=\left[\begin{array}{c}
 -x_{1}+2x_{1}^2x_{2}\\
 -x_{2}\\
 \end{array}\right].
