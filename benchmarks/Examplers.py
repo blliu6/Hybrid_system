@@ -269,7 +269,7 @@ examples = {
         n=3,
         local_1=Zone(shape='box', low=[-2] * 3, up=[2] * 3),
         init=Zone(shape='ball', center=[0, 0, 0], r=1 ** 2),
-        unsafe=Zone(shape='ball', center=[1.5, 1.5, 1.5], r=1.5 ** 2),
+        unsafe=Zone(shape='ball', center=[1.5, 1.5, 1.5], r=0.5 ** 2),
         # 非安全区域改动
         f_1=[
             lambda x: -x[0] + x[1] - x[2],

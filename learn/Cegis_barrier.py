@@ -47,6 +47,7 @@ class Cegis:
             t_learn += t2 - t1
 
             barrier = learner.net.get_barriers()
+            print(f'B(x) = {barrier[0]}')
             # for poly in barrier:
             #     print(poly)
 
