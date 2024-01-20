@@ -70,7 +70,7 @@ You need install required software packages listed below and setting up a MOSEK 
 
 ## 3.1 New examples
 
-In SYBCHS, if we want to synthesize a barrier certificate, at first we need create a new example in the examples
+In SNBCHS, if we want to synthesize a barrier certificate, at first we need create a new example in the examples
 dictionary in `Examplers.py`. Then we should confirm its number. In an example, its number is the key and value is the
 new example constructed by Example class.
 
