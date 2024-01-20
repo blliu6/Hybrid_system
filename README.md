@@ -16,11 +16,9 @@ generation, making it a versatile and powerful tool for safety verification.
 
 The directory in which you install SNBCHS contains nine subdirectories:
 
-* `/ComparativeExperiment`：the code of comparative experiments;
-* `/Counterexample`:the counterexamples generator;
 * `/benchmarks`: the examples we showed in paper;
 * `/learn`: the code of learner;
-* `/verify`: the code of verifier;
+* `/verify`: the code of verifier and the counterexamples generator;
 * `/plot`: the code of plots;
 * `/utils`: the configuration of the program;
 * `/model`:the neural network models we trained;
@@ -87,8 +85,8 @@ and differential equations.Here we show a hybrid system example to illustrate.
 
 **Example 1** &emsp; Suppose we wish to input the following domains:
 
-**The local condition:** <br />
-![local](https://github.com/blliu6/Hybrid_system/blob/main/benchmarks/picture/local.png) <br />
+**The condition of hybrid system:** <br />
+![local](https://github.com/blliu6/Hybrid_system/blob/main/benchmarks/picture/hybrid_system.png) <br />
 **The initial set:** <br />
 ![initial](https://github.com/blliu6/Hybrid_system/blob/main/benchmarks/picture/initial.png) <br />
 
