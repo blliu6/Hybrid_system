@@ -74,10 +74,6 @@ In SYBCHS, if we want to synthesize a barrier certificate, at first we need crea
 dictionary in `Examplers.py`. Then we should confirm its number. In an example, its number is the key and value is the
 new example constructed by Example class.
 
-```python
->> 1: Example()
-```
-
 ## 3.2 Inputs for new examples
 
 At first, we should confirm the dimension `n` ,basic domains: `local,init,unsafe and guard`, reset condition
@@ -91,7 +87,7 @@ and differential equations.Here we show a hybrid system example to illustrate.
 The completed example is following:
 
 ```python
->> 2: Example(
+>> 1: Example(
     n=2,
     local_1=Zone(shape='box', low=[-5, -5], up=[0, 5], verify_zone=[lambda x: -x[0]]),
     local_2=Zone(shape='box', low=[0, -5], up=[5, 5], verify_zone=[lambda x: x[0]]),
@@ -109,15 +105,17 @@ The completed example is following:
 ),
 ```
 
-Then we should update the code of `barrier_template.py` or create a new python file by imitating its code. For
-generating a barrier cerficate,we should input the parameter name to call function `get_example_by_name` and set the
-parameters of opts.
+Then we should create a new python file named 'H2.py'. In this file we can adjust the hyperparameters for learning,
+verification and counterexample generation.
 
 For Example 1, the code example is as follows:
 
 ```python
->> b2_activations = ['SKIP']
->> b2_hidden_neurons = [10] * len(b1_activations)
+>> b1_activations = ['SKIP']  # 'SKIP','SQUARE','MUL','LINEAR' are optional.
+>> b1_hidden_neurons = [10] * len(b1_activations)  # the number of hidden layer nodes.
+
+>> b2_activations = ['SKIP']  # 'SKIP','SQUARE','MUL','LINEAR' are optional.
+>> b2_hidden_neurons = [10] * len(b2_activations)  # the number of hidden layer nodes.
 
 >> example = get_example_by_name('H2')
 
@@ -128,23 +126,27 @@ For Example 1, the code example is as follows:
     'b2_act': b2_activations,
     'b2_hidden': b2_hidden_neurons,
     "example": example,
-    'bm1_hidden': [10],
+    # Multipliers for Lie derivative conditions.
+    'bm1_hidden': [10],  # the number of hidden layer nodes.
     'bm2_hidden': [10],
-    'bm1_act': ['SKIP'],
+    'bm1_act': ['SKIP'],  # the activation function.
     'bm2_act': ['SKIP'],
-    'rm1_hidden': [],
+    # Multipliers for guard conditions.
+    'rm1_hidden': [],  # the number of hidden layer nodes.
     'rm2_hidden': [],
-    'rm1_act': [],
+    'rm1_act': [],  # the activation function.
     'rm2_act': [],
+    # Neural network
     "batch_size": 1000,
-    'lr': 0.1,
-    'loss_weight': (1, 1, 1, 1, 1, 1, 1, 1),
+    'lr': 0.1,  # the learning rate
+    'loss_weight': (1, 1, 1, 1, 1, 1, 1, 1),  # The weight of the loss term
     'R_b': 0.5,
     'margin': 1,
-    "DEG": [2, 0, 2, 2, 2, 2, 2, 2],
     "learning_loops": 100,
-    'max_iter': 10,
-    'counterexample_nums': 10
+    # Verification
+    "DEG": [2, 0, 2, 2, 2, 2, 2, 2],  # Degrees of multipliers during SOS verification.
+    'max_iter': 10,  # The maximum number of iterations.
+    'counterexample_nums': 10  # The number of counterexamples generated each time.
 }
 ```
 

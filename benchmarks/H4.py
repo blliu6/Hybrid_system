@@ -13,7 +13,7 @@ def main():
     b1_hidden_neurons = [10] * len(b1_activations)
 
     b2_activations = ['SKIP']
-    b2_hidden_neurons = [10] * len(b1_activations)
+    b2_hidden_neurons = [10] * len(b2_activations)
 
     example = get_example_by_name('H4')
 
