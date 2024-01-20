@@ -83,57 +83,10 @@ new example constructed by Example class.
 At first, we should confirm the dimension `n` ,basic domains: `local,init,unsafe and guard`, reset condition
 and differential equations.Here we show a hybrid system example to illustrate.
 
-**Example 1** &emsp; Suppose we wish to input the following domains:
+**Example 1** &emsp; Suppose we wish to input the following example:
 
 **The condition of hybrid system:** <br />
-![local](https://github.com/blliu6/Hybrid_system/blob/main/benchmarks/picture/hybrid_system.png) <br />
-**The initial set:** <br />
-![initial](https://github.com/blliu6/Hybrid_system/blob/main/benchmarks/picture/initial.png) <br />
-
-**The unsafe set:**  <br />
-![unsafe](https://github.com/blliu6/Hybrid_system/blob/main/benchmarks/picture/unsafe.png) <br />
-**The guard condition:**  <br />
-![guard](https://github.com/blliu6/Hybrid_system/blob/main/benchmarks/picture/guard.png) <br />
-**The reset condition:**  <br />
-![reset](https://github.com/blliu6/Hybrid_system/blob/main/benchmarks/picture/reset.png) <br />
-
-This can be instantiated as follows:
-
-```python
->> n = 2,
->> local_1 = Zone(shape='box', low=[-5, -5], up=[0, 5], verify_zone=[lambda x: -x[0]]),
->> local_2 = Zone(shape='box', low=[0, -5], up=[5, 5], verify_zone=[lambda x: x[0]]),
->> init = Zone(shape='ball', center=[-2, 2], r=0.5 ** 2),
->> unsafe = Zone(shape='ball', center=[2, 2], r=0.5 ** 2),
->> guard_1 = Zone(shape='ball', center=[0, 0], r=0.75 ** 2),
->> guard_2 = Zone(shape='ball', center=[0, 0], r=0.5 ** 2),
->> reset_1 = [lambda x: -x[0], lambda x: x[1]],
->> reset_2 = [lambda x: x[0] - 2, lambda x: x[1] + 1],
-```
-
-Then, the dynamical system should be confirmed in the Example function. The dynamical system is modelled as differential
-equations `f`. We define the differential equations through lambda expressions. The variables $x_1,x_2,x_3,\cdots,x_n$
-should be typed as $x[0], x[1], x[2], \cdots, x[n-1]$ in code. All differential equations are input into the *f* list.
-
-For Example 1, we consider the following differential equations: <br />
-![f](https://github.com/blliu6/Hybrid_system/blob/main/benchmarks/picture/f.png) <br />
-Construct the differential equations by setting
-
-```python
->> f_1 = [lambda x: -x[0] + x[0] * x[1],
-          lambda x: -x[1]],
->> f_2 = [lambda x: -x[0] + 2 * x[0] ** 2 * x[1],
-          lambda x: -x[1]],
-```
-
-## 3.3 Generating neural barrier certificates
-
-After inputting the dimension, domains and `f`, we should define the example’s name. For instance, to create an example
-named `H_2`, you need type:
-
-```python
->> name = 'H2'
-```
+![hybrid](https://github.com/blliu6/Hybrid_system/blob/main/benchmarks/picture/hybrid_system.png) <br />
 
 The completed example is following:
 
