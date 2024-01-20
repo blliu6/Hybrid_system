@@ -55,12 +55,12 @@ class SOS:
         x = self.x
         state = [True] * 8
         ################################
-        # 第一个
+        # first
         state[0] = self.verify_positive(b1, self.get_con(self.ex.I), deg=deg[0])
         if not state[0]:
             print('The condition 1 is not satisfied.')
         ################################
-        # 第二个
+        # second
         expr = sum([sp.diff(b1, x[i]) * self.ex.f1[i](x) for i in range(self.n)])
         state[1] = self.verify_positive_multiplier(expr, b1, self.get_con(self.ex.l1), deg=deg[1])
         # expr = expr - bm1 * b1
@@ -68,7 +68,7 @@ class SOS:
         if not state[1]:
             print('The condition 2 is not satisfied.')
         ################################
-        # 第三个
+        # third
         expr = sum([sp.diff(b2, x[i]) * self.ex.f2[i](x) for i in range(self.n)])
         state[2] = self.verify_positive_multiplier(expr, b2, self.get_con(self.ex.l2), deg=deg[2])
         # expr = expr - bm2 * b2
@@ -76,7 +76,7 @@ class SOS:
         if not state[2]:
             print('The condition 3 is not satisfied.')
         ################################
-        # 第四个
+        # fourth
         b2_fun = sp.lambdify(x, b2)
         x_ = [self.ex.r1[i](x) for i in range(self.n)]
         bl2 = b2_fun(*x_)
@@ -86,7 +86,7 @@ class SOS:
         if not state[3]:
             print('The condition 4 is not satisfied.')
         ################################
-        # 第五个
+        # fifth
         b1_fun = sp.lambdify(x, b1)
         x_ = [self.ex.r2[i](x) for i in range(self.n)]
         bl1 = b1_fun(*x_)
@@ -96,17 +96,17 @@ class SOS:
         if not state[4]:
             print('The condition 5 is not satisfied.')
         ################################
-        # 第六个
+        # sixth
         state[5] = self.verify_positive(rm1, self.get_con(self.ex.g1), deg=deg[5])
         if not state[5]:
             print('The condition 6 is not satisfied.')
         ################################
-        # 第七个
+        # seventh
         state[6] = self.verify_positive(rm2, self.get_con(self.ex.g2), deg=deg[6])
         if not state[6]:
             print('The condition 7 is not satisfied.')
         ################################
-        # 第八个
+        # eighth
         state[7] = self.verify_positive(-b2, self.get_con(self.ex.U), deg=deg[7])
         if not state[7]:
             print('The condition 8 is not satisfied.')
@@ -128,7 +128,7 @@ class SOS:
         if not state[0]:
             print('The init condition is not satisfied.')
         ################################
-        # 第二个
+        # Lie
         expr = sum([sp.diff(b1, x[i]) * self.ex.f1[i](x) for i in range(self.n)])
         # expr = expr - bm1 * b1
         # state[1] = self.verify_positive(expr, self.get_con(self.ex.l1), deg=deg[1])

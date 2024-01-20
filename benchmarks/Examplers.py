@@ -34,136 +34,7 @@ class Example:
 
 
 examples = {
-    0: Example(
-        n=2,
-        local_1=Zone(shape='box', low=[-5, -5], up=[0, 5]),
-        local_2=Zone(shape='box', low=[0, -5], up=[5, 5]),
-        init=Zone(shape='ball', center=[-2, 2], r=0.5 ** 2),
-        unsafe=Zone(shape='ball', center=[2, 2], r=0.5 ** 2),
-        guard_1=Zone(shape='ball', center=[0, 0], r=0.75 ** 2),
-        guard_2=Zone(shape='ball', center=[0, 0], r=0.5 ** 2),
-        reset_1=[lambda x: -x[0], lambda x: x[1]],
-        reset_2=[lambda x: x[0] - 2, lambda x: x[1] + 1],
-        f_1=[lambda x: -x[0] + x[0] * x[1],
-             lambda x: -x[1]],
-        f_2=[lambda x: -x[0] + 2 * x[0] ** 2 * x[1],
-             lambda x: -x[1]],
-        name='H2_easy'
-    ),
     1: Example(
-        n=2,
-        local_1=Zone(shape='box', low=[-5, -5], up=[0, 5], verify_zone=[lambda x: -x[0]]),
-        local_2=Zone(shape='box', low=[0, -5], up=[5, 5], verify_zone=[lambda x: x[0]]),
-        init=Zone(shape='ball', center=[-2, 2], r=0.5 ** 2),
-        unsafe=Zone(shape='ball', center=[2, 2], r=0.5 ** 2),
-        guard_1=Zone(shape='ball', center=[0, 0], r=0.75 ** 2),
-        guard_2=Zone(shape='ball', center=[0, 0], r=0.5 ** 2),
-        reset_1=[lambda x: -x[0], lambda x: x[1]],
-        reset_2=[lambda x: x[0] - 2, lambda x: x[1] + 1],
-        f_1=[lambda x: -x[0] + x[0] * x[1],
-             lambda x: -x[1]],
-        f_2=[lambda x: -x[0] + 2 * x[0] ** 2 * x[1],
-             lambda x: -x[1]],
-        name='H2'  # Safety Verification of Nonlinear Hybrid Systems Based on Bilinear Programming->H3
-    ),
-    2: Example(
-        n=3,
-        local_1=Zone(shape='box', low=[-1.1, -11, -11], up=[1.1, 11, 11]),
-        local_2=Zone(shape='box', low=[0.17, 0.17, 0.17], up=[12, 12, 12]),
-        init=Zone(shape='ball', center=[0, 0, 0], r=0.01),
-        unsafe=Zone(shape='box', low=[5, -100, -100], up=[5.1, 100, 100],
-                    verify_zone=[lambda x: (x[0] - 5) * (5.1 - x[0])]),
-        guard_1=Zone(shape='box', low=[0.99, 9.95, 9.95], up=[1.01, 10.05, 10.05]),
-        guard_2=Zone(shape='box', low=[0.17] * 3, up=[0.23] * 3),
-        reset_1=[lambda x: x[0], lambda x: x[1], lambda x: x[2]],
-        reset_2=[lambda x: x[0], lambda x: x[1], lambda x: x[2]],
-        f_1=[lambda x: -x[1], lambda x: -x[0] + x[2], lambda x: x[0] + (2 * x[1] + 3 * x[2]) * (1 + x[2] ** 2)],
-        f_2=[lambda x: -x[1], lambda x: -x[0] + x[2], lambda x: -x[0] - 2 * x[1] - 3 * x[2]],
-        name='H4'  # Safety Verification of Nonlinear Hybrid Systems Based on Bilinear Programming->H2
-    ),
-    3: Example(
-        n=3,
-        local_1=Zone(shape='box', low=[-1.1, -11, -11], up=[1.1, 11, 11]),
-        local_2=Zone(shape='box', low=[0.17, 0.17, 0.17], up=[12, 12, 12]),
-        init=Zone(shape='ball', center=[0, 0, 0], r=0.01),
-        unsafe=Zone(shape='box', low=[5, -11, -11], up=[5.1, 11, 11]),
-        guard_1=Zone(shape='box', low=[0.99, 9.95, 9.95], up=[1.01, 10.05, 10.05]),
-        guard_2=Zone(shape='box', low=[0.17] * 3, up=[0.23] * 3),
-        reset_1=[lambda x: x[0], lambda x: x[1], lambda x: x[2]],
-        reset_2=[lambda x: x[0], lambda x: x[1], lambda x: x[2]],
-        f_1=[lambda x: -x[1], lambda x: -x[0] + x[2], lambda x: x[0] + (2 * x[1] + 3 * x[2]) * (1 + x[2] ** 2)],
-        f_2=[lambda x: -x[1], lambda x: -x[0] + x[2], lambda x: -x[0] - 2 * x[1] - 3 * x[2]],
-        name='H4_easy'
-    ),
-    4: Example(
-        n=2,
-        local_1=Zone(shape='box', low=[-10, -10], up=[0, 10], verify_zone=[lambda x: -x[0]]),
-        local_2=Zone(shape='box', low=[0, -10], up=[10, 10], verify_zone=[lambda x: x[0]]),
-        init=Zone(shape='box', low=[-2, -2], up=[-1, -1]),
-        unsafe=Zone(shape='box', low=[0, -2], up=[1, -1]),
-        guard_1=Zone(shape='ball', center=[-0.5, -0.5], r=0.5 ** 2),
-        guard_2=Zone(shape='ball', center=[1, 1], r=0.5 ** 2),
-        reset_1=[lambda x: -x[0] + 2, lambda x: -x[1] + 2],
-        reset_2=[lambda x: x[0] - 2, lambda x: x[1] - 2],
-        f_1=[lambda x: x[0] - x[0] * x[1],
-             lambda x: -x[1] + x[0] * x[1]],
-        f_2=[lambda x: x[0] + x[0] ** 2 * x[1],
-             lambda x: x[1] + x[0] * x[1]],
-        name='H3_hard'
-        # Darboux-type_barrier_certificates_for_safety_verification_of_nonlinear_hybrid_systems->EXAMPLE2
-    ),
-    5: Example(
-        n=2,
-        local_1=Zone(shape='box', low=[-5, -5], up=[0, 5]),
-        local_2=Zone(shape='box', low=[0, -5], up=[5, 5]),
-        init=Zone(shape='box', low=[-2, -2], up=[-1, -1]),
-        unsafe=Zone(shape='box', low=[0, -2], up=[1, -1]),
-        guard_1=Zone(shape='ball', center=[-0.5, -0.5], r=0.5 ** 2),
-        guard_2=Zone(shape='ball', center=[1, 1], r=0.5 ** 2),
-        reset_1=[lambda x: -x[0] + 2, lambda x: -x[1] + 2],
-        reset_2=[lambda x: x[0] - 2, lambda x: x[1] - 2],
-        f_1=[lambda x: x[0] - x[0] * x[1],
-             lambda x: -x[1] + x[0] * x[1]],
-        f_2=[lambda x: x[0] + x[0] ** 2 * x[1],
-             lambda x: x[1] + x[0] * x[1]],
-        name='H3'
-        # Darboux-type_barrier_certificates_for_safety_verification_of_nonlinear_hybrid_systems->EXAMPLE2
-    ),
-    6: Example(
-        n=2,
-        local_1=Zone(shape='box', low=[0, 0], up=[40, 60], verify_zone=[lambda x: (x[0] - 5) * (35 - x[0])]),
-        local_2=Zone(shape='box', low=[0, 0], up=[40, 60], verify_zone=[lambda x: (x[0] - 5) * (35 - x[0])]),
-        init=Zone(shape='ball', center=[9, 20], r=2 ** 2),
-        unsafe=Zone(shape='box', low=[0, 48], up=[40, 60], verify_zone=[lambda x: (x[1] - 48) * (60 - x[1])]),
-        guard_1=Zone(shape='box', low=[34.9, 0], up=[35.1, 60]),
-        guard_2=Zone(shape='box', low=[4.9, 0], up=[5.1, 60]),
-        reset_1=[lambda x: x[0], lambda x: x[1]],
-        reset_2=[lambda x: x[0], lambda x: x[1]],
-        f_1=[lambda x: x[1] ** 2 - 10 * x[1] + 25,
-             lambda x: 2 * x[0] * x[1] + 10 * x[0] - 40 * x[1] - 200],
-        f_2=[lambda x: -x[1] ** 2 - 10 * x[1] - 25,
-             lambda x: 8 * x[0] * x[1] + 40 * x[0] - 160 * x[1] - 800],
-        name='H5'
-        # Safety Verification of Nonlinear Hybrid Systems Based on Invariant Clusters
-    ),
-    7: Example(
-        n=2,
-        local_1=Zone(shape='box', low=[0, 0], up=[40, 60]),
-        local_2=Zone(shape='box', low=[0, 0], up=[40, 60]),
-        init=Zone(shape='ball', center=[9, 20], r=2 ** 2),
-        unsafe=Zone(shape='box', low=[0, 48], up=[40, 60], verify_zone=[lambda x: (x[1] - 48) * (60 - x[1])]),
-        guard_1=Zone(shape='box', low=[35, 0], up=[40, 48]),
-        guard_2=Zone(shape='box', low=[0, 0], up=[5, 48]),
-        reset_1=[lambda x: x[0], lambda x: x[1]],
-        reset_2=[lambda x: x[0], lambda x: x[1]],
-        f_1=[lambda x: x[1] ** 2 - 10 * x[1] + 25,
-             lambda x: 2 * x[0] * x[1] + 10 * x[0] - 40 * x[1] - 200],
-        f_2=[lambda x: -x[1] ** 2 - 10 * x[1] - 25,
-             lambda x: 8 * x[0] * x[1] + 40 * x[0] - 160 * x[1] - 800],
-        name='H5_easy'
-        # Safety Verification of Nonlinear Hybrid Systems Based on Invariant Clusters
-    ),
-    8: Example(
         n=2,
         local_1=Zone(shape='box', low=[-2, -2], up=[0, 2]),
         local_2=Zone(shape='box', low=[0, -2], up=[2, 2]),
@@ -180,7 +51,55 @@ examples = {
         name='H1'
         # fossil
     ),
-    37: Example(
+    2: Example(
+        n=2,
+        local_1=Zone(shape='box', low=[-5, -5], up=[0, 5], verify_zone=[lambda x: -x[0]]),
+        local_2=Zone(shape='box', low=[0, -5], up=[5, 5], verify_zone=[lambda x: x[0]]),
+        init=Zone(shape='ball', center=[-2, 2], r=0.5 ** 2),
+        unsafe=Zone(shape='ball', center=[2, 2], r=0.5 ** 2),
+        guard_1=Zone(shape='ball', center=[0, 0], r=0.75 ** 2),
+        guard_2=Zone(shape='ball', center=[0, 0], r=0.5 ** 2),
+        reset_1=[lambda x: -x[0], lambda x: x[1]],
+        reset_2=[lambda x: x[0] - 2, lambda x: x[1] + 1],
+        f_1=[lambda x: -x[0] + x[0] * x[1],
+             lambda x: -x[1]],
+        f_2=[lambda x: -x[0] + 2 * x[0] ** 2 * x[1],
+             lambda x: -x[1]],
+        name='H2'  # Safety Verification of Nonlinear Hybrid Systems Based on Bilinear Programming->H3
+    ),
+    3: Example(
+        n=2,
+        local_1=Zone(shape='box', low=[-5, -5], up=[0, 5]),
+        local_2=Zone(shape='box', low=[0, -5], up=[5, 5]),
+        init=Zone(shape='box', low=[-2, -2], up=[-1, -1]),
+        unsafe=Zone(shape='box', low=[0, -2], up=[1, -1]),
+        guard_1=Zone(shape='ball', center=[-0.5, -0.5], r=0.5 ** 2),
+        guard_2=Zone(shape='ball', center=[1, 1], r=0.5 ** 2),
+        reset_1=[lambda x: -x[0] + 2, lambda x: -x[1] + 2],
+        reset_2=[lambda x: x[0] - 2, lambda x: x[1] - 2],
+        f_1=[lambda x: x[0] - x[0] * x[1],
+             lambda x: -x[1] + x[0] * x[1]],
+        f_2=[lambda x: x[0] + x[0] ** 2 * x[1],
+             lambda x: x[1] + x[0] * x[1]],
+        name='H3'
+        # Darboux-type_barrier_certificates_for_safety_verification_of_nonlinear_hybrid_systems->EXAMPLE2
+    ),
+    4: Example(
+        n=3,
+        local_1=Zone(shape='box', low=[-1.1, -11, -11], up=[1.1, 11, 11]),
+        local_2=Zone(shape='box', low=[0.17, 0.17, 0.17], up=[12, 12, 12]),
+        init=Zone(shape='ball', center=[0, 0, 0], r=0.01),
+        unsafe=Zone(shape='box', low=[5, -100, -100], up=[5.1, 100, 100],
+                    verify_zone=[lambda x: (x[0] - 5) * (5.1 - x[0])]),
+        guard_1=Zone(shape='box', low=[0.99, 9.95, 9.95], up=[1.01, 10.05, 10.05]),
+        guard_2=Zone(shape='box', low=[0.17] * 3, up=[0.23] * 3),
+        reset_1=[lambda x: x[0], lambda x: x[1], lambda x: x[2]],
+        reset_2=[lambda x: x[0], lambda x: x[1], lambda x: x[2]],
+        f_1=[lambda x: -x[1], lambda x: -x[0] + x[2], lambda x: x[0] + (2 * x[1] + 3 * x[2]) * (1 + x[2] ** 2)],
+        f_2=[lambda x: -x[1], lambda x: -x[0] + x[2], lambda x: -x[0] - 2 * x[1] - 3 * x[2]],
+        name='H4'  # Safety Verification of Nonlinear Hybrid Systems Based on Bilinear Programming->H2
+    ),
+    5: Example(
         n=2,
         local_1=Zone(shape='box', low=[-2] * 2, up=[2] * 2),
         init=Zone(shape='ball', center=[1.125, 0.625], r=0.0125),
@@ -192,7 +111,7 @@ examples = {
         name='C1',
         continuous=True
     ),
-    21: Example(
+    6: Example(
         n=2,
         local_1=Zone(shape='box', low=[-2] * 2, up=[2] * 2),
         init=Zone(shape='ball', center=[-1, 0.5], r=0.4 ** 2),
@@ -204,7 +123,7 @@ examples = {
         name='C2',
         continuous=True
     ),
-    10: Example(
+    7: Example(
         n=2,
         local_1=Zone(shape='box', low=[-2, -2], up=[2, 2]),
         init=Zone(shape='box', low=[0, 1], up=[1, 2]),
@@ -216,7 +135,7 @@ examples = {
         name='C3',
         continuous=True
     ),
-    43: Example(
+    8: Example(
         n=2,
         local_1=Zone(shape='box', low=[-2] * 2, up=[2] * 2),
         init=Zone(shape='box', low=[-1 / 4, 3 / 4], up=[1 / 4, 3 / 2]),
@@ -228,7 +147,7 @@ examples = {
         name='C4',
         continuous=True
     ),
-    15: Example(
+    9: Example(
         n=2,
         local_1=Zone(shape='box', low=[-3.5, -2], up=[2, 1]),
         init=Zone(shape='box', low=[1, -0.5], up=[2, 0.5]),
@@ -240,7 +159,7 @@ examples = {
         name='C5',
         continuous=True
     ),
-    27: Example(
+    10: Example(
         n=2,
         local_1=Zone(shape='box', low=[-2] * 2, up=[2] * 2),
         init=Zone(shape='ball', center=[0, 0.5], r=0.2 ** 2),
@@ -252,7 +171,7 @@ examples = {
         name='C6',
         continuous=True
     ),
-    22: Example(
+    11: Example(
         n=3,
         local_1=Zone(shape='box', low=[-20] * 3, up=[20] * 3),
         init=Zone(shape='ball', center=[-14.5, -14.5, 12.5], r=0.5 ** 2),
@@ -265,7 +184,7 @@ examples = {
         name='C7',
         continuous=True
     ),
-    36: Example(
+    12: Example(
         n=3,
         local_1=Zone(shape='box', low=[-2] * 3, up=[2] * 3),
         init=Zone(shape='ball', center=[0, 0, 0], r=1 ** 2),
@@ -279,7 +198,7 @@ examples = {
         name='C8',
         continuous=True
     ),
-    26: Example(
+    13: Example(
         n=3,
         local_1=Zone(shape='box', low=[-2] * 3, up=[2] * 3),
         init=Zone(shape='ball', center=[0.25, 0.25, 0.25], r=0.5 ** 2),
@@ -292,7 +211,7 @@ examples = {
         name='C9',
         continuous=True
     ),
-    16: Example(
+    14: Example(
         n=4,
         local_1=Zone(shape='box', low=[-2.5] * 4, up=[2] * 4),
         init=Zone(shape='box', low=[0.5] * 4, up=[1.5] * 4),
@@ -306,7 +225,7 @@ examples = {
         name='C10',
         continuous=True
     ),
-    38: Example(
+    15: Example(
         n=4,
         local_1=Zone(shape='box', low=[-1.5] * 4, up=[1.5] * 4),
         init=Zone(shape='box', low=[-0.2, -1.2, -1.5, -1.5],
@@ -322,7 +241,7 @@ examples = {
         name='C11',
         continuous=True
     ),
-    49: Example(
+    16: Example(
         n=6,
         local_1=Zone(shape='box', low=[-2] * 6, up=[2] * 6),
         init=Zone(shape='box', low=[0.5] * 6, up=[1.5] * 6),
@@ -338,7 +257,7 @@ examples = {
         name='C12',
         continuous=True
     ),
-    45: Example(
+    17: Example(
         n=6,
         local_1=Zone(shape='box', low=[-2] * 6, up=[2] * 6),
         init=Zone(shape='box', low=[1] * 6, up=[2] * 6),
@@ -354,7 +273,7 @@ examples = {
         name='C13',
         continuous=True
     ),
-    46: Example(
+    18: Example(
         n=6,
         local_1=Zone(shape='box', low=[0] * 6, up=[10] * 6),
         init=Zone(shape='box', low=[3] * 6, up=[3.1] * 6),
@@ -370,7 +289,7 @@ examples = {
         name='C14',
         continuous=True
     ),
-    40: Example(
+    19: Example(
         n=7,
         local_1=Zone(shape='box', low=[-2] * 7, up=[2] * 7),
         init=Zone(shape='ball', center=[1, 1, 1, 1, 1, 1, 1], r=0.01 ** 2),
@@ -387,7 +306,7 @@ examples = {
         name='C15',
         continuous=True
     ),
-    50: Example(
+    20: Example(
         n=8,
         local_1=Zone(shape='box', low=[-2] * 8, up=[2] * 8),
         init=Zone(shape='box', low=[0.5] * 8, up=[1.5] * 8),
@@ -406,7 +325,7 @@ examples = {
         name='C16',
         continuous=True
     ),
-    41: Example(
+    21: Example(
         n=9,
         local_1=Zone(shape='box', low=[-2] * 9, up=[2] * 9),
         init=Zone(shape='ball', center=[1, 1, 1, 1, 1, 1, 1, 1, 1], r=0.1 ** 2),
@@ -425,7 +344,7 @@ examples = {
         name='C17',
         continuous=True
     ),
-    42: Example(
+    22: Example(
         n=12,
         local_1=Zone(shape='box', low=[-2] * 12, up=[2] * 12),
         init=Zone(shape='ball', center=[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], r=0.1 ** 2),
@@ -447,7 +366,7 @@ examples = {
         name='C18',
         continuous=True
     ),
-    53: Example(
+    23: Example(
         n=13,
         local_1=Zone(shape='box', low=[-0.3] * 13, up=[0.3] * 13),
         init=Zone(shape='box', low=[-0.3, -0.2, -0.2, -0.2, -0.2, -0.2, -0.2, -0.2, -0.2, -0.2, -0.2, -0.2, -0.2],
@@ -472,7 +391,7 @@ examples = {
         name='C19',
         continuous=True
     ),
-    54: Example(
+    24: Example(
         n=15,
         local_1=Zone(shape='box', low=[-0.3] * 15, up=[0.3] * 15),
         init=Zone(shape='box',
@@ -503,7 +422,7 @@ examples = {
         name='C20',
         continuous=True
     ),
-    55: Example(
+    25: Example(
         n=17,
         local_1=Zone(shape='box', low=[-0.3] * 17, up=[0.3] * 17),
         init=Zone(shape='box',
@@ -538,7 +457,7 @@ examples = {
         continuous=True
     ),
 
-    56: Example(
+    26: Example(
         n=19,
         local_1=Zone(shape='box', low=[-0.3] * 19, up=[0.3] * 19),
         init=Zone(shape='box',
@@ -575,7 +494,7 @@ examples = {
         name='C22',
         continuous=True
     ),
-    57: Example(
+    27: Example(
         n=21,
         local_1=Zone(shape='box', low=[-0.3] * 21, up=[0.3] * 21),
         init=Zone(shape='box',
@@ -615,7 +534,7 @@ examples = {
         name='C23',
         continuous=True
     ),
-    58: Example(
+    28: Example(
         n=23,
         local_1=Zone(shape='box', low=[-0.3] * 23, up=[0.3] * 23),
         init=Zone(shape='box',
@@ -656,368 +575,7 @@ examples = {
         ],
         name='C24',
         continuous=True
-    ),
-    11: Example(
-        n=2,
-        local_1=Zone(shape='box', low=[1, 1], up=[5, 5]),
-        init=Zone(shape='box', low=[4, 0.9], up=[4.5, 1.1]),
-        unsafe=Zone(shape='box', low=[1, 2], up=[2, 3]),
-        f_1=[lambda x: -5.5 * x[1] + x[1] * x[1],
-             lambda x: 6 * x[0] - x[0] * x[0],
-             ],
-        name='T1',
-        continuous=True
-    ),
-    12: Example(
-        n=2,
-        local_1=Zone(shape='box', low=[-2, -2], up=[2, 2]),
-        init=Zone(shape='box', low=[-0.2, 0.3], up=[0.2, 0.7]),
-        unsafe=Zone(shape='box', low=[-2, -2], up=[-1, -1]),
-        f_1=[lambda x: -x[0] + 2 * x[0] * x[0] * x[0] * x[1] * x[1],
-             lambda x: -x[1]
-             ],
-        name='T2',
-        continuous=True
-    ),
-    13: Example(
-        n=2,
-        local_1=Zone(shape='box', low=[-2, -2], up=[2, 2]),
-        init=Zone(shape='box', low=[-1, -1], up=[0, 0]),
-        unsafe=Zone(shape='box', low=[1, 1], up=[2, 2]),
-        f_1=[lambda x: -1 + x[0] * x[0] + x[1] * x[1],
-             lambda x: 5 * (-1 + x[0] * x[1])
-             ],
-        name='T3',
-        continuous=True
-    ),
-    14: Example(
-        n=2,
-        local_1=Zone(shape='box', low=[-3, -3], up=[3, 3]),
-        init=Zone(shape='box', low=[-0.2, -0.2], up=[0.2, 0.2]),
-        unsafe=Zone(shape='box', low=[2, 2], up=[3, 3]),
-        f_1=[
-            lambda x: x[0] - x[0] * x[0] * x[0] + x[1] - x[0] * x[1] * x[1],
-            lambda x: -x[0] + x[1] - x[0] * x[0] * x[1] - x[1] * x[1] * x[1]
-        ],
-        name='T4',
-        continuous=True
-    ),
-
-    17: Example(
-        n=2,
-        local_1=Zone(shape='box', low=[-1] * 2, up=[1] * 2),
-        init=Zone(shape='box', low=[-0.1] * 2, up=[0.1] * 2),
-        unsafe=Zone(shape='box', low=[0.5] * 2, up=[1] * 2),
-        f_1=[
-            lambda x: -2 * x[0] + x[0] * x[0] + x[1],
-            lambda x: x[0] - 2 * x[1] + x[1] * x[1]
-        ],
-        name='T5',
-        continuous=True
-    ),
-    20: Example(
-        n=2,
-        local_1=Zone(shape='box', low=[0] * 2, up=[2] * 2),
-        init=Zone(shape='ball', center=[1.125, 0.625], r=0.0125),
-        unsafe=Zone(shape='ball', center=[0.875, 0.125], r=0.0125),
-        f_1=[
-            lambda x: -x[0] + x[1],
-            lambda x: -x[1]
-        ],
-        name='Exp3',
-        continuous=True
-    ),
-
-    23: Example(
-        n=2,
-        local_1=Zone(shape='box', low=[-2] * 2, up=[2] * 2),
-        init=Zone(shape='ball', center=[1.125, 0.625], r=0.125 ** 2),
-        unsafe=Zone(shape='ball', center=[-1.5, -1.25], r=0.25 ** 2),
-        f_1=[
-            lambda x: -0.1 * x[0] - 10 * x[1],
-            lambda x: 4 * x[0] - 2 * x[1]
-        ],
-        name='Exp6',
-        continuous=True
-    ),
-    24: Example(
-        n=3,
-        local_1=Zone(shape='box', low=[-2] * 3, up=[2] * 3),
-        init=Zone(shape='ball', center=[1, 1, 0], r=0.8 ** 2),
-        unsafe=Zone(shape='box', low=[-0.5, -1.5, -1], up=[0.5, -0.5, 1]),
-        f_1=[
-            lambda x: x[0] * (1 - x[2]),
-            lambda x: x[1] * (1 - 2 * x[2]),
-            lambda x: x[2] * (-1 + x[0] + x[1])
-        ],
-        name='Exp7',
-        continuous=True
-    ),
-    25: Example(
-        n=2,
-        local_1=Zone(shape='box', low=[-1.5] * 2, up=[5.5] * 2),
-        init=Zone(shape='box', low=[4, -1], up=[4.25, 1]),
-        unsafe=Zone(shape='ball', center=[1.5, 2.5], r=0.5 ** 2),
-        f_1=[
-            lambda x: -x[0] + 2 * x[1] * x[0] ** 2,
-            lambda x: -x[1]
-        ],
-        name='Exp8',
-        continuous=True
-    ),
-
-    28: Example(
-        n=2,
-        local_1=Zone(shape='box', low=[-2] * 2, up=[2] * 2),
-        init=Zone(shape='ball', center=[-0.5, -0.5], r=0.5 ** 2),
-        unsafe=Zone(shape='ball', center=[-1.5, -1.5], r=0.5 ** 2),
-        f_1=[
-            lambda x: x[0] ** 2 + x[1] ** 2 - 1,
-            lambda x: 5 * (x[0] * x[1] - 1),
-        ],
-        name='Exp11',
-        continuous=True
-    ),
-    29: Example(
-        n=2,
-        local_1=Zone(shape='box', low=[-3] * 2, up=[3] * 2),
-        init=Zone(shape='ball', center=[0, 0], r=0.2 ** 2),
-        unsafe=Zone(shape='ball', center=[2.5, 2.5], r=0.5 ** 2),
-        f_1=[
-            lambda x: x[0] - x[0] ** 3 + x[1] - x[0] * x[1] ** 2,
-            lambda x: -x[0] + x[1] - x[1] * x[0] ** 2 - x[1] ** 3
-        ],
-        name='Exp12',
-        continuous=True
-    ),
-    30: Example(
-        n=2,
-        local_1=Zone(shape='box', low=[-0.5] * 2, up=[1] * 2),
-        init=Zone(shape='ball', center=[0, 0], r=0.1 ** 2),
-        unsafe=Zone(shape='ball', center=[0.75, 0.75], r=0.25 ** 2),
-        f_1=[
-            lambda x: -2 * x[0] + x[0] ** 2 + x[1],
-            lambda x: x[0] - 2 * x[1] + x[1] ** 2
-        ],
-        name='Exp13',
-        continuous=True
-    ),
-    31: Example(
-        n=2,
-        local_1=Zone(shape='box', low=[-4] * 2, up=[4] * 2),
-        init=Zone(shape='ball', center=[1.5, 0], r=0.5 ** 2),
-        unsafe=Zone(shape='ball', center=[-1, -1], r=0.4 ** 2),
-        f_1=[
-            lambda x: x[1],
-            lambda x: -x[0] + 1 / 3 * x[0] ** 3 - x[1]
-        ],
-        name='Exp14',
-        continuous=True
-    ),
-    32: Example(
-        n=2,
-        local_1=Zone(shape='box', low=[0] * 2, up=[1.5] * 2),
-        init=Zone(shape='ball', center=[1.125, 0.625], r=0.125 ** 2),
-        unsafe=Zone(shape='ball', center=[0.875, 0.125], r=0.075 ** 2),
-        f_1=[
-            lambda x: -x[0] + x[0] * x[1],
-            lambda x: -x[1]
-        ],
-        name='Exp15',
-        continuous=True
-    ),
-    33: Example(
-        n=2,
-        local_1=Zone(shape='box', low=[-2] * 2, up=[2] * 2),
-        init=Zone(shape='ball', center=[-1, -1], r=0.5 ** 2),
-        unsafe=Zone(shape='ball', center=[0, 1], r=0.5 ** 2),
-        f_1=[
-            lambda x: -x[0] + x[0] * x[1],
-            lambda x: -x[1]
-        ],
-        name='Exp16',
-        continuous=True
-    ),
-    34: Example(
-        n=2,
-        local_1=Zone(shape='box', low=[-1] * 2, up=[3] * 2),
-        init=Zone(shape='ball', center=[0, 9 / 8], r=27 / 8),
-        unsafe=Zone(shape='ball', center=[2, 2], r=0.5 ** 2),
-        f_1=[
-            lambda x: -x[0] + 2 * (x[0] ** 2) * x[1],
-            lambda x: -x[1]
-        ],
-        name='Exp17',
-        continuous=True
-    ),
-    35: Example(
-        n=2,
-        local_1=Zone(shape='box', low=[-5] * 2, up=[5] * 2),
-        init=Zone(shape='ball', center=[-0.75, 1.25], r=0.25 ** 2),
-        unsafe=Zone(shape='ball', center=[-2.25, -1.75], r=0.25 ** 2),
-        f_1=[
-            lambda x: -1 / 3 * x[0] ** 3 + x[0] - x[1] + 0.875,
-            lambda x: 0.08 * (x[0] - 0.8 * x[1] + 0.7)
-        ],
-        name='Exp18',
-        continuous=True
-    ),
-
-    39: Example(
-        n=2,
-        local_1=Zone(shape='box', low=[1.5] * 2, up=[3.5] * 2),
-        init=Zone(shape='ball', center=[2.75, 2], r=0.25 ** 2),
-        unsafe=Zone(shape='box', low=[1.5, 1.5], up=[2, 3.5]),
-        f_1=[
-            lambda x: x[0] - x[1],
-            lambda x: x[0] + x[1]
-        ],
-        name='Exp22',
-        continuous=True
-    ),
-
-    44: Example(
-        n=4,
-        local_1=Zone(shape='box', low=[-2] * 4, up=[2] * 4),
-        init=Zone(shape='box', low=[0.5] * 4, up=[1.5] * 4),
-        unsafe=Zone(shape='box', low=[-1.5] * 4, up=[-0.5] * 4),
-        f_1=[
-            lambda x: -0.5 * x[0] ** 2 - 0.5 * x[1] ** 2 - 0.125 * x[2] ** 2 - 2 * x[1] * x[2] + 2 * x[3] ** 2 + 1,
-            lambda x: -x[0] * x[1] - 1,
-            lambda x: -x[0] * x[2],
-            lambda x: -x[0] * x[3]
-        ],
-        name='T9',
-        continuous=True
-    ),
-
-    47: Example(
-        n=8,
-        local_1=Zone(shape='box', low=[-2] * 8, up=[2] * 8),
-        init=Zone(shape='box', low=[-0.1] * 8, up=[0.1] * 8),
-        unsafe=Zone(shape='box', low=[0, 0, 0.5, 0.5, 0.5, -1.5, 0.5, -1.5],
-                    up=[0.5, 0.5, 1.5, 1.5, 1.5, -0.5, 1.5, -0.5]),
-        f_1=[
-            lambda x: x[2],
-            lambda x: x[3],
-            lambda x: -7253.4927 * x[0] + 1936.3639 * x[7] - 1338.7624 * x[2] + 1333.3333 * x[5],
-            lambda x: -1936.3639 * x[6] - 7253.4927 * x[1] - 1338.7624 * x[3] - 1333.3333 * x[4],
-            lambda x: x[6],
-            lambda x: x[7],
-            lambda x: 9.81 * x[1],
-            lambda x: -9.81 * x[0]
-        ],
-        name='T13',
-        continuous=True
-    ),
-    48: Example(
-        n=10,
-        local_1=Zone(shape='box', low=[-2] * 10, up=[2] * 10),
-        init=Zone(shape='box', low=[-0.1] * 10, up=[0.1] * 10),
-        unsafe=Zone(shape='box', low=[0, 0, 0, 0.5, 0.5, 0.5, 0.5, -1.5, 0.5, -1.5],
-                    up=[0.5, 0.5, 0.5, 1.5, 1.5, 1.5, 1.5, -0.5, 1.5, -0.5]),
-        f_1=[
-            lambda x: x[3],
-            lambda x: x[4],
-            lambda x: x[5],
-            lambda x: -7253.4927 * x[0] + 1936.3639 * x[9] - 1338.7624 * x[3] + 1333.3333 * x[7],
-            lambda x: -1936.3639 * x[8] - 7253.4927 * x[1] - 1338.7624 * x[4] - 1333.3333 * x[6],
-            lambda x: -769.2308 * x[2] - 770.2301 * x[5],
-            lambda x: x[8],
-            lambda x: x[9],
-            lambda x: 9.81 * x[1],
-            lambda x: -9.81 * x[0]
-        ],
-        name='T15',
-        continuous=True
-    ),
-
-    51: Example(
-        n=9,
-        local_1=Zone(shape='box', low=[-2] * 9, up=[2] * 9),
-        init=Zone(shape='box', low=[0.99] * 9, up=[1.01] * 9),
-        unsafe=Zone(shape='box', low=[1.8] * 9, up=[2] * 9),
-        f_1=[
-            lambda x: 3 * x[2] - x[0] * x[5],
-            lambda x: x[3] - x[1] * x[5],
-            lambda x: x[0] * x[5] - 3 * x[2],
-            lambda x: x[1] * x[5] - x[3],
-            lambda x: 3 * x[2] + 5 * x[0] - x[4],
-            lambda x: 5 * x[4] + 3 * x[2] + x[3] - x[5] * (x[0] + x[1] + 2 * x[7] + 1),
-            lambda x: 5 * x[3] + x[1] - 0.5 * x[6],
-            lambda x: 5 * x[6] - 2 * x[5] * x[7] + x[8] - 0.2 * x[7],
-            lambda x: 2 * x[5] * x[7] - x[8],
-        ],
-        name='T14',
-        continuous=True
-    ),
-    52: Example(
-        n=12,
-        local_1=Zone(shape='box', low=[-2] * 12, up=[2] * 12),
-        init=Zone(shape='box', low=[-0.1] * 12, up=[0.1] * 12),
-        unsafe=Zone(shape='box', low=[0, 0, 0, 0.5, 0.5, 0.5, 0.5, -1.5, 0.5, -1.5, 0.5], up=[0.1] * 12),
-        f_1=[
-            lambda x: x[3],
-            lambda x: x[4],
-            lambda x: x[5],
-            lambda x: -7253.4927 * x[0] + 1936.3639 * x[10] - 1338.7624 * x[3] + 1333.3333 * x[7],
-            lambda x: -7253.4927 * x[1] - 1936.3639 * x[9] - 1338.7624 * x[4] + 1333.3333 * x[6],
-            lambda x: -769.2308 * x[2] - 770.2301 * x[5],
-            lambda x: x[9],
-            lambda x: x[10],
-            lambda x: x[11],
-            lambda x: 9.81 * x[1],
-            lambda x: -9.81 * x[0],
-            lambda x: -16.3541 * x[11] - 15.3846 * x[8]
-        ],
-        name='T16',
-        continuous=True
-    ),
-
-    59: Example(
-        n=25,
-        local_1=Zone(shape='box', low=[-0.3] * 25, up=[0.3] * 25),
-        init=Zone(shape='box',
-                  low=[-0.3, -0.2, -0.2, -0.2, -0.2, -0.2, -0.2, -0.2, -0.2, -0.2, -0.2, -0.2, -0.2, -0.2, -0.2, -0.2,
-                       -0.2, -0.2, -0.2, -0.2, -0.2, -0.2, -0.2, -0.2, -0.2],
-                  up=[0, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3,
-                      0.3, 0.3, 0.3, 0.3, 0.3]),
-        unsafe=Zone(shape='box',
-                    low=[-0.2, -0.3, -0.3, -0.3, -0.3, -0.3, -0.3, -0.3, -0.3, -0.3, -0.3, -0.3, -0.3, -0.3, -0.3, -0.3,
-                         -0.3, -0.3, -0.3, -0.3, -0.3, -0.3, -0.3, -0.3, -0.3],
-                    up=[-0.15, -0.25, -0.25, -0.25, -0.25, -0.25, -0.25, -0.25, -0.25, -0.25, -0.25, -0.25, -0.25,
-                        -0.25, -0.25, -0.25, -0.25, -0.25, -0.25, -0.25, -0.25, -0.25, -0.25, -0.25, -0.25]),
-        f_1=[
-            lambda x: (x[1] + x[2] + x[2] + x[3] + x[3] + x[4] + x[4] + x[5] + x[5] + x[6] + x[6] + x[7] + x[7] + x[8] +
-                       x[8] + x[9] + x[9] + x[10] + x[11] + x[12] + x[13]) / 100 + 1,
-            lambda x: x[2],
-            lambda x: -10 * (x[1] - x[1] ** 3 / 6) - x[1],
-            lambda x: x[4],
-            lambda x: -10 * (x[3] - x[3] ** 3 / 6) - x[1],
-            lambda x: x[6],
-            lambda x: -10 * (x[5] - x[5] ** 3 / 6) - x[1],
-            lambda x: x[8],
-            lambda x: -10 * (x[7] - x[7] ** 3 / 6) - x[1],
-            lambda x: x[10],
-            lambda x: -10 * (x[9] - x[9] ** 3 / 6) - x[1],
-            lambda x: x[12],
-            lambda x: -10 * (x[11] - x[11] ** 3 / 6) - x[1],
-            lambda x: x[14],
-            lambda x: -10 * (x[13] - x[13] ** 3 / 6) - x[1],
-            lambda x: x[16],
-            lambda x: -10 * (x[15] - x[15] ** 3 / 6) - x[1],
-            lambda x: x[18],
-            lambda x: -10 * (x[17] - x[17] ** 3 / 6) - x[1],
-            lambda x: x[20],
-            lambda x: -10 * (x[19] - x[19] ** 3 / 6) - x[1],
-            lambda x: x[22],
-            lambda x: -10 * (x[21] - x[21] ** 3 / 6) - x[1],
-            lambda x: x[24],
-            lambda x: -10 * (x[23] - x[23] ** 3 / 6) - x[1],
-        ],
-        name='R12',
-        continuous=True
-    ),
+    )
 }
 
 
