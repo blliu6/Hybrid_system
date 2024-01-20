@@ -6,7 +6,7 @@ from utils.Config import CegisConfig
 from learn.generate_data import Data
 from learn.Learner import Learner
 from verify.SosVerify import SOS
-from Counterexample.CounterExampleFind import CounterExampleFinder
+from verify.CounterExampleFind import CounterExampleFinder
 from plot.plot import Draw
 
 
