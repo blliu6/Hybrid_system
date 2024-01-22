@@ -1,9 +1,10 @@
 import cvxpy as cp
 import numpy as np
 import sympy as sp
-from utils.Config import CegisConfig
-from benchmarks.Examplers import Zone, Example
 from scipy.optimize import minimize, NonlinearConstraint
+
+from benchmarks.Examplers import Zone
+from utils.Config import CegisConfig
 
 
 def split_bounds(bounds, n):
@@ -45,6 +46,8 @@ class CounterExampleFinder:
         self.ex = self.config.example
         self.n = self.ex.n
         self.nums = config.counterexample_nums
+        self.ellipsoid = config.counterexamples_ellipsoid
+        self.eps = config.eps
 
     def find_counterexample(self, state, poly_list):
         expr = self.get_expr(poly_list)
@@ -56,6 +59,9 @@ class CounterExampleFinder:
             if vis:
                 x = self.enhance(x)
                 x = self.filter(x, expr[0])
+                if self.ellipsoid:
+                    x = self.get_counterexamples_by_ellipsoid(x, self.nums)
+                x = self.filter(x, expr[0])
                 I.extend(x)
 
         if not state[7]:
@@ -63,12 +69,18 @@ class CounterExampleFinder:
             if vis:
                 x = self.enhance(x)
                 x = self.filter(x, expr[7])
+                if self.ellipsoid:
+                    x = self.get_counterexamples_by_ellipsoid(x, self.nums)
+                x = self.filter(x, expr[7])
                 U.extend(x)
 
         if not state[1]:
             vis, x = self.get_extremum_scipy(self.ex.l1, expr[1])
             if vis:
                 x = self.enhance(x)
+                x = self.filter(x, expr[1])
+                if self.ellipsoid:
+                    x = self.get_counterexamples_by_ellipsoid(x, self.nums)
                 x = self.filter(x, expr[1])
                 l1.extend(x)
                 l1_dot.extend(self.x2dotx(x, self.ex.f1))
@@ -78,6 +90,9 @@ class CounterExampleFinder:
             if vis:
                 x = self.enhance(x)
                 x = self.filter(x, expr[2])
+                if self.ellipsoid:
+                    x = self.get_counterexamples_by_ellipsoid(x, self.nums)
+                x = self.filter(x, expr[2])
                 l2.extend(x)
                 l2_dot.extend(self.x2dotx(x, self.ex.f2))
 
@@ -86,12 +101,18 @@ class CounterExampleFinder:
             if vis:
                 x = self.enhance(x)
                 x = self.filter(x, expr[3])
+                if self.ellipsoid:
+                    x = self.get_counterexamples_by_ellipsoid(x, self.nums)
+                x = self.filter(x, expr[3])
                 g1.extend(x)
 
         if not state[4]:
             vis, x = self.get_extremum_scipy(self.ex.g2, expr[4])
             if vis:
                 x = self.enhance(x)
+                x = self.filter(x, expr[4])
+                if self.ellipsoid:
+                    x = self.get_counterexamples_by_ellipsoid(x, self.nums)
                 x = self.filter(x, expr[4])
                 g2.extend(x)
 
@@ -109,6 +130,9 @@ class CounterExampleFinder:
                 print(f'Counterexample found:{x}')
                 x = self.enhance(x)
                 x = self.filter(x, expr[0])
+                if self.ellipsoid:
+                    x = self.get_counterexamples_by_ellipsoid(x, self.nums)
+                x = self.filter(x, expr[0])
                 I.extend(x)
 
         if not state[2]:
@@ -116,6 +140,9 @@ class CounterExampleFinder:
             if vis:
                 print(f'Counterexample found:{x}')
                 x = self.enhance(x)
+                x = self.filter(x, -expr[0])
+                if self.ellipsoid:
+                    x = self.get_counterexamples_by_ellipsoid(x, self.nums)
                 x = self.filter(x, -expr[0])
                 U.extend(x)
 
@@ -133,6 +160,9 @@ class CounterExampleFinder:
                 if vis:
                     cnt += 1
                     x = self.enhance(x)
+                    x = self.filter(x, expr[1])
+                    if self.ellipsoid:
+                        x = self.get_counterexamples_by_ellipsoid(x, self.nums)
                     x = self.filter(x, expr[1])
                     l1.extend(x)
                     l1_dot.extend(self.x2dotx(x, self.ex.f1))
@@ -190,8 +220,8 @@ class CounterExampleFinder:
         return res
 
     def enhance(self, x):
+        eps = self.eps
         nums = self.nums
-        eps = 0.05
         result = [x]
         for i in range(nums - 1):
             rd = (np.random.random(self.n) - 0.5) * eps
@@ -290,6 +320,37 @@ class CounterExampleFinder:
         else:
             return False, []
 
+    def get_ellipsoid(self, data):
+        n = self.n
+        A = cp.Variable((n, n), PSD=True)
+        B = cp.Variable((n, 1))
+        con = []
+        for e in data:
+            con.append(cp.sum_squares(A @ np.array([e]).T + B) <= 1)
+
+        obj = cp.Minimize(-cp.log_det(A))
+        prob = cp.Problem(obj, con)
+        try:
+            prob.solve(solver=cp.MOSEK)
+            if prob.status == 'optimal':
+                P = np.linalg.inv(A.value)
+                center = -P @ B.value
+                return True, P, center
+            else:
+                return False, None, None
+        except:
+            return False, None, None
+
+    def get_counterexamples_by_ellipsoid(self, data, nums):
+        state, P, center = self.get_ellipsoid(data)
+        if not state:
+            return data
+        else:
+            ans = np.random.randn(nums, self.n)
+            ans = np.array([e / np.sqrt(sum(e ** 2)) * np.random.random() ** (1 / self.n) for e in ans]).T
+            ellip = P @ ans + center
+            return list(ellip.T)
+
 
 if __name__ == '__main__':
     from benchmarks.Examplers import get_example_by_name
@@ -298,6 +359,9 @@ if __name__ == '__main__':
     par = {'example': ex}
     config = CegisConfig(**par)
     count = CounterExampleFinder(config)
-    zone = Zone(shape='ball', center=[0, 0], r=1)
+    # zone = Zone(shape='ball', center=[0, 0], r=1)
     # count.get_extremum_scipy(zone, 'x1 + x2')
-    count.find_counterexample([False] * 8, [])
+    # count.find_counterexample([False] * 8, [])
+    data = [[3, 1], [-1, 1], [1, 2], [1, 0]]
+    data = [np.array(e) for e in data]
+    count.get_ellipsoid(data)

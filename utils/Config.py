@@ -33,6 +33,8 @@ class CegisConfig:
     rm2 = None
     counterexample_nums = 100
     lie_counterexample = 0
+    counterexamples_ellipsoid = False
+    eps = 0.05
 
     def __init__(self, **kwargs):
         for key, value in kwargs.items():
