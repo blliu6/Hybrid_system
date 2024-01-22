@@ -22,7 +22,8 @@ class Data:
         elif zone.shape == 'ball':
             s = np.random.randn(batch_size, self.n)
             s = np.array([e / np.sqrt(sum(e ** 2)) * np.sqrt(zone.r) for e in s])
-            s = np.array([e * np.random.random() ** (1 / self.n) if np.random.random() > 0.2 else e for e in s])
+            s = np.array(
+                [e * np.random.random() ** (1 / self.n) if np.random.random() > self.config.C_b else e for e in s])
             s = s + zone.center
 
         # from matplotlib import pyplot as plt
