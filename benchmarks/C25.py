@@ -12,21 +12,22 @@ def main():
     b1_activations = ['SKIP']
     b1_hidden_neurons = [10] * len(b1_activations)
 
-    example = get_example_by_name('C14')
+    example = get_example_by_name('C25')
 
     start = timeit.default_timer()
     opts = {
         'b1_act': b1_activations,
         'b1_hidden': b1_hidden_neurons,
         "example": example,
-        "batch_size": 1000,
-        'lr': 0.1,
+        'bm1_act': [],
+        "batch_size": 2000,
+        'lr': 0.01,
         'loss_weight_continuous': (1, 1, 1),
-        'R_b': 0,
+        'R_b': 0.2,
         'margin': 2,
-        "DEG_continuous": [2, 2, 2, 2],
+        "DEG_continuous": [0, 2, 1, 0],
         "learning_loops": 100,
-        'max_iter': 10
+        'max_iter': 20
     }
     Config = CegisConfig(**opts)
     cegis = Cegis(Config)
