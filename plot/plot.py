@@ -37,7 +37,7 @@ class Draw:
         plt.xlim(min(l1.low[0], l2.low[0]) - 1, max(l1.up[0], l2.up[0]) + 1)
         plt.ylim(min(l1.low[1], l2.low[1]) - 1, max(l1.up[1], l2.up[1]) + 1)
         ax.set_aspect(1)
-        plt.legend()
+        plt.legend(loc='lower left')
         plt.savefig(f'picture/{self.ex.name}_2d.png', dpi=1000, bbox_inches='tight')
         plt.show()
 
@@ -104,7 +104,7 @@ class Draw:
         if self.ex.continuous:
             ax.plot_surface(X, Y, plot_b, rstride=5, cstride=5, alpha=0.5, cmap=cm.jet)
         else:
-            ax.plot_surface(X, Y, plot_b, rstride=5, cstride=5, alpha=0.5, color=color)
+            ax.plot_surface(X, Y, plot_b, rstride=5, cstride=5, alpha=0.5, cmap='cool')
 
     def plot_barrier(self, zone, hx, color):
         low, up = zone.low, zone.up
