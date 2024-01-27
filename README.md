@@ -1,6 +1,6 @@
 # 1.Introduction
 
-SNBCHS represents a cutting-edge software toolbox dedicated to safety verification in continuous dynamical systems by
+SynHbc represents a cutting-edge software toolbox dedicated to safety verification in continuous dynamical systems by
 synthesizing neural barrier certificates. Synthesizing process is an counterexample-guided inductive framework
 comprising of Learner, Verifier, and Cex Generator components. During counterexample generation, we employ a specific
 format to transform the process into a polynomial optimization problem, streamlining the acquisition of optimal
@@ -9,12 +9,12 @@ solving Linear Matrix Inequalities (LMI) feasibility problems.
 
 This approach is particularly effective and scalable, outperforming traditional sum-of-squares programming techniques
 for solving linear or bilinear matrix inequality constraints in barrier certificate generation. Additionally, it
-surpasses state-of-the-art neural barrier certificate learning methods. Notably, SNBCHS is the pioneering procedure for
+surpasses state-of-the-art neural barrier certificate learning methods. Notably, SynHbc is the pioneering procedure for
 synthesizing neural barrier certificates tailored for hybrid systems with discrete transitions. The software toolbox
 provides a comprehensive solution, encompassing crucial elements such as hybrid systems and counterexample (Cex)
 generation, making it a versatile and powerful tool for safety verification.
 
-The directory in which you install SNBCHS contains nine subdirectories:
+The directory in which you install SynHbc contains nine subdirectories:
 
 * `/benchmarks`: the examples we showed in paper;
 * `/learn`: the code of learner;
@@ -28,7 +28,7 @@ The directory in which you install SNBCHS contains nine subdirectories:
 
 ## 2.1 System requirements
 
-To install and run SNBCHS, you need:
+To install and run SynHbc, you need:
 
 * Windows Platform: `Python 3.9`;
 * Linux Platform: `Python 3.9`;
@@ -38,8 +38,8 @@ To install and run SNBCHS, you need:
 
 You need install required software packages listed below and setting up a MOSEK license .
 
-1. Download SNBCHS.zip, and unpack it;
-2. Install the required software packages for using SNBCHS:
+1. Download SynHbc.zip, and unpack it;
+2. Install the required software packages for using SynHbc:
 
     ```python
     pip install cvxopt==1.3.0
@@ -70,7 +70,7 @@ You need install required software packages listed below and setting up a MOSEK 
 
 ## 3.1 New examples
 
-In SNBCHS, if we want to synthesize a barrier certificate, at first we need create a new example in the examples
+In SynHbc, if we want to synthesize a barrier certificate, at first we need create a new example in the examples
 dictionary in `Examplers.py`. Then we should confirm its number. In an example, its number is the key and value is the
 new example constructed by Example class.
 

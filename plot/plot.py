@@ -19,8 +19,8 @@ class Draw:
         fig = plt.figure()
         ax = plt.gca()
 
-        ax.add_patch(self.draw_zone(self.ex.l1, 'black', 'local_1'))
-        ax.add_patch(self.draw_zone(self.ex.l2, 'black', 'local_2'))
+        ax.add_patch(self.draw_zone(self.ex.l1, 'grey', 'local_1'))
+        ax.add_patch(self.draw_zone(self.ex.l2, 'blue', 'local_2'))
         ax.add_patch(self.draw_zone(self.ex.I, 'g', 'init'))
         ax.add_patch(self.draw_zone(self.ex.U, 'r', 'unsafe'))
         ax.add_patch(self.draw_zone(self.ex.g1, 'bisque', 'guard_1'))
@@ -31,7 +31,7 @@ class Draw:
         self.plot_vector_field(l1, self.ex.f1, 'slategrey')
         self.plot_vector_field(l2, self.ex.f2, 'cornflowerblue')
 
-        self.plot_barrier(l1, self.b1, 'blue')
+        self.plot_barrier(l1, self.b1, 'orchid')
         self.plot_barrier(l2, self.b2, 'purple')
 
         plt.xlim(min(l1.low[0], l2.low[0]) - 1, max(l1.up[0], l2.up[0]) + 1)
@@ -75,6 +75,7 @@ class Draw:
         unsafe = self.draw_zone(self.ex.U, color='r', label='unsafe')
         ax.add_patch(unsafe)
         art3d.pathpatch_2d_to_3d(unsafe, z=0, zdir="z")
+        # ax.view_init(elev=25, azim=-86)
         plt.savefig(f'picture/{self.ex.name}_3d.png', dpi=1000, bbox_inches='tight')
         plt.show()
 
