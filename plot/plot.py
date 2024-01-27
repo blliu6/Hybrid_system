@@ -75,7 +75,7 @@ class Draw:
         unsafe = self.draw_zone(self.ex.U, color='r', label='unsafe')
         ax.add_patch(unsafe)
         art3d.pathpatch_2d_to_3d(unsafe, z=0, zdir="z")
-        # ax.view_init(elev=25, azim=-86)
+        # ax.view_init(elev=7, azim=12)
         plt.savefig(f'picture/{self.ex.name}_3d.png', dpi=1000, bbox_inches='tight')
         plt.show()
 
@@ -91,6 +91,7 @@ class Draw:
         unsafe = self.draw_zone(self.ex.U, color='r', label='unsafe')
         ax.add_patch(unsafe)
         art3d.pathpatch_2d_to_3d(unsafe, z=0, zdir="z")
+        # ax.view_init(elev=-164, azim=165)
         plt.savefig(f'picture/{self.ex.name}_3d.png', dpi=1000, bbox_inches='tight')
         plt.show()
 
@@ -103,7 +104,7 @@ class Draw:
         lambda_b = sp.lambdify(s_x, b, 'numpy')
         plot_b = lambda_b(X, Y)
         if self.ex.continuous:
-            ax.plot_surface(X, Y, plot_b, rstride=5, cstride=5, alpha=0.5, cmap=cm.jet)
+            ax.plot_surface(X, Y, plot_b, rstride=5, cstride=5, alpha=0.5, cmap='cool')
         else:
             ax.plot_surface(X, Y, plot_b, rstride=5, cstride=5, alpha=0.5, cmap='cool')
 
@@ -144,12 +145,4 @@ class Draw:
 
 
 if __name__ == '__main__':
-    from benchmarks.Examplers import get_example_by_name
-
-    ex = get_example_by_name('H3')
-    b1 = '0.0400758160260908*x1**2 - 2.40897372979335*x1*x2 - 1.24390362040234*x1 - 1.43151614875389*x2**2 + 0.259768727895773*x2 + 0.831009430574983'
-    b2 = '0.13928392864101*x1**2 + 1.01008702869913*x1*x2 - 1.33612375376827*x1 - 1.19809153148389*x2**2 - 1.9334641802199*x2 + 3.94266860834908'
-
-    d = Draw(ex, b1, b2)
-    d.draw_3d()
-    d.draw()
+    pass
