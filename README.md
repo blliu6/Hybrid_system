@@ -1,6 +1,6 @@
 # 1.Introduction
 
-SynHbc represents a cutting-edge software toolbox dedicated to safety verification in continuous dynamical systems by
+SynHbc represents a cutting-edge software toolbox dedicated to safety verification in hybrid dynamical systems by
 synthesizing neural barrier certificates. Synthesizing process is an counterexample-guided inductive framework
 comprising of Learner, Verifier, and Cex Generator components. During counterexample generation, we employ a specific
 format to transform the process into a polynomial optimization problem, streamlining the acquisition of optimal
