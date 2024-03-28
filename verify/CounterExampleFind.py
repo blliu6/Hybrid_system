@@ -129,10 +129,11 @@ class CounterExampleFinder:
             if vis:
                 print(f'Counterexample found:{x}')
                 if self.ellipsoid:
-                    flag, y = self.get_center(x, expr[0], self.ex.I)
+                    r = self.eps
+                    flag, y, ry = self.get_center(x, expr[0], self.ex.I)
                     if flag:
-                        x = y
-                    x = self.enhance(x)
+                        x, r = y, ry
+                    x = self.enhance(x, r)
                     x = self.filter(x, expr[0])
                     x = self.get_counterexamples_by_ellipsoid(x, self.nums)
                     x = self.filter(x, expr[0])
@@ -146,10 +147,10 @@ class CounterExampleFinder:
             if vis:
                 print(f'Counterexample found:{x}')
                 if self.ellipsoid:
-                    flag, y = self.get_center(x, -expr[0], self.ex.U)
+                    flag, y, r = self.get_center(x, -expr[0], self.ex.U)
                     if flag:
                         x = y
-                    x = self.enhance(x)
+                    x = self.enhance(x, r)
                     x = self.filter(x, -expr[0])
                     x = self.get_counterexamples_by_ellipsoid(x, self.nums)
                     x = self.filter(x, -expr[0])
@@ -172,10 +173,10 @@ class CounterExampleFinder:
                 if vis:
                     cnt += 1
                     if self.ellipsoid:
-                        flag, y = self.get_center(x, expr[1], self.ex.l1)
+                        flag, y, r = self.get_center(x, expr[1], self.ex.l1)
                         if flag:
                             x = y
-                        x = self.enhance(x)
+                        x = self.enhance(x, r)
                         x = self.filter(x, expr[1])
                         x = self.get_counterexamples_by_ellipsoid(x, self.nums)
                         x = self.filter(x, expr[1])
@@ -237,15 +238,14 @@ class CounterExampleFinder:
         res = [e for e in data if fun(*e) < 0]
         return res
 
-    def enhance(self, x):
-        eps = self.eps
+    def enhance(self, x, r=None):
+        eps = self.eps if r is None else r
         nums = self.nums
-        result = [x]
-        for i in range(nums - 1):
-            rd = (np.random.random(self.n) - 0.5) * eps
-            rd = rd + x
-            result.append(rd)
-        return result
+        s = np.random.randn(nums, self.n)
+        s = np.array([e / np.sqrt(sum(e ** 2)) * eps * np.random.random() ** (1 / self.n) for e in s])
+        result = s + x
+
+        return list(result)
 
     def get_expr(self, poly_list):
         b1, b2, bm1, bm2, rm1, rm2 = poly_list
@@ -363,10 +363,10 @@ class CounterExampleFinder:
             if res.success:
                 result = res.x
         if result is None:
-            return False, []
+            return False, None, None
         else:
-
-            return True, (np.array(result) + np.array(worst_point)) / 2
+            return True, (np.array(result) + np.array(worst_point)) / 2, np.sqrt(
+                sum((np.array(result) - np.array(worst_point)) ** 2))
 
     def get_ellipsoid(self, data):
         n = self.n

@@ -12,13 +12,12 @@ class Learner:
             self.net = Net(config)
         self.config = config
 
-    def learn(self, data):
+    def learn(self, data, opt):
         learn_loops = self.config.learning_loops
         margin = self.config.margin
         slope = 1e-3
         relu6 = torch.nn.ReLU6()
-        LR = self.config.lr
-        optimizer = torch.optim.AdamW(self.net.parameters(), lr=LR)
+        optimizer = opt
 
         data_tensor = data
 
@@ -100,13 +99,12 @@ class Learner:
             if result:
                 break
 
-    def learn_for_continous(self, data):
+    def learn_for_continous(self, data, opt):
         learn_loops = self.config.learning_loops
         margin = self.config.margin
         slope = 1e-3
         relu6 = torch.nn.ReLU6()
-        LR = self.config.lr
-        optimizer = torch.optim.AdamW(self.net.parameters(), lr=LR)
+        optimizer = opt
 
         data_tensor = data
 

@@ -20,13 +20,14 @@ def main():
         'b1_hidden': b1_hidden_neurons,
         "example": example,
         "batch_size": 1000,
-        'lr': 0.7,
-        'loss_weight_continuous': (1, 1, 1),
-        'R_b': 0.3,
+        'lr': 0.08,
+        'loss_weight_continuous': (1, 1, 100),
+        'R_b': 0.5,
         'margin': 2,
         "DEG_continuous": [2, 2, 2, 2],
         "learning_loops": 100,
-        'max_iter': 10
+        'max_iter': 10,
+        'counterexamples_ellipsoid': True
     }
     Config = CegisConfig(**opts)
     cegis = Cegis(Config)

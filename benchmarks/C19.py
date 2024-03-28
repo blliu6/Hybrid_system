@@ -21,7 +21,7 @@ def main():
         "example": example,
         'bm1_act': [],
         "batch_size": 1000,
-        'lr': 0.008,
+        'lr': 0.05,
         'loss_weight_continuous': (1, 1, 1),
         'R_b': 0,
         'margin': 2,
@@ -29,7 +29,8 @@ def main():
         "learning_loops": 100,
         'max_iter': 10,
         'split': True,
-        'counterexample_nums': 2
+        'counterexample_nums': 10,
+        'counterexamples_ellipsoid': True
     }
     Config = CegisConfig(**opts)
     cegis = Cegis(Config)

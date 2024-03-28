@@ -27,7 +27,8 @@ def main():
         'margin': 1,
         "DEG_continuous": [0, 2, 1, 0],
         "learning_loops": 100,
-        'max_iter': 10
+        'max_iter': 10,
+        'counterexamples_ellipsoid': True
     }
     Config = CegisConfig(**opts)
     cegis = Cegis(Config)

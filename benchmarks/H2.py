@@ -38,7 +38,7 @@ def main():
         'rm2_act': [],
         # Neural network
         "batch_size": 1000,
-        'lr': 0.1,  # the learning rate
+        'lr': 0.09,  # the learning rate
         'loss_weight': (1, 1, 1, 1, 1, 1, 1, 1),  # The weight of the loss term
         'R_b': 0.5,
         'margin': 1,

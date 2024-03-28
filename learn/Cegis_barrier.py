@@ -28,6 +28,7 @@ class Cegis:
         else:
             data = Data(self.config).generate_data()
         learner = Learner(self.config)
+        optimizer = torch.optim.AdamW(learner.net.parameters(), lr=self.config.lr)
 
         counter = CounterExampleFinder(self.config)
 
@@ -40,9 +41,9 @@ class Cegis:
             print(f'iter:{i + 1}')
             t1 = timeit.default_timer()
             if self.config.example.continuous:
-                learner.learn_for_continous(data)
+                learner.learn_for_continous(data, optimizer)
             else:
-                learner.learn(data)
+                learner.learn(data, optimizer)
             t2 = timeit.default_timer()
             t_learn += t2 - t1
 
