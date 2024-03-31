@@ -57,63 +57,105 @@ class CounterExampleFinder:
         if not state[0]:
             vis, x = self.get_extremum_scipy(self.ex.I, expr[0])
             if vis:
-                x = self.enhance(x)
-                x = self.filter(x, expr[0])
                 if self.ellipsoid:
+                    r = self.eps
+                    flag, y, ry = self.get_center(x, expr[0], self.ex.I)
+                    if flag:
+                        x, r = y, ry
+                    x = self.enhance(x, r)
+                    x = self.filter(x, expr[0])
                     x = self.get_counterexamples_by_ellipsoid(x, self.nums)
-                x = self.filter(x, expr[0])
+                    x = self.filter(x, expr[0])
+                else:
+                    x = self.enhance(x)
+                    x = self.filter(x, expr[0])
                 I.extend(x)
 
         if not state[7]:
             vis, x = self.get_extremum_scipy(self.ex.U, expr[7])
             if vis:
-                x = self.enhance(x)
-                x = self.filter(x, expr[7])
                 if self.ellipsoid:
+                    r = self.eps
+                    flag, y, ry = self.get_center(x, expr[7], self.ex.U)
+                    if flag:
+                        x, r = y, ry
+                    x = self.enhance(x, r)
+                    x = self.filter(x, expr[7])
                     x = self.get_counterexamples_by_ellipsoid(x, self.nums)
-                x = self.filter(x, expr[7])
+                    x = self.filter(x, expr[7])
+                else:
+                    x = self.enhance(x)
+                    x = self.filter(x, expr[7])
                 U.extend(x)
 
         if not state[1]:
             vis, x = self.get_extremum_scipy(self.ex.l1, expr[1])
             if vis:
-                x = self.enhance(x)
-                x = self.filter(x, expr[1])
                 if self.ellipsoid:
+                    r = self.eps
+                    flag, y, ry = self.get_center(x, expr[1], self.ex.l1)
+                    if flag:
+                        x, r = y, ry
+                    x = self.enhance(x, r)
+                    x = self.filter(x, expr[1])
                     x = self.get_counterexamples_by_ellipsoid(x, self.nums)
-                x = self.filter(x, expr[1])
+                    x = self.filter(x, expr[1])
+                else:
+                    x = self.enhance(x)
+                    x = self.filter(x, expr[1])
                 l1.extend(x)
                 l1_dot.extend(self.x2dotx(x, self.ex.f1))
 
         if not state[2]:
             vis, x = self.get_extremum_scipy(self.ex.l2, expr[2])
             if vis:
-                x = self.enhance(x)
-                x = self.filter(x, expr[2])
                 if self.ellipsoid:
+                    r = self.eps
+                    flag, y, ry = self.get_center(x, expr[2], self.ex.l2)
+                    if flag:
+                        x, r = y, ry
+                    x = self.enhance(x, r)
+                    x = self.filter(x, expr[2])
                     x = self.get_counterexamples_by_ellipsoid(x, self.nums)
-                x = self.filter(x, expr[2])
+                    x = self.filter(x, expr[2])
+                else:
+                    x = self.enhance(x)
+                    x = self.filter(x, expr[2])
                 l2.extend(x)
                 l2_dot.extend(self.x2dotx(x, self.ex.f2))
 
         if not state[3]:
             vis, x = self.get_extremum_scipy(self.ex.g1, expr[3])
             if vis:
-                x = self.enhance(x)
-                x = self.filter(x, expr[3])
                 if self.ellipsoid:
+                    r = self.eps
+                    flag, y, ry = self.get_center(x, expr[3], self.ex.g1)
+                    if flag:
+                        x, r = y, ry
+                    x = self.enhance(x, r)
+                    x = self.filter(x, expr[3])
                     x = self.get_counterexamples_by_ellipsoid(x, self.nums)
-                x = self.filter(x, expr[3])
+                    x = self.filter(x, expr[3])
+                else:
+                    x = self.enhance(x)
+                    x = self.filter(x, expr[3])
                 g1.extend(x)
 
         if not state[4]:
             vis, x = self.get_extremum_scipy(self.ex.g2, expr[4])
             if vis:
-                x = self.enhance(x)
-                x = self.filter(x, expr[4])
                 if self.ellipsoid:
+                    r = self.eps
+                    flag, y, ry = self.get_center(x, expr[4], self.ex.g2)
+                    if flag:
+                        x, r = y, ry
+                    x = self.enhance(x, r)
+                    x = self.filter(x, expr[4])
                     x = self.get_counterexamples_by_ellipsoid(x, self.nums)
-                x = self.filter(x, expr[4])
+                    x = self.filter(x, expr[4])
+                else:
+                    x = self.enhance(x)
+                    x = self.filter(x, expr[4])
                 g2.extend(x)
 
         res = (l1, l2, I, U, g1, g2, l1_dot, l2_dot)
