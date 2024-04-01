@@ -175,6 +175,8 @@ class CounterExampleFinder:
                     flag, y, ry = self.get_center(x, expr[0], self.ex.I)
                     if flag:
                         x, r = y, ry
+                    # x = self.enhance(x, 3 * r)
+                    # x = self.filter(x, expr[0], self.ex.I)
                     x = self.enhance(x, r)
                     x = self.filter(x, expr[0])
                     x = self.get_counterexamples_by_ellipsoid(x, self.nums)
@@ -274,11 +276,22 @@ class CounterExampleFinder:
             f_x.append([f[i](x) for i in range(self.n)])
         return f_x
 
-    def filter(self, data, expr):
+    def filter(self, data, expr, zone=None):
         x = sp.symbols([f'x{i + 1}' for i in range(self.n)])
         fun = sp.lambdify(x, expr, 'numpy')
         res = [e for e in data if fun(*e) < 0]
+        if zone is not None:
+            res = [e for e in res if self.check(e, zone)]
         return res
+
+    def check(self, e, zone: Zone):
+        if zone.shape == 'box':
+            flag = True
+            for i in range(len(zone.low)):
+                flag = flag and (zone.low[i] <= e[i] <= zone.up[i])
+            return flag
+        else:
+            return sum((np.array(e) - zone.center) ** 2) <= zone.r
 
     def enhance(self, x, r=None):
         eps = self.eps if r is None else r
