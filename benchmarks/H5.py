@@ -11,13 +11,13 @@ def main():
     start = timeit.default_timer()
     # B1
     b1_activations = ['SKIP']  # 'SKIP','SQUARE','MUL','LINEAR' are optional.
-    b1_hidden_neurons = [10] * len(b1_activations)  # the number of hidden layer nodes.
+    b1_hidden_neurons = [20] * len(b1_activations)  # the number of hidden layer nodes.
 
     # B2
     b2_activations = ['SKIP']
     b2_hidden_neurons = [10] * len(b2_activations)
 
-    example = get_example_by_name('H1')
+    example = get_example_by_name('H5')
 
     start = timeit.default_timer()
     opts = {
@@ -38,7 +38,7 @@ def main():
         'rm2_act': [],
         # Neural network
         "batch_size": 1000,
-        'lr': 0.1,  # the learning rate
+        'lr': 0.2,  # the learning rate
         'loss_weight': (1, 1, 1, 1, 1, 1, 1, 1),  # The weight of the loss term
         'R_b': 0.6,
         'margin': 1,

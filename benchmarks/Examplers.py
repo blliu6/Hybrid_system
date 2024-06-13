@@ -48,7 +48,7 @@ examples = {
              lambda x: x[0] - 0.25 * x[0] ** 2],
         f_2=[lambda x: x[1],
              lambda x: -x[0] - 0.5 * x[0] ** 3],
-        name='H1'
+        name='H6'
         # fossil
     ),
     2: Example(
@@ -65,7 +65,7 @@ examples = {
              lambda x: -x[1]],
         f_2=[lambda x: -x[0] + 2 * x[0] ** 2 * x[1],
              lambda x: -x[1]],
-        name='H2'  # Safety Verification of Nonlinear Hybrid Systems Based on Bilinear Programming->H3
+        name='H7'  # Safety Verification of Nonlinear Hybrid Systems Based on Bilinear Programming->H3
     ),
     3: Example(
         n=2,
@@ -81,7 +81,7 @@ examples = {
              lambda x: -x[1] + x[0] * x[1]],
         f_2=[lambda x: x[0] + x[0] ** 2 * x[1],
              lambda x: x[1] + x[0] * x[1]],
-        name='H3'
+        name='H8'
         # Darboux-type_barrier_certificates_for_safety_verification_of_nonlinear_hybrid_systems->EXAMPLE2
     ),
     4: Example(
@@ -97,7 +97,7 @@ examples = {
         reset_2=[lambda x: x[0], lambda x: x[1], lambda x: x[2]],
         f_1=[lambda x: -x[1], lambda x: -x[0] + x[2], lambda x: x[0] + (2 * x[1] + 3 * x[2]) * (1 + x[2] ** 2)],
         f_2=[lambda x: -x[1], lambda x: -x[0] + x[2], lambda x: -x[0] - 2 * x[1] - 3 * x[2]],
-        name='H4'  # Safety Verification of Nonlinear Hybrid Systems Based on Bilinear Programming->H2
+        name='H9'  # Safety Verification of Nonlinear Hybrid Systems Based on Bilinear Programming->H2
     ),
     5: Example(
         n=2,
@@ -601,6 +601,93 @@ examples = {
         ],
         name='C26',
         continuous=True
+    ),
+    31: Example(
+        n=2,
+        local_1=Zone(shape='box', low=[4, 0], up=[8, 1]),
+        local_2=Zone(shape='box', low=[4, 1], up=[8, 2]),
+        init=Zone(shape='box', low=[5.1, 0.25], up=[5.9, 0.5]),
+        unsafe=Zone(shape='ball', center=[4.25, 1.5], r=0.25 ** 2),
+        guard_1=Zone(shape='box', low=[4, 0.99], up=[8, 1]),
+        guard_2=Zone(shape='box', low=[4, 1], up=[8, 1.2]),
+        reset_1=[lambda x: x[0], lambda x: 1],
+        reset_2=[lambda x: x[0], lambda x: x[1]],
+        f_1=[lambda x: -0.25 * x[0], lambda x: 0.25 + 0.25 * x[0] - 1.75 * x[1] + 0.8 * x[1] * x[1]],
+        f_2=[lambda x: -0.25 * x[0] + 0.25 * x[1], lambda x: 0.4 - 0.2 * x[0] - 0.25 * x[1]],
+        name='H2'  # Probabilistic Safety Verification of Stochastic Hybrid Systems Using Barrier Certificates->H1
+    ),
+    32: Example(
+        n=2,
+        local_1=Zone(shape='box', low=[0.1, 0.1], up=[0.9, 0.9]),
+        local_2=Zone(shape='box', low=[1.1, 1.1], up=[1.9, 1.9]),
+        init=Zone(shape='ball', center=[0.8, 0.2], r=0.1 ** 2),
+        unsafe=Zone(shape='box', low=[0.8, 0.8], up=[0.9, 0.9]),
+        guard_1=Zone(shape='box', low=[0.1, 0.875], up=[0.9, 0.9]),
+        guard_2=Zone(shape='box', low=[1.1, 1.1], up=[1.9, 1.125]),
+        reset_1=[lambda x: x[0] - 1.3, lambda x: x[1] - 1.9],
+        reset_2=[lambda x: x[0] - 0.8, lambda x: x[1] - 0.8],
+        f_1=[lambda x: -x[0] + x[0] * x[1] - x[0] ** 2, lambda x: x[1] - x[0] * x[1] + x[1] ** 2],
+        f_2=[lambda x: -x[0] + x[0] * x[1], lambda x: x[1] - x[0] * x[1]],
+        name='H3'  # An efficient framework for barrier certificate generation of uncertain nonlinear hybrid systems->H1
+    ),
+    33: Example(
+        n=2,
+        local_1=Zone(shape='box', low=[4, 0], up=[6, 1]),
+        local_2=Zone(shape='box', low=[4, 1], up=[6, 2]),
+        init=Zone(shape='ball', center=[5.5, 0.25], r=0.25 ** 2),
+        unsafe=Zone(shape='ball', center=[4.25, 1.5], r=0.25 ** 2),
+        guard_1=Zone(shape='box', low=[4, 0.99], up=[6, 1]),
+        guard_2=Zone(shape='box', low=[4, 1], up=[6, 1.1]),
+        reset_1=[lambda x: x[0], lambda x: 1],
+        reset_2=[lambda x: x[0], lambda x: x[1]],
+        f_1=[lambda x: -0.1 - 0.2244 * x[0], lambda x: 1 + 0.2244 * x[0] - 1.7115 * x[1] + 0.8241 * x[1] ** 2],
+        f_2=[lambda x: -0.3 - 0.2373 * x[0] + 0.2380 * x[1], lambda x: 0.7 - 0.1760 * x[0] - 0.2380 * x[1]],
+        name='H4'  # An efficient framework for barrier certificate generation of uncertain nonlinear hybrid systems->E4
+    ),
+    34: Example(
+        n=2,
+        local_1=Zone(shape='box', low=[-9.5, -9.5], up=[9.5, 9.5]),
+        local_2=Zone(shape='box', low=[-9.5, -9.5], up=[9.5, 9.5]),
+        init=Zone(shape='box', low=[-2.5, -3.5], up=[2.5, 3.5]),
+        unsafe=Zone(shape='box', low=[8, 8], up=[9, 9]),
+        guard_1=Zone(shape='box', low=[-9.5, -9.5], up=[9.5, 9.5]),
+        guard_2=Zone(shape='box', low=[-9.5, -9.5], up=[9.5, 9.5]),
+        reset_1=[lambda x: x[0], lambda x: 1],
+        reset_2=[lambda x: x[0], lambda x: x[1]],
+        f_1=[lambda x: 1.9 * x[0] + 0.6 * x[1], lambda x: 0.6 * x[0] - 0.1 * x[1]],
+        f_2=[lambda x: -0.1 * x[0] - 0.9 * x[1], lambda x: 0.1 * x[0] - 1.4 * x[1]],
+        name='H1'  # Safety verification of state/time-driven hybrid systems using barrier certificates->E1
+    ),
+    35: Example(
+        n=2,
+        local_1=Zone(shape='box', low=[0.1, 0.1], up=[0.9, 0.9]),
+        local_2=Zone(shape='box', low=[1.1, 1.1], up=[1.9, 1.9]),
+        init=Zone(shape='ball', center=[0.8, 0.2], r=0.1 ** 2),
+        unsafe=Zone(shape='box', low=[0.8, 0.8], up=[0.9, 0.9]),
+        guard_1=Zone(shape='box', low=[0.1, 0.875], up=[0.9, 0.9]),
+        guard_2=Zone(shape='box', low=[1.1, 1.1], up=[1.9, 1.125]),
+        reset_1=[lambda x: x[0] - 1.3, lambda x: x[1] - 1.9],
+        reset_2=[lambda x: x[0] - 0.8, lambda x: x[1] - 0.8],
+        f_1=[lambda x: -x[0] + x[0] * x[1], lambda x: x[1] - x[0] * x[1]],
+        f_2=[lambda x: -x[0] + x[0] * x[1], lambda x: x[1] - x[0] * x[1]],
+        name='H5'
+        # Safety Verification of Hybrid Systems by Constraint Propagation-Based Abstraction Refinement->Example-ECO
+    ),
+    36: Example(
+        n=3,
+        local_1=Zone(shape='box', low=[-1, -1, -1], up=[0, 0, 0]),
+        local_2=Zone(shape='box', low=[0, 0, 0], up=[1, 1, 1]),
+        init=Zone(shape='ball', center=[-0.5, -0.5, -0.5], r=0.1 ** 2),
+        unsafe=Zone(shape='box', low=[0.5, 0.5, 0.5], up=[0.6, 0.6, 0.6]),
+        guard_1=Zone(shape='box', low=[0, 0, 0], up=[1, 1, 1]),
+        guard_2=Zone(shape='box', low=[-1, -1, -1], up=[0, 0, 0]),
+        reset_1=[lambda x: x[0], lambda x: x[1], lambda x: x[2]],
+        reset_2=[lambda x: x[0], lambda x: x[1], lambda x: x[2]],
+        f_1=[lambda x: -x[0] - 3 * x[1] + 2 * x[2] + x[1] * x[2], lambda x: 3 * x[0] - x[1] - x[2] + x[0] * x[2],
+             lambda x: -2 * x[0] + x[1] - x[2] + x[0] * x[1]],
+        f_2=[lambda x: x[1] - x[0] ** 3, lambda x: -x[0] - x[1] ** 3 + x[1] * x[2] ** 4,
+             lambda x: -x[2] + x[1] ** 3 * x[2]],
+        name='H10'  # DISCOVERING MULTIPLEL YAPUNOVFUNCTIONS FOR SWITCHED HYBRID SYSTEMS->Example 8
     )
 }
 

@@ -17,7 +17,7 @@ def main():
     b2_activations = ['SKIP']
     b2_hidden_neurons = [10] * len(b2_activations)
 
-    example = get_example_by_name('H1')
+    example = get_example_by_name('H7')
 
     start = timeit.default_timer()
     opts = {
@@ -27,10 +27,10 @@ def main():
         'b2_hidden': b2_hidden_neurons,
         "example": example,
         # Multipliers for Lie derivative conditions.
-        'bm1_hidden': [],  # the number of hidden layer nodes.
-        'bm2_hidden': [],
-        'bm1_act': [],  # the activation function.
-        'bm2_act': [],
+        'bm1_hidden': [10],  # the number of hidden layer nodes.
+        'bm2_hidden': [10],
+        'bm1_act': ['SKIP'],  # the activation function.
+        'bm2_act': ['SKIP'],
         # Multipliers for guard conditions.
         'rm1_hidden': [],  # the number of hidden layer nodes.
         'rm2_hidden': [],
@@ -38,15 +38,15 @@ def main():
         'rm2_act': [],
         # Neural network
         "batch_size": 1000,
-        'lr': 0.1,  # the learning rate
+        'lr': 0.09,  # the learning rate
         'loss_weight': (1, 1, 1, 1, 1, 1, 1, 1),  # The weight of the loss term
-        'R_b': 0.6,
+        'R_b': 0.5,
         'margin': 1,
         "learning_loops": 100,
         # Verification
         "DEG": [2, 0, 2, 2, 2, 2, 2, 2],  # Degrees of multipliers during SOS verification.
-        'max_iter': 100,  # The maximum number of iterations.
-        'counterexample_nums': 100  # The number of counterexamples generated each time.
+        'max_iter': 10,  # The maximum number of iterations.
+        'counterexample_nums': 10  # The number of counterexamples generated each time.
     }
     Config = CegisConfig(**opts)
     cegis = Cegis(Config)

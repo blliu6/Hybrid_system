@@ -17,7 +17,7 @@ def main():
     b2_activations = ['SKIP']
     b2_hidden_neurons = [10] * len(b2_activations)
 
-    example = get_example_by_name('H1')
+    example = get_example_by_name('H10')
 
     start = timeit.default_timer()
     opts = {
@@ -38,13 +38,13 @@ def main():
         'rm2_act': [],
         # Neural network
         "batch_size": 1000,
-        'lr': 0.1,  # the learning rate
+        'lr': 0.05,  # the learning rate
         'loss_weight': (1, 1, 1, 1, 1, 1, 1, 1),  # The weight of the loss term
-        'R_b': 0.6,
+        'R_b': 0.4,
         'margin': 1,
         "learning_loops": 100,
         # Verification
-        "DEG": [2, 0, 2, 2, 2, 2, 2, 2],  # Degrees of multipliers during SOS verification.
+        "DEG": [2, 2, 4, 2, 2, 2, 2, 2],  # Degrees of multipliers during SOS verification.
         'max_iter': 100,  # The maximum number of iterations.
         'counterexample_nums': 100  # The number of counterexamples generated each time.
     }

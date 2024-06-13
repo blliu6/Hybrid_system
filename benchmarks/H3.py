@@ -9,11 +9,13 @@ from learn.Cegis_barrier import Cegis
 
 def main():
     start = timeit.default_timer()
-    b1_activations = ['SKIP']
-    b1_hidden_neurons = [10] * len(b1_activations)
+    # B1
+    b1_activations = ['SKIP']  # 'SKIP','SQUARE','MUL','LINEAR' are optional.
+    b1_hidden_neurons = [20] * len(b1_activations)  # the number of hidden layer nodes.
 
+    # B2
     b2_activations = ['SKIP']
-    b2_hidden_neurons = [10] * len(b2_activations)
+    b2_hidden_neurons = [20] * len(b2_activations)
 
     example = get_example_by_name('H3')
 
@@ -24,17 +26,27 @@ def main():
         'b2_act': b2_activations,
         'b2_hidden': b2_hidden_neurons,
         "example": example,
-        'bm1_act': [],
-        'bm2_act': [],
-        'rm1_act': [],
+        # Multipliers for Lie derivative conditions.
+        'bm1_hidden': [10],  # the number of hidden layer nodes.
+        'bm2_hidden': [10],
+        'bm1_act': ['SKIP'],  # the activation function.
+        'bm2_act': ['SKIP'],
+        # Multipliers for guard conditions.
+        'rm1_hidden': [],  # the number of hidden layer nodes.
+        'rm2_hidden': [],
+        'rm1_act': [],  # the activation function.
         'rm2_act': [],
-        "batch_size": 500,  # 100
-        'lr': 0.1,
-        'loss_weight': (1, 1, 1, 1, 1, 1, 1, 1),
-        'R_b': 0.3,
-        'margin': 0.5,
-        "DEG": [2] * 8,
+        # Neural network
+        "batch_size": 1000,
+        'lr': 0.2,  # the learning rate
+        'loss_weight': (1, 1, 1, 1, 1, 1, 1, 1),  # The weight of the loss term
+        'R_b': 0.6,
+        'margin': 1,
         "learning_loops": 100,
+        # Verification
+        "DEG": [2, 0, 2, 2, 2, 2, 2, 2],  # Degrees of multipliers during SOS verification.
+        'max_iter': 100,  # The maximum number of iterations.
+        'counterexample_nums': 100  # The number of counterexamples generated each time.
     }
     Config = CegisConfig(**opts)
     cegis = Cegis(Config)
