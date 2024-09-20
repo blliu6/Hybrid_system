@@ -321,36 +321,30 @@ class Net(nn.Module):
         expr = []
         x = sp.symbols([['x{}'.format(i + 1) for i in range(self.input)]])
         #############################################################
-        # 第一个
         expr_1 = self.sp_net(x, self.config.b1_act, self.b1_lay1, self.b1_lay2)
         expr.append(expr_1)
         #############################################################
-        # 第二个
         expr_2 = self.sp_net(x, self.config.b2_act, self.b2_lay1, self.b2_lay2)
         expr.append(expr_2)
         #############################################################
-        # 第三个 bm1
         if len(self.config.bm1_hidden) == 0:
             expr_3 = self.bm1_lay1[0].detach().numpy()[0]
         else:
             expr_3 = self.sp_net(x, self.config.bm1_act, self.bm1_lay1, self.bm1_lay2)
         expr.append(expr_3)
         #############################################################
-        # 第四个 bm2
         if len(self.config.bm2_hidden) == 0:
             expr_4 = self.bm2_lay1[0].detach().numpy()[0]
         else:
             expr_4 = self.sp_net(x, self.config.bm2_act, self.bm2_lay1, self.bm2_lay2)
         expr.append(expr_4)
         #############################################################
-        # 第五个
         if len(self.config.rm1_hidden) == 0:
             expr_5 = self.rm1_lay1[0].detach().numpy()[0]
         else:
             expr_5 = self.sp_net(x, self.config.rm1_act, self.rm1_lay1, self.rm1_lay2)
         expr.append(expr_5)
         #############################################################
-        # 第六个
         if len(self.config.rm2_hidden) == 0:
             expr_6 = self.rm2_lay1[0].detach().numpy()[0]
         else:
