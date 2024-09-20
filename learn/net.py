@@ -18,7 +18,6 @@ class Net(nn.Module):
         self.rm2_lay1, self.rm2_lay2 = [], []
 
         #############################################################
-        # b1网络
         n_prev = self.input
         k = 1
         for n_hid, act in zip(config.b1_hidden, config.b1_act):
@@ -46,7 +45,6 @@ class Net(nn.Module):
         #############################################################
 
         #############################################################
-        # b2网络
         n_prev = self.input
         k = 1
         for n_hid, act in zip(config.b2_hidden, config.b2_act):
@@ -74,7 +72,6 @@ class Net(nn.Module):
         #############################################################
 
         #############################################################
-        # bm1_乘子网络
         if len(config.bm1_hidden) == 0:
             if config.bm1 is not None:
                 bm1 = nn.Parameter(torch.Tensor([config.bm1]), requires_grad=False)
@@ -111,7 +108,6 @@ class Net(nn.Module):
         #############################################################
 
         #############################################################
-        # bm2_乘子网络
         if len(config.bm2_hidden) == 0:
             if config.bm2 is not None:
                 bm2 = nn.Parameter(torch.Tensor([config.bm2]), requires_grad=False)
@@ -148,7 +144,6 @@ class Net(nn.Module):
         #############################################################
 
         #############################################################
-        # rm1_乘子网络
         if len(config.rm1_hidden) == 0:
             if config.rm1 is not None:
                 rm1 = nn.Parameter(torch.Tensor([config.rm1]), requires_grad=False)
@@ -185,7 +180,6 @@ class Net(nn.Module):
         #############################################################
 
         #############################################################
-        # rm2_乘子网络
         if len(config.rm2_hidden) == 0:
             if config.rm2 is not None:
                 rm2 = nn.Parameter(torch.Tensor([config.rm2]), requires_grad=False)
