@@ -6,3 +6,4 @@ sumofsquares==1.2.1
 cvxpy==1.4.1
 scipy==1.9.0
 picos==2.4.11
+mosek==10.2.5
